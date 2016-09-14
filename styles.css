@@ -1,0 +1,23 @@
+/* mainfonts */
+t1 {font-family: verdana; font-weight: bold; font-size: 24px; color: #34495e;}
+t2 {font-family: verdana; font-size: 20px;}
+r1 {font-family: verdana; float: right; font-size: 20px; color: #34495e;}
+t3 {font-family: verdana; font-size: 20px; color: #7F8C8D ; font-style: italic;}
+#test {float: right;}
+/* subfonts */
+s1 {font-family: Open Sans, sans-serif; font-size: 20px; color: #34495e;}
+footer1 {font-family: Open Sans, sans-serif; font-size: 14px; color: #34495e;}
+footer2 {font-family: Open Sans, sans-serif; font-size: 14px; color: #34495e; float: right;}
+/* design-types */
+.left {text-align: left;}
+.right {text-align: right;}
+.center {text-align: center;}
+.block {text-align: justify;}
+/* shit */
+body {background-color: #f2f2f2; margin: 0px 0px 0px 0px; border-top: 7px; border-top-style: solid; border-top-color: #71BA51;}
+input {font-family: Open Sans, sans-serif; font-size: 20px; color: #22313F; padding: 10px; border: 1px; border-style: solid; border-color: #2980b9; width: 100%;}
+/* divs */
+#loginhead {width: 100%; margin: auto; padding: 1% 1% 0px 1%;}
+#loginpanel {width: 320px; padding: 3% 0px 5% 0px; margin: auto;}
+#loginfooter {width: 50%; margin: auto; border-top: 1px; border-top-style: solid; border-top-color: #7f8c8d; padding: 1% 0px 1% 0px;}
+#copyright {width: 50%; margin: auto; padding: 1% 0px 1% 0px; border-top: 1px; border-top-style: solid; border-top-color: #7f8c8d;}

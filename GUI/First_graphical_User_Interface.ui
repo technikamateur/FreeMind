@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>747</width>
+    <width>815</width>
     <height>477</height>
    </rect>
   </property>
@@ -25,22 +25,62 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="3" column="2" rowspan="2">
+    <item row="4" column="1" rowspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="font">
+         <font>
+          <family>Open Sans</family>
+          <pointsize>14</pointsize>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Backup-Kontroll-Zentrum</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="margin">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="textBrowser_3"/>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2" rowspan="2">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="label_3">
         <property name="font">
          <font>
           <family>Open Sans</family>
-          <pointsize>12</pointsize>
+          <pointsize>14</pointsize>
           <underline>true</underline>
          </font>
         </property>
         <property name="text">
-         <string>Status Überwachung</string>
+         <string>Überwachung</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="margin">
+         <number>5</number>
         </property>
        </widget>
       </item>
@@ -64,6 +104,11 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_5">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Refresh</string>
           </property>
@@ -72,18 +117,71 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextBrowser" name="textBrowser"/>
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="font">
+         <font>
+          <family>Open Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Copyright/Lizenz</string>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
+    <item row="0" column="0" colspan="3">
+     <widget class="QLabel" name="label_head">
+      <property name="font">
+       <font>
+        <family>Open Sans</family>
+        <pointsize>18</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>FreeMind - Das IGF Server Interface</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
           <family>Open Sans</family>
-          <pointsize>12</pointsize>
+          <pointsize>14</pointsize>
           <underline>true</underline>
          </font>
         </property>
@@ -115,6 +213,11 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Herunterfahren</string>
           </property>
@@ -135,6 +238,11 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_2">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Neustarten</string>
           </property>
@@ -178,6 +286,11 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_3">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Aktualisieren</string>
           </property>
@@ -203,44 +316,6 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="1">
-     <widget class="QTextEdit" name="textEdit"/>
-    </item>
-    <item row="0" column="0" colspan="3">
-     <widget class="QLabel" name="label_head">
-      <property name="font">
-       <font>
-        <family>Open Sans</family>
-        <pointsize>16</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-        <underline>false</underline>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>ArrowCursor</cursorShape>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>FreeMind - Das IGF Server Interface</string>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="3">
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -248,7 +323,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>747</width>
+     <width>815</width>
      <height>21</height>
     </rect>
    </property>

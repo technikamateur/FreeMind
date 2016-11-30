@@ -20,6 +20,7 @@ body {
 figure {
   margin: 0px;
   width: 300px;
+  text-align: center;
 }
 figcaption {
   padding: 10px 0px 0px 0px;

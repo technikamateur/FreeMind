@@ -1,2 +1,3 @@
 # igf-samba
-This will be a project for my current work. IGF-Smaba will be a Webinterface to access all neccessary server configurations.
+
+<img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/logo/linux-server-300px.png" alt="logo FreeMind">

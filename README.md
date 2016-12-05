@@ -9,4 +9,4 @@ The usage of raspido is your own risk! Please understand that this Software come
 ***
 ### License:
 This project is licensed under "Creative Commons 4.0 International by-nc-sa"! For more information see *license.txt*.
-<img align="left" src="http://mirrors.creativecommons.org/presskit/logos/cc.logo.svg" alt="logo cc" style="width: 128px;">
+<img align="left" src="http://mirrors.creativecommons.org/presskit/logos/cc.logo.svg" alt="logo cc" width="128">

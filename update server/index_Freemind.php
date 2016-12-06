@@ -8,9 +8,4 @@ if ($latestversion == $userversion)
 } else {
   print "$currenturl/$latestversion";
 }
-$requests = file_get_contents('requests.txt');
-$requests = intval($requests);
-$requests = $requests + 1;
-$datei = fopen("requests.txt", "w");
-fwrite($datei, $requests);
 ?>

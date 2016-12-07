@@ -3,7 +3,7 @@
 # This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 # To view a copy of this license, visit creativecommons.org/licenses/by-nc-sa/4.0/
 # or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
-# created by Daniel Körsten aka TechnikAmateur
+# created 2016 by Daniel Körsten aka TechnikAmateur
 
 # setting up some basic parameters
 version="1.0"
@@ -22,7 +22,7 @@ then
   if ! [ "$update" == "latest-version" ]
   then
     mkdir /etc/freemind/update
-    wget -N -q -P /etc/freemid/update $update/freemind.tar.gz > /dev/null/temp
+    wget -N -q -P /etc/freemid/update $update/freemind.tar.gz>/dev/null/temp
     tar -xf /etc/freemind/update/freemind.tar.gz -C /etc/freemind/update
     chmod +x /etc/freemind/update/update.sh
     bash /etc/freemind/update/update.sh &
@@ -31,13 +31,13 @@ then
 fi
 # start python for TCP Connection
 # checking HDD online
-if ! [ "$(mount | grep /dev/sdb1>/dev/null)" ]
+if ! [ "$(mount | grep /dev/sdb1>/dev/null/temp)" ]
 then
   python3 /etc/freemind/base.py off 1
-elif ! [ "$(mount | grep /dev/sdc1>/dev/null)" ]
+elif ! [ "$(mount | grep /dev/sdc1>/dev/null/temp)" ]
 then
   python3 /etc/freemind/base.py off 2
-elif ! [ "$(mount | grep /dev/sdd1>/dev/null)" ]
+elif ! [ "$(mount | grep /dev/sdd1>/dev/null/temp)" ]
 then
   python3 /etc/freemind/base.py off 3
 fi

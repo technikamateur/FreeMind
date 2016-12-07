@@ -14,23 +14,28 @@ if not os.path.isfile("freemind.db"):
     cursor.execute("""CREATE TABLE IF NOT EXISTS errorlog(
                       id INTEGER PRIMARY KEY,
                       error INTEGER,
-                      details TEXT,
                       date TEXT,
                       time TEXT);""")
     connection.close()
+    connection =sqlite3.connect("freemind.db")
+    cursor =connection.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS updatelog(
+                      id INTEGER PRIMARY KEY,
+                      date TEXT);""")
+    connection.close()
 # functions
+# function inserterror to table errorlog in freemind.db
 def inserterror():
     x = 0
-    dberror = 1
-    dbdetails = int(sys.argv[2])
+    dberror = int(sys.argv[2])
     dbdate = str(strftime("%Y-%m-%d", gmtime()))
     dbtime = str(strftime("%H-%M", gmtime()))
     connection = sqlite3.connect("freemind.db")
     cursor = connection.cursor()
     for i in range(1,9999):
         try:
-            cursor.execute("""INSERT INTO errorlog(id, error, details, date, time)
-                              VALUES(?,?,?,?,?)""", (i, dberror, dbdetails, dbdate, dbtime))
+            cursor.execute("""INSERT INTO errorlog(id, error, date, time)
+                              VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
             connection.commit()
         except:
             x = x + 1 # only that something is happening
@@ -44,7 +49,6 @@ def inserterror():
         cursor.execute("""CREATE TABLE IF NOT EXISTS errorlog(
                           id INTEGER PRIMARY KEY,
                           error INTEGER,
-                          details TEXT,
                           date TEXT,
                           time TEXT);""")
         connection.close()
@@ -53,17 +57,19 @@ def inserterror():
         cursor = connection.cursor()
         for i in range(1,9999):
             try:
-                cursor.execute("""INSERT INTO errorlog(id, error, details, date, time)
-                                  VALUES(?,?,?,?,?)""", (i, dberror, dbdetails, dbdate, dbtime))
+                cursor.execute("""INSERT INTO errorlog(id, error, date, time)
+                                  VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
                 connection.commit()
             except:
                 x = x + 1 # only that something is happening
             else:
                 break
         connection.close()
+# function read and insert update to table updatelog in freemind.db
+def update():
 
 # getting sys arguments
-if sys.argv[1] == "off":
-    insertoff()
-elif sys.argv[1] == "updatereq":
-    bpla
+if sys.argv[1] == "error":
+    inserterror()
+elif sys.argv[1] == "update":
+    update()

@@ -28,8 +28,8 @@ if not os.path.isfile("freemind.db"):
 def inserterror():
     x = 0
     dberror = int(sys.argv[2])
-    dbdate = str(strftime("%Y-%m-%d", gmtime()))
-    dbtime = str(strftime("%H-%M", gmtime()))
+    dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+    dbtime = time.strftime("%H-%M", time.gmtime())
     connection = sqlite3.connect("freemind.db")
     cursor = connection.cursor()
     for i in range(1,9999):
@@ -42,7 +42,7 @@ def inserterror():
         else:
             break
     connection.close()
-    if i == 9998:
+    if i >= 9998:
         os.remove("freemind.db")
         connection = sqlite3.connect("freemind.db")
         cursor = connection.cursor()
@@ -61,13 +61,44 @@ def inserterror():
                                   VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
                 connection.commit()
             except:
-                x = x + 1 # only that something is happening
+                x = x + 1 # only that something is happens
             else:
                 break
         connection.close()
 # function read and insert update to table updatelog in freemind.db
 def update():
-
+    x = 0
+    rw = sys.argv[2]
+    if rw == "done":
+        dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        for i in range(1,9999):
+            try:
+                cursor.execute("""INSERT INTO updatelog(id, date)
+                                  VALUES(?,?)""", (i, dbdate))
+                connection.commit()
+            except:
+                x = x + 1 # only that somthing happens
+            else:
+                break
+        connection.close()
+        if i >= 9998:
+            os.remove("freemind.db")
+            connection = sqlite3.connect("freemind.db")
+            cursor = connection.cursor()
+            for i in range(1,9999):
+                try:
+                    cursor.execute("""INSERT INTO updatelog(id, date)
+                                      VALUES(?,?)""", (i, dbdate))
+                    connection.commit()
+                except:
+                    x = x + 1 # only that somthing happens
+                else:
+                    break
+            connection.close()
+    else:
+        bla
 # getting sys arguments
 if sys.argv[1] == "error":
     inserterror()

@@ -31,13 +31,13 @@ then
 fi
 # start python for TCP Connection
 # checking HDD online
-if ! [ "$(mount | grep /dev/sdb1>/dev/null/temp)" ]
+if ! [ "$(mount | grep /dev/sdb>/dev/null/temp)" ]
 then
   python3 /etc/freemind/base.py off 1
-elif ! [ "$(mount | grep /dev/sdc1>/dev/null/temp)" ]
+elif ! [ "$(mount | grep /dev/sdc>/dev/null/temp)" ]
 then
   python3 /etc/freemind/base.py off 2
-elif ! [ "$(mount | grep /dev/sdd1>/dev/null/temp)" ]
+elif ! [ "$(mount | grep /dev/sdd>/dev/null/temp)" ]
 then
   python3 /etc/freemind/base.py off 3
 fi

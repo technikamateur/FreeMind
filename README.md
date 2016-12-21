@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl.txt) [![Stable](https://img.shields.io/badge/Stable%20Version-1.0-green.svg)](http://46.182.19.177/) [![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg)](http://46.182.19.177/)
 #### Important information:
 All releases, wich are marked with the tag *beta* are not stable and can damage your hardware.
-The usage of raspido is your own risk! Please understand that this Software comes with NO WARRANTY! For more information see *license.txt*.
+The usage of FreeMind and all components is your own risk! Please understand that this Software comes with NO WARRANTY! For more information see *license.txt*.
 ***
 ### About:
 FreeMind is simple desktop application based on python3 and a serverside script. FreeMind makes it easy to manage your Samba-Fileserver. If you are intrested in Features see *Features*. In general it is a tool wich will help you to manage your Linux server without any knowledge.
@@ -19,4 +19,4 @@ FreeMind is simple desktop application based on python3 and a serverside script.
 
 ### License:
 <img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/gplv3.png" alt="GPLv3">
-This project is licensed under "Creative Commons 4.0 International by-nc-sa"! For more information see *license.txt*.
+This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.

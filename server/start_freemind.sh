@@ -40,19 +40,21 @@ then
     bash /etc/freemind/update/update.sh &
     exit 0
   fi
+else
+  python3 /etc/freemind/main.py error
 fi
 # start python for TCP Connection
 # checking HDD online
 if ! [ "$(mount | grep /dev/sdb1>/dev/null/temp)" ]
 then
-  python3 /etc/freemind/main.py off 1
+  python3 /etc/freemind/main.py error 1
   hddon=false
 elif ! [ "$(mount | grep /dev/sdc1>/dev/null/temp)" ]
 then
-  python3 /etc/freemind/main.py off 2
+  python3 /etc/freemind/main.py error 2
   hddon=false
 elif ! [ "$(mount | grep /dev/sdd1>/dev/null/temp)" ]
 then
-  python3 /etc/freemind/main.py off 3
+  python3 /etc/freemind/main.py error 3
   hddon=false
 fi

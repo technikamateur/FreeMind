@@ -19,6 +19,7 @@
 # setting up some basic parameters
 version="1.0"
 internet=true
+hddon=true
 # checking for server connection
 curl -s --request GET http://46.182.19.177:8002/index.php?userversion=$version > /dev/null/temp || $internet=false
 # cleaning update cache
@@ -42,13 +43,16 @@ then
 fi
 # start python for TCP Connection
 # checking HDD online
-if ! [ "$(mount | grep /dev/sdb>/dev/null/temp)" ]
+if ! [ "$(mount | grep /dev/sdb1>/dev/null/temp)" ]
 then
-  python3 /etc/freemind/base.py off 1
-elif ! [ "$(mount | grep /dev/sdc>/dev/null/temp)" ]
+  python3 /etc/freemind/main.py off 1
+  hddon=false
+elif ! [ "$(mount | grep /dev/sdc1>/dev/null/temp)" ]
 then
-  python3 /etc/freemind/base.py off 2
-elif ! [ "$(mount | grep /dev/sdd>/dev/null/temp)" ]
+  python3 /etc/freemind/main.py off 2
+  hddon=false
+elif ! [ "$(mount | grep /dev/sdd1>/dev/null/temp)" ]
 then
-  python3 /etc/freemind/base.py off 3
+  python3 /etc/freemind/main.py off 3
+  hddon=false
 fi

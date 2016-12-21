@@ -50,7 +50,7 @@ echo
 echo "Installing components..."
 sleep 5
 mkdir hd-idle-files
-mv hd-idle-1.05.tgz hd-idle-files
+mv hd-idle-1.05.tgz hd-idle-files #fehlerhaft, da beim entpacken auch ein ordner erstellt wird.
 cd hd-idle-files
 tar xfv hd-idle-1.05.tgz
 dpkg-buildpackage -rfakeroot

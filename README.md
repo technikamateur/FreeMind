@@ -18,5 +18,5 @@ FreeMind is simple desktop application based on python3 and a serverside script.
 - helps you to solve problems e.g. if a HDD crashes
 
 ### License:
-<img align="right" src="http://mirrors.creativecommons.org/presskit/logos/cc.logo.svg" alt="logo cc" width="128">
+<img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/gplv3.png" alt="GPLv3">
 This project is licensed under "Creative Commons 4.0 International by-nc-sa"! For more information see *license.txt*.

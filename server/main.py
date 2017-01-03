@@ -1,48 +1,24 @@
 #!/usr/bin/python3
+"""
+FreeMind is a composition of software and config files. It will help you to manage your Linux fileserver.
+Copyright (C) 2017  Daniel Körsten aka TechnikAmateur
 
-# FreeMind is a composition of software and config files. It will help you to manage your Linux fileserver.
-# Copyright (C) 2017  Daniel Körsten aka TechnikAmateur
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 # -*- coding: utf-8 -*-
-"""
-This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
-To view a copy of this license, visit creativecommons.org/licenses/by-nc-sa/4.0/
-or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
-created 2016 by Daniel Körsten aka TechnikAmateur
-"""
-import os, sys, time, sqlite3
-
-# checking database
-if not os.path.isfile("freemind.db"):
-    connection = sqlite3.connect("freemind.db")
-    cursor = connection.cursor()
-    cursor.execute("""CREATE TABLE IF NOT EXISTS errorlog(
-                      id INTEGER PRIMARY KEY,
-                      error INTEGER,
-                      date TEXT,
-                      time TEXT);""")
-    connection.close()
-    connection =sqlite3.connect("freemind.db")
-    cursor =connection.cursor()
-    cursor.execute("""CREATE TABLE IF NOT EXISTS updatelog(
-                      id INTEGER PRIMARY KEY,
-                      date TEXT);""")
-    connection.close()
-
-# functions
+import os, sys, time, sqlite3, dbase
+dbase.create()
 # function inserterror to table errorlog in freemind.db
 def inserterror():
     x = 0
@@ -55,7 +31,7 @@ def inserterror():
         try:
             cursor.execute("""INSERT INTO errorlog(id, error, date, time)
                               VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
-            connection.commit()
+            connection.commit()#!!!!!!!!!!!!!!!!!! realy wichtig
         except:
             x = x + 1 # only that something is happening
         else:

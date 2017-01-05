@@ -14,3 +14,10 @@ UUID=b91f9383-4078-4a63-a7a8-9a7caa55eb01 none            swap    sw            
 #FreeMind
 #Transfer
 UUID=97dedfb9-d69e-4387-af5f-f0f2f0dc22ce       /media/transfer btrfs   defaults,autodefrag,noatime,inode_cache 0       2
+
+
+
+
+967d1ebc-8993-4d38-98a8-32fab3dc18df
+f5c57db5-6b8c-4a32-a50b-6d7e03735d68
+a7f95341-77f8-4dbf-b762-a37a9b284e77

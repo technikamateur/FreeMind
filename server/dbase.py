@@ -19,8 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # -*- coding: utf-8 -*-
 import sqlite3
 import os
+import sys # remove if there are not sys args.
+import time
 
 
+# function create databse if not exists
 def create():
     if not os.path.isfile("freemind.db"):
         connection = sqlite3.connect("freemind.db")
@@ -49,4 +52,44 @@ def create():
                           free TEXT,
                           drive INTEGER);""")
         connection.commit()
+        connection.close()
+
+
+# function insert error in db
+def inserterror(dberror):
+    x = 0
+    dberror = int(dberror)
+    dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+    dbtime = time.strftime("%H-%M", time.gmtime())
+    connection = sqlite3.connect("freemind.db")
+    cursor = connection.cursor()
+    for i in range(1, 9999):
+        try:
+            # yapf: disable
+            cursor.execute("""INSERT INTO errorlog(id, error, date, time)
+                              VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
+            # yapf: enable
+            connection.commit()
+        except:
+            x = x + 1  # only that something is happening
+        else:
+            break
+    connection.close()
+    if i >= 9998:
+        os.remove("freemind.db")
+        create()
+        x = 0
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        for i in range(1, 9999):
+            try:
+                # yapf: disable
+                cursor.execute("""INSERT INTO errorlog(id, error, date, time)
+                                  VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
+                # yapf: enable
+                connection.commit()
+            except:
+                x = x + 1  # only that something is happens
+            else:
+                break
         connection.close()

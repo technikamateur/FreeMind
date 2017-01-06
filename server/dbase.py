@@ -19,8 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # -*- coding: utf-8 -*-
 import sqlite3
 import os
-import sys # remove if there are not sys args.
+import sys  # remove if there are not sys args.
 import time
+import libary
 
 
 # function create databse if not exists
@@ -51,11 +52,10 @@ def create():
                           total TEXT,
                           free TEXT,
                           drive INTEGER);""")
-        connection.commit()
         connection.close()
 
 
-# function insert error in db
+# function insert error in database with current date and time stamp
 def inserterror(dberror):
     x = 0
     dberror = int(dberror)
@@ -93,3 +93,141 @@ def inserterror(dberror):
             else:
                 break
         connection.close()
+
+
+# function insert update in databse with current time and date stamp
+def insertupdate(updatetyp):
+    x = 0
+    if updatetyp == "freemind":
+        dbupdatetyp = 0
+        dbupdatetyp = int(dbupdatetyp)
+        dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+        dbtime = time.strftime("%H-%M", time.gmtime())
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        for i in range(1, 9999):
+            try:
+                # yapf: disable
+                cursor.execute("""INSERT INTO updatelog(id, date, time, update)
+                                  VALUES(?,?,?,?)""", (i, dbdate, dbtime, dbupdatetyp))
+                # yapf: enable
+                connection.commit()
+            except:
+                x = x + 1  # only that somthing happens
+            else:
+                break
+        connection.close()
+        if i >= 9998:
+            os.remove("freemind.db")
+            create()
+            connection = sqlite3.connect("freemind.db")
+            cursor = connection.cursor()
+            for i in range(1, 9999):
+                try:
+                    # yapf: disable
+                    cursor.execute("""INSERT INTO updatelog(id, date, time, update)
+                                      VALUES(?,?,?,?)""", (i, dbdate, dbtime, dbupdatetyp))
+                    # yapf: enable
+                    connection.commit()
+                except:
+                    x = x + 1  # only that somthing happens
+                else:
+                    break
+            connection.close()
+    elif updatetyp == "system":
+        dbupdatetyp = 1
+        dbupdatetyp = int(dbupdatetyp)
+        dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+        dbtime = time.strftime("%H-%M", time.gmtime())
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        for i in range(1, 9999):
+            try:
+                # yapf: disable
+                cursor.execute("""INSERT INTO updatelog(id, date, time, update)
+                                  VALUES(?,?,?,?)""", (i, dbdate, dbtime, dbupdatetyp))
+                # yapf: enable
+                connection.commit()
+            except:
+                x = x + 1  # only that somthing happens
+            else:
+                break
+        connection.close()
+        if i >= 9998:
+            os.remove("freemind.db")
+            create()
+            connection = sqlite3.connect("freemind.db")
+            cursor = connection.cursor()
+            for i in range(1, 9999):
+                try:
+                    # yapf: disable
+                    cursor.execute("""INSERT INTO updatelog(id, date, time, update)
+                                      VALUES(?,?,?,?)""", (i, dbdate, dbtime, dbupdatetyp))
+                    # yapf: enable
+                    connection.commit()
+                except:
+                    x = x + 1  # only that somthing happens
+                else:
+                    break
+            connection.close()
+    else:
+        error = False
+        return error
+
+
+# function get last update from database and return element
+def updatereq():
+    connection = sqlite3.connect("freemind.db")
+    cursor = connection.cursor()
+    lastupdate = 0
+    while lastupdate == 0:
+        # yapf: disable
+        cursor.execute("""SELECT * FROM updatelog ORDER BY id DESC LIMIT 1""")
+        # yapf: enable
+        dbdate = cursor[1]
+        lastupdate = cursor[3]
+    connection.close()
+    currenttime = time.strftime("%Y-%m-%d", time.gmtime())
+    timediff = libary.timediff(dbdate, currenttime)
+    if timediff >= 30:
+        updateit = 1
+    else:
+        updateit = 0
+    return updateit
+
+
+# function save or get backup status
+def backupready(para):
+    if (para == 0) or (para == 1):
+        para = int(para)
+        eid = 1
+        eid = int(eid)
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        try:
+            # yapf: disable
+            cursor.execute("""UPDATE backupready SET ready = ?
+                              WHERE id = ?""", (para, eid))
+            connection.commit()
+            connection.close()
+            # yapf: enable
+        except:
+            # yapf: disable
+            cursor.execute("""INSERT INTO backupready(id, ready)
+                              VALUES(?,?)""", (eid, ready))
+            connection.commit()
+            connection.close()
+            # yapf: enable
+        except sqlite3.Error as e:
+            z = 1  # SQLite3 Fehler. Wird aktuell nicht verarbeitet.
+    elif para == "get":
+        # Hier sollte ein try, except folgen...
+        eid = 1
+        eid = int(eid)
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        cursor.execute("""SELECT * FROM backupready WHERE id=?""", (eid))
+        ready = cursor[1]
+        return ready
+    else:
+        z = 1 # Wenn Parameter Fehler, hier verarbeiten.

@@ -17,10 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 # -*- coding: utf-8 -*-
-import os, sys, time, sqlite3, dbase
+import sys
+import dbase
+
+
 # creating databse if not exists
 dbase.create()
-
+"""
 # function read and insert update to table updatelog in freemind.db
 def insertupdate():
     x = 0
@@ -80,12 +83,22 @@ def timecalc(olddate, newdate): #execlude that in singl file!
     olddate = time.mktime(olddatetuple)
     newdate = time.mktime(newdatetuple)
     diff = newdate - olddate
-    diff = diff // 86400
+    diff = diff // 86400 # ganzzahlige division durch 24h, da Ergebnis in Sekunden
     return diff
-
+"""
 # getting sys arguments
 if sys.argv[1] == "error":
     error = sys.argv[2]
-    inserterror(error)
+    dbase.inserterror(error)
 elif sys.argv[1] == "update":
-    updatereq = insertupdate()
+    update = sys.argv[2]
+    if (update == "freemind") or (update == "system"):
+        status = dbase.inserterror(update)
+    elif update == "lastupdate":
+        status = dbase.updatereq()
+        print status
+    else:
+        sys.exit(1)
+elif sys.argv[1] == "backupready":
+    backuppara = sys.argv[2]
+    status = dbase.backupready(backuppara)

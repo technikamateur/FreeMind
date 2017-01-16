@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>IGF - FreeMind</string>
+   <string>FreeMind</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -31,44 +31,12 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0" colspan="3">
+    <item row="1" column="0" colspan="2">
      <widget class="Line" name="line">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-    </item>
-    <item row="4" column="1" rowspan="2">
-     <layout class="QVBoxLayout" name="verticalLayout_4">
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="label_backup">
-        <property name="font">
-         <font>
-          <family>MS Shell Dlg 2</family>
-          <pointsize>14</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-          <underline>true</underline>
-         </font>
-        </property>
-        <property name="text">
-         <string>Backup-Kontroll-Zentrum</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="margin">
-         <number>5</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextBrowser" name="textBrowser_3"/>
-      </item>
-     </layout>
     </item>
     <item row="4" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -76,7 +44,7 @@
        <widget class="QLabel" name="label_aktion">
         <property name="font">
          <font>
-          <family>MS Shell Dlg 2</family>
+          <family>MS Reference Sans Serif</family>
           <pointsize>14</pointsize>
           <weight>50</weight>
           <bold>false</bold>
@@ -214,13 +182,13 @@
       </item>
      </layout>
     </item>
-    <item row="4" column="2" rowspan="2">
+    <item row="4" column="1" rowspan="2">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="label_live">
         <property name="font">
          <font>
-          <family>MS Shell Dlg 2</family>
+          <family>MS Reference Sans Serif</family>
           <pointsize>14</pointsize>
           <weight>50</weight>
           <bold>false</bold>
@@ -272,6 +240,42 @@
        </layout>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_lastupdate">
+          <property name="font">
+           <font>
+            <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Letztes Update:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QTextBrowser" name="textBrowser">
         <property name="font">
          <font>
@@ -291,6 +295,7 @@
           <property name="font">
            <font>
             <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
            </font>
           </property>
           <property name="text">
@@ -316,6 +321,12 @@
         </item>
         <item>
          <widget class="QProgressBar" name="bar_mem_systemdrive">
+          <property name="font">
+           <font>
+            <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
           <property name="value">
            <number>0</number>
           </property>
@@ -329,14 +340,15 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_filedrive">
+         <widget class="QLabel" name="label_fileraid">
           <property name="font">
            <font>
             <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Filedrive</string>
+           <string>Fileraid</string>
           </property>
          </widget>
         </item>
@@ -350,7 +362,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>34</width>
+            <width>41</width>
             <height>20</height>
            </size>
           </property>
@@ -358,48 +370,12 @@
         </item>
         <item>
          <widget class="QProgressBar" name="bar_mem_filedrive">
-          <property name="value">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_backupdrive">
           <property name="font">
            <font>
             <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
            </font>
           </property>
-          <property name="text">
-           <string>Backupdrive</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>11</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QProgressBar" name="bar_mem_backupdrive">
           <property name="value">
            <number>0</number>
           </property>
@@ -417,6 +393,7 @@
           <property name="font">
            <font>
             <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
            </font>
           </property>
           <property name="text">
@@ -434,7 +411,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>15</width>
+            <width>16</width>
             <height>20</height>
            </size>
           </property>
@@ -442,6 +419,12 @@
         </item>
         <item>
          <widget class="QProgressBar" name="bar_mem_recycledrive">
+          <property name="font">
+           <font>
+            <family>MS Reference Sans Serif</family>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
           <property name="value">
            <number>0</number>
           </property>
@@ -454,7 +437,7 @@
         <property name="font">
          <font>
           <family>MS Reference Sans Serif</family>
-          <pointsize>8</pointsize>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -467,14 +450,14 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="0" colspan="3">
+    <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="label_title">
       <property name="font">
        <font>
-        <family>MS Reference Sans Serif</family>
+        <family>DejaVu Sans Mono</family>
         <pointsize>18</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
+        <weight>50</weight>
+        <bold>false</bold>
         <underline>false</underline>
        </font>
       </property>

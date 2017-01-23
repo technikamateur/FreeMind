@@ -18,8 +18,13 @@
 
 # run script as sudo. Maybe a check at the beginnning would be helpful
 sleep 30
+recyclepath="/media/recycledrive/sambarecycle/"
+fileraidpath="/media/fileraid/.recycledrive/" # You must set the / at the end of the line.
 ready="$(python3 /etc/freemind/fmmain.py recycleready get)"
 if ! [[ "$ready" == "1" ]]; then
   exit 1 # Es sollte vermerkt werden, ob das Script lief oder nicht. Oder ist das sinnlos?
 fi
-rsync -a /media/fileraid/.recyclebin/ /media/recycledrive
+rsync -a /media/fileraid/.recyclebin/ $recyclepath
+chmod -R --silent 555 $recyclepath
+find $recyclepath -type f -mtime +60 -delete
+find $recyclepath -type d -empty -exec rmdir {} +

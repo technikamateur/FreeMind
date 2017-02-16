@@ -17,13 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # run script as sudo. Maybe a check at the beginnning would be helpful
-sleep 30
+sleep 30 # in case ist starts with OS it should wait until samba is started
 if (( $EUID != 0 ))
 then
     exit 1
 fi
 recyclepath="/media/recycledrive/sambarecycle"
-fileraidpath="/media/fileraid/.recyclebin" # You must set the / at the end of the line.
+fileraidpath="/media/fileraid/.recycle" # You must set the / at the end of the line.
 #ready="$(python3 /etc/freemind/fmmain.py recycleready get)"
 #if ! [[ "$ready" == "1" ]]; then
 #  exit 1 # Es sollte vermerkt werden, ob das Script lief oder nicht. Oder ist das sinnlos? In kombi mit rsync --stats?
@@ -31,4 +31,4 @@ fileraidpath="/media/fileraid/.recyclebin" # You must set the / at the end of th
 rsync -a $fileraidpath/ $recyclepath
 find $recyclepath -type f -mtime +90 -delete
 find $recyclepath -type d -empty -exec rmdir {} +
-rm -r /media/fileraid/.recyclebin/*
+rm -r /media/fileraid/.recycle/*

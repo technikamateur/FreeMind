@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 """
 FreeMind is a composition of software and config files. It will help you to manage your Linux fileserver.
 Copyright (C) 2017  Daniel Körsten aka TechnikAmateur
@@ -16,11 +18,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-# -*- coding: utf-8 -*-
+
 import time
 
 
-def timediff(olddate, newdate):  #execlude that in singl file!
+# give this function 2 dates and you will get timediff
+# only works with dates created with time.strftime("%Y-%m-%d", time.gmtime())
+def timediff(olddate, newdate):
     olddate = str(olddate)
     newdate = str(newdate)
     olddatesplit = olddate.split("-")

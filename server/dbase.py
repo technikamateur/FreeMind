@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 """
 FreeMind is a composition of software and config files. It will help you to manage your Linux fileserver.
 Copyright (C) 2017  Daniel Körsten aka TechnikAmateur
@@ -16,15 +18,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-# -*- coding: utf-8 -*-
+
 import sqlite3
 import os
-import sys  # remove if there are not sys args.
+import sys  # remove if there are no sys args.
 import time
 import libary
 
 
 # function create databse if not exists
+# v 1.0 - final
 def create():
     if not os.path.isfile("freemind.db"):
         connection = sqlite3.connect("freemind.db")
@@ -38,15 +41,10 @@ def create():
                           id INTEGER PRIMARY KEY,
                           date TEXT,
                           time TEXT,
-                          update INTEGER);""")
-        cursor.execute("""CREATE TABLE IF NOT EXISTS backupready(
+                          updatetyp INTEGER);""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS recycleready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""")
-        cursor.execute("""CREATE TABLE IF NOT EXISTS backuplog(
-                          id INTEGER PRIMARY KEY,
-                          date TEXT,
-                          time TEXT,
-                          error INTEGER);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
                           id INTEGER PRIMARY KEY,
                           total TEXT,
@@ -176,11 +174,12 @@ def insertupdate(updatetyp):
 
 
 # function get last update from database and return element
+# v 1.0 - final
 def updatereq():
     connection = sqlite3.connect("freemind.db")
     cursor = connection.cursor()
     lastupdate = 0
-    while lastupdate == 0:
+    while lastupdate == 0: #FreeMind updates got 0; OS updtes 1
         # yapf: disable
         cursor.execute("""SELECT * FROM updatelog ORDER BY id DESC LIMIT 1""")
         # yapf: enable
@@ -196,8 +195,10 @@ def updatereq():
     return updateit
 
 
-# function save or get backup status
-def backupready(para):
+# function save or get recycle status and return element
+# works with freemind.db, table recycleready
+# v 1.0 - final
+def recycleready(para):
     if (para == 0) or (para == 1):
         para = int(para)
         eid = 1
@@ -206,28 +207,34 @@ def backupready(para):
         cursor = connection.cursor()
         try:
             # yapf: disable
-            cursor.execute("""UPDATE backupready SET ready = ?
+            cursor.execute("""UPDATE recycleready SET ready = ?
                               WHERE id = ?""", (para, eid))
-            connection.commit()
-            connection.close()
-            # yapf: enable
-        except:
-            # yapf: disable
-            cursor.execute("""INSERT INTO backupready(id, ready)
-                              VALUES(?,?)""", (eid, ready))
             connection.commit()
             connection.close()
             # yapf: enable
         except sqlite3.Error as e:
             z = 1  # SQLite3 Fehler. Wird aktuell nicht verarbeitet.
+        except:
+            # yapf: disable
+            cursor.execute("""INSERT INTO recycleready(id, ready)
+                              VALUES(?,?)""", (eid, ready))
+            connection.commit()
+            connection.close()
+            # yapf: enable
     elif para == "get":
         # Hier sollte ein try, except folgen...
         eid = 1
         eid = int(eid)
-        connection = sqlite3.connect("freemind.db")
-        cursor = connection.cursor()
-        cursor.execute("""SELECT * FROM backupready WHERE id=?""", (eid))
-        ready = cursor[1]
+        try:
+            # yapf: disable
+            connection = sqlite3.connect("freemind.db")
+            cursor = connection.cursor()
+            cursor.execute("""SELECT * FROM recycleready WHERE id=?""", (eid))
+            ready = cursor[1]
+            connection.close
+            # yapf: enable
+        except:
+            # yapf: disable
+            ready = "error"
+            # yapf: enable
         return ready
-    else:
-        z = 1 # Wenn Parameter Fehler, hier verarbeiten.

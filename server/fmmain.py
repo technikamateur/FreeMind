@@ -41,3 +41,4 @@ elif sys.argv[1] == "update":
 elif sys.argv[1] == "recycleready":
     recyclepara = sys.argv[2]
     status = dbase.recycleready(recyclepara)
+# memtotal und memis fehlen noch vollstaendig

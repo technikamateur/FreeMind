@@ -54,6 +54,7 @@ def create():
 
 
 # function insert error in database with current date and time stamp
+# v 1.0 - final
 def inserterror(dberror):
     x = 0
     dberror = int(dberror)
@@ -94,6 +95,7 @@ def inserterror(dberror):
 
 
 # function insert update in databse with current time and date stamp
+# v 1.0 - final
 def insertupdate(updatetyp):
     x = 0
     if updatetyp == "freemind":

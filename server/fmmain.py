@@ -41,4 +41,9 @@ elif sys.argv[1] == "update":
 elif sys.argv[1] == "recycleready":
     recyclepara = sys.argv[2]
     status = dbase.recycleready(recyclepara)
+    if (status == "1") or (status == "0"):
+        print(status)
+#    else:
+#        error = XYZ
+#        dbase.inserterror(error)
 # memtotal und memis fehlen noch vollstaendig

@@ -239,4 +239,5 @@ def recycleready(para):
             # yapf: disable
             ready = "error"
             # yapf: enable
+        ready = str(ready)
         return ready

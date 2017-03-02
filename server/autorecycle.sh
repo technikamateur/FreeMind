@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# run script as sudo. Maybe a check at the beginnning would be helpful
+# run script as sudo!
 sleep 30 # in case ist starts with OS it should wait until samba is started
 if (( $EUID != 0 ))
 then

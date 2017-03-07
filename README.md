@@ -20,3 +20,7 @@ FreeMind is simple desktop application based on python3 and a serverside script.
 ### License:
 <img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/gplv3.png" alt="GPLv3">
 This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
+
+### Integrated projects & frameworks:
+- [CSS Percentage Circle](http://circle.firchow.net/) by [Andre Firchow](https://github.com/andrefirchow), License: [MIT](https://opensource.org/licenses/MIT)
+- [Bootstrap](http://getbootstrap.com/), License: [MIT](https://opensource.org/licenses/MIT)

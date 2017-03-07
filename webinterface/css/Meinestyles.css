@@ -45,6 +45,12 @@ tmemory {
   color: #494949;
 }
 
+tfooter {
+  font-family: OpenSans, sans-serif;
+  font-size: 1.2em;
+  color: #494949;
+}
+
 #centerbox {
   width: 95%;
   height: auto;
@@ -63,28 +69,32 @@ tmemory {
   margin-bottom: 2em;
 }
 
-#centerboxlist {
+#firstlistbox {
   width: 30%;
   height: auto;
-  margin-left: 1em;
-  margin-right: auto;
-  margin-top: 2em;
-  margin-bottom: 5em;
+  float: left;
+}
+
+#otherlistbox {
+  width: 30%;
+  height: auto;
+  float: left;
+  margin-left: 80px;
 }
 
 #headlinebox {
   width: 98%;
   height: auto;
-  margin-left: auto;;
+  margin-left: auto;
   margin-right: auto;
-  margin-top: 2em;
+  margin-top: 17em;
   margin-bottom: 2em;
 }
 
 #headlineboxundermem {
   width: 98%;
   height: auto;
-  margin-left: auto;;
+  margin-left: auto;
   margin-right: auto;
   margin-top: 27em;
   margin-bottom: 2em;
@@ -115,7 +125,7 @@ tmemory {
 #centertextboxmemory {
   width: 200px;
   height: auto;
-  margin-left: auto;;
+  margin-left: auto;
   margin-right: auto;
   text-align: center;
 }

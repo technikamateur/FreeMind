@@ -109,6 +109,15 @@ tfooter {
   margin-bottom: 2em;
 }
 
+#mainmemoryboxbpi {
+  width: 480px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5em;
+  margin-bottom: 2em;
+}
+
 #firstmemorybox {
   width: 200px;
   height: auto;

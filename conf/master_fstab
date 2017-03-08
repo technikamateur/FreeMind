@@ -6,18 +6,13 @@
 #
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
 # / was on /dev/sda2 during installation
-UUID=c6989759-2255-4de9-a5de-3bfdeb5c7697 /               ext4    errors=remount-ro 0       1
+UUID=fef0eb74-97de-4cef-bb16-63aa261ae440 /               ext4    errors=remount-ro 0       1
 # /boot/efi was on /dev/sda1 during installation
 UUID=EABA-46BC  /boot/efi       vfat    umask=0077      0       1
 # swap was on /dev/sda3 during installation
 UUID=b91f9383-4078-4a63-a7a8-9a7caa55eb01 none            swap    sw              0       0
-#FreeMind
-#Transfer
-UUID=97dedfb9-d69e-4387-af5f-f0f2f0dc22ce       /media/transfer btrfs   defaults,autodefrag,noatime,inode_cache 0       2
-
-
-
-
-967d1ebc-8993-4d38-98a8-32fab3dc18df
-f5c57db5-6b8c-4a32-a50b-6d7e03735d68
-a7f95341-77f8-4dbf-b762-a37a9b284e77
+# FreeMind
+# RAID1-Verbund von den 2 3TB Platten
+UUID=320c6d77-9ac3-42f6-a5a5-19f3a930bffd       /media/fileraid btrfs   device=/dev/sdb1,device=/dev/sdc1   defaults,autodefrag,inode_cache 0       0
+# 2 TB Festplatte, die den Papierkorb beinhaltet
+UUID=fbc2b82b-7054-4370-96da-7d49165ab954       /media/recycledrive     ext4    defaults,nofail 0  2

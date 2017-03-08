@@ -16,18 +16,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# run script as sudo!
-sleep 30 # in case ist starts with OS it should wait until samba is started
+# setting up some parameters
+version="1.0"
+internet=true
+varcurl=curl
+# checking superuser
 if (( $EUID != 0 ))
 then
     exit 1
 fi
-bready=$(cat bready.dat)
-if [[ $bready == 1 ]]; then
-  rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@192.168.0.111:/media/fileraid/ /media/backupdrive/igfserverbackup --exclude='.recycle'
-  find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
-  chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
-  chmod -R 700 /media/backupdrive/igfserverbackup
-else
-  exit 1
+# starting update procedure...
+if [[ $1 == 1 ]]; then
+  $varcurl -s --request GET "http://46.182.19.177:8002/index.php?userprogram=freemind-backup&userversion=$version" > /dev/null || $internet=false
+  if [ $internet == true ]; then
+    update=$($varcurl -s --request GET "http://46.182.19.177:8002/index.php?userprogram=freemind-backup&userversion=$version")
+    if [ $update != "latest-version" ]; then
+      mkdir /etc/freemind/update
+      wget -q -O - $update/freemind-backup.tar.gz | tar xzf - -C /etc/freemind/update
+      chmod +x /etc/freemind/update/update.sh
+      bash /etc/freemind/update/update.sh &
+      exit 0
+    fi
+  fi # else statement?
+elif [[ $1 == 2 ]]; then
+  bash fmtransfer.sh
+elif [[ $1 == 3 ]]; then
+  bash autobackup.sh
 fi

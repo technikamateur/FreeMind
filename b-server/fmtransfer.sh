@@ -16,26 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# setting up some parameters
-version="1.0"
-internet=true
-varcurl=curl
-# checking superuser
+# run script as sudo!
+sleep 30
 if (( $EUID != 0 ))
 then
     exit 1
 fi
-# starting update procedure...
-$varcurl -s --request GET "http://46.182.19.177:8002/index.php?userprogram=freemind-backup&userversion=$version" > /dev/null || $internet=false
-if [ $internet == true ]
-then
-  update=$($varcurl -s --request GET "http://46.182.19.177:8002/index.php?userprogram=freemind-backup&userversion=$version")
-  if [ $update != "latest-version" ]
-  then
-    mkdir /etc/freemind/update
-    wget -q -O - $update/freemind-backup.tar.gz | tar xzf - -C /etc/freemind/update
-    chmod +x /etc/freemind/update/update.sh
-    bash /etc/freemind/update/update.sh &
-    exit 0
-  fi
-fi # else statement?
+rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@192.168.0.111:/etc/freemind/bready.dat /etc/freemind
+chown root:root bready.dat
+chmod 600 /etc/freemind/bready.dat

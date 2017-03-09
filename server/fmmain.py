@@ -43,6 +43,8 @@ elif sys.argv[1] == "recycleready":
     status = dbase.recycleready(recyclepara)
     if (status == "1") or (status == "0"):
         print(status)
+elif sys.argv[1] == 1:
+    #das spacagrabb skript in libary.py
 #    else:
 #        error = XYZ
 #        dbase.inserterror(error)

@@ -38,3 +38,5 @@ def timediff(olddate, newdate):
     diff = newdate - olddate
     diff = diff // 86400  # ganzzahlige division durch 24h, da Ergebnis in Sekunden
     return diff
+
+def spacagrabber():

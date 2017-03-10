@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de-DE">
-  <head>
+
+<head>
     <title>FreeMind</title>
     <meta charset="UTF-8" />
     <!-- MEEEIIINNNSSS -->
@@ -13,84 +14,107 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- Navbar -->
-    <nav class = "navbar navbar-default navbar-fixed-top" role = "navigation">
-      <div class = "navbar-header">
-        <a class = "navbar-brand" href = "index.html">FreeMind</a>
-      </div>
-      <div>
-        <ul class = "nav navbar-nav">
-          <li><a href = "index.html">Startseite</a></li>
-          <li><a href = "server.html">Server</a></li>
-          <li class = "active"><a href = "bananapi.html">Banana Pi</a></li>
-          <li><a href = "freemind.pdf">Handbuch</a></li>
-        </ul>
-      </div>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">FreeMind</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="server.html">Server</a></li>
+                <li class="active"><a href="bananapi.html">Banana Pi</a></li>
+                <li><a href="freemind.pdf">Handbuch</a></li>
+            </ul>
+        </div>
     </nav>
     <!-- Jetzt beginnt der eigentliche Spaß -->
     <div id="centerbox2">
-      <t2>Systeminformationen:</t2><br><br>
-      <div id="firstlistbox">
-          <ul class="list-group">
-            <li class="list-group-item"><tnormhead>Server Betriebssystem: </tnormhead><tnorm> Debian Jessie armhf</tnorm></li>
-            <li class="list-group-item"><tnormhead>CPU: </tnormhead><tnorm> Cortex A7 Dual-Core</tnorm></li>
-            <li class="list-group-item"><tnormhead>RAM: </tnormhead><tnorm> 1GB</tnorm></li>
-            <li class="list-group-item"><tnormhead>Speicherplatz SD + HDD: </tnormhead><tnorm> 16GB + 3TB</tnorm></li>
-          </ul>
-      </div>
-      <div id="otherlistbox">
-          <ul class="list-group">
-            <li class="list-group-item"><tnormhead>Letztes OS-Update: </tnormhead><tnorm> 01.01.2017</tnorm></li>
-            <li class="list-group-item"><tnormhead>Letztes FreeMind-Update: </tnormhead><tnorm> 01.01.2017</tnorm></li>
-            <li class="list-group-item"><tnormhead>Letztes Backup: </tnormhead><tnorm> 01.01.2017</tnorm></li>
-          </ul>
-      </div>
+        <t2>Systeminformationen:</t2><br><br>
+        <div id="firstlistbox">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <tnormhead>Server Betriebssystem: </tnormhead>
+                    <tnorm> Debian Jessie armhf</tnorm>
+                </li>
+                <li class="list-group-item">
+                    <tnormhead>CPU: </tnormhead>
+                    <tnorm> Cortex A7 Dual-Core</tnorm>
+                </li>
+                <li class="list-group-item">
+                    <tnormhead>RAM: </tnormhead>
+                    <tnorm> 1GB</tnorm>
+                </li>
+                <li class="list-group-item">
+                    <tnormhead>Speicherplatz SD + HDD: </tnormhead>
+                    <tnorm> 16GB + 3TB</tnorm>
+                </li>
+            </ul>
+        </div>
+        <div id="otherlistbox">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <tnormhead>Letztes OS-Update: </tnormhead>
+                    <tnorm> 01.01.2017</tnorm>
+                </li>
+                <li class="list-group-item">
+                    <tnormhead>Letztes FreeMind-Update: </tnormhead>
+                    <tnorm> 01.01.2017</tnorm>
+                </li>
+                <li class="list-group-item">
+                    <tnormhead>Letztes Backup: </tnormhead>
+                    <tnorm> 01.01.2017</tnorm>
+                </li>
+            </ul>
+        </div>
     </div>
     <div id="headlinebox">
-      <t2>Speicherübersicht:</t2>
-      <div id="mainmemoryboxbpi">
-        <div id="firstmemorybox">
-          <div class="c100 p25 big">
-            <span>25%</span>
-            <div class="slice">
-              <div class="bar"></div>
-              <div class="fill"></div>
+        <t2>Speicherübersicht:</t2>
+        <div id="mainmemoryboxbpi">
+            <div id="firstmemorybox">
+                <div class="c100 p25 big">
+                    <span>25%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <div id="centertextboxmemory">
+                    <tmemory>SD-Karte</tmemory>
+                </div>
             </div>
-          </div>
-          <div id="centertextboxmemory">
-            <tmemory>SD-Karte</tmemory>
-          </div>
-        </div>
-        <div id="othermemorybox">
-          <div class="c100 p26 big">
-            <span>26%</span>
-            <div class="slice">
-              <div class="bar"></div>
-              <div class="fill"></div>
+            <div id="othermemorybox">
+                <div class="c100 p26 big">
+                    <span>26%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <div id="centertextboxmemory">
+                    <tmemory>HDD-1 (Backup)</tmemory>
+                </div>
             </div>
-          </div>
-          <div id="centertextboxmemory">
-            <tmemory>HDD-1 (Backup)</tmemory>
-          </div>
         </div>
-      </div>
     </div>
     <div id="headlineboxundermem">
-      <t2> Serveraktionen:</t2>
+        <t2> Serveraktionen:</t2>
     </div>
     <div id="serveractions">
-      <div class="form-group">
-        <label class="sr-only" for="exampleInputPassword3">Password</label>
-        <input type="password" class="form-control" id="passwordform" placeholder="Passwort">
-      </div>
-      <a class="btn btn-default" href="#" role="button">Herunterfahren</a>
-      <a class="btn btn-default" href="#" role="button">Neustart</a>
-      <a class="btn btn-default" href="#" role="button">Aktualisieren</a>
-      <a class="btn btn-default" href="#" role="button">Backup durchfühen</a>
-      <a class="btn btn-default" href="#" role="button">Dateisysteme prüfen</a>
-      <a class="btn btn-default" href="#" role="button">Festplatte prüfen</a>
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" class="form-control" id="passwordform" placeholder="Passwort">
+        </div>
+        <a class="btn btn-default" href="#" role="button">Herunterfahren</a>
+        <a class="btn btn-default" href="#" role="button">Neustart</a>
+        <a class="btn btn-default" href="#" role="button">Aktualisieren</a>
+        <a class="btn btn-default" href="#" role="button">Backup durchfühen</a>
+        <a class="btn btn-default" href="#" role="button">Dateisysteme prüfen</a>
+        <a class="btn btn-default" href="#" role="button">Festplatte prüfen</a>
     </div>
-  </body>
+</body>
+
 </html>

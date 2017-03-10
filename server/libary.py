@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import time
+import os
 
 
 # give this function 2 dates and you will get timediff
@@ -40,3 +41,30 @@ def timediff(olddate, newdate):
     return diff
 
 def spacagrabber():
+    # check number of drives and create array
+    fobj = open("mem.dat")
+    count = 0
+    for line in fobj:
+        count += 1
+    fobj.close()
+    darray = [0] * count
+    dnames = [0] * count
+    # write data from file into array
+    fobj = open("mem.dat")
+    i = 0
+    for line in fobj:
+        darray[i] = line.rstrip()
+        i += 1
+    fobj.close()
+    # remove the source .dat
+    os.remove("mem.dat")
+    # read the drive names. ONLY as much as drives in mem.dat
+    fobj = open("defhdd.conf")
+    i = 0
+    for line in fobj:
+        dnames[i] = line.rstrip()
+        i += 1
+        if i == count:
+            break
+    fobj.close()
+    return dnames, darray, count

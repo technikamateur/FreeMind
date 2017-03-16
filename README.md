@@ -1,6 +1,7 @@
 # FreeMind
 
 <img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/logo/linux-server-128px.png" alt="logo FreeMind">
+
 ***
 
 [![License](https://img.shields.io/badge/License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl.txt)
@@ -10,7 +11,9 @@
 #### Important information:
 All releases, wich are marked with the tag *beta* are not stable and can damage your hardware.
 The usage of FreeMind and all components is your own risk! Please understand that this Software comes with NO WARRANTY! For more information see *license.txt*.
+
 ***
+
 ### About:
 FreeMind is simple desktop application based on python3 and a serverside script. FreeMind makes it easy to manage your Samba-Fileserver. If you are intrested in Features see *Features*. In general it is a tool wich will help you to manage your Linux server without any knowledge.
 

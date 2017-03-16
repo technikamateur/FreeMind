@@ -4,7 +4,7 @@
 
 ***
 
-[![License](https://img.shields.io/badge/License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl.txt)
+[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl.txt)
 [![Stable](https://img.shields.io/badge/Stable%20Version-1.0-green.svg)](https://github.com/technikamateur/FreeMind/releases)
 [![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg)](https://github.com/technikamateur/FreeMind/releases)
 

@@ -41,6 +41,7 @@ def timediff(olddate, newdate):
     return diff
 
 def spacagrabber():
+    # first, it should start the .sh
     # check number of drives and create array
     fobj = open("mem.dat")
     count = 0
@@ -67,4 +68,19 @@ def spacagrabber():
         if i == count:
             break
     fobj.close()
-    return dnames, darray, count
+    #return dnames, darray, count
+    # creating array for every category
+    hddname = [0] * count
+    hdd = [0] * count
+    memis = [0] * count
+    memtotal = [0] * count
+    # count -1 because loop starts with 0 instead of 1
+    count -= 1
+    # loop for text splitting (mem.dat)
+    for disks in darray:
+        hddarraysplit = disks.split("+")
+        hdd[i] = hddarraysplit[0]
+        memis[i] = hddarraysplit[1]
+        memtotal[i] = hddarraysplit[2]
+    for names in dnames:
+        hddnamesplit = names.split("=")

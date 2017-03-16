@@ -2,7 +2,9 @@
 
 <img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/logo/linux-server-128px.png" alt="logo FreeMind">
 ***
-[![License](https://img.shields.io/badge/License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl.txt) [![Stable](https://img.shields.io/badge/Stable%20Version-1.0-green.svg)](http://46.182.19.177/) [![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg)](http://46.182.19.177/)
+[![License](https://img.shields.io/badge/License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl.txt)
+[![Stable](https://img.shields.io/badge/Stable%20Version-1.0-green.svg)](http://46.182.19.177/)
+[![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg)](http://46.182.19.177/)
 #### Important information:
 All releases, wich are marked with the tag *beta* are not stable and can damage your hardware.
 The usage of FreeMind and all components is your own risk! Please understand that this Software comes with NO WARRANTY! For more information see *license.txt*.

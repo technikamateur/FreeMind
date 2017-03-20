@@ -15,7 +15,7 @@ The usage of FreeMind and all components is your own risk! Please understand tha
 ***
 
 ### About:
-FreeMind is simple desktop application based on python3 and a serverside script. FreeMind makes it easy to manage your Samba-Fileserver. If you are intrested in Features see *Features*. In general it is a tool wich will help you to manage your Linux server without any knowledge.
+FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 backend. FreeMind makes it easy to manage your Samba-Fileserver, detect problems, create a backup, use snapshots, manae bin and some more pretty cool things wich safe a lot of time - actually your time. If you are interested in a detailed list of all features, see *Features*.
 
 ### Features:
 - installs security patches in the background for you - never get worry about security

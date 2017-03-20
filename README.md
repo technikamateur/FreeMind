@@ -9,13 +9,13 @@
 [![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg)](https://github.com/technikamateur/FreeMind/releases)
 
 #### Important information:
-All releases, wich are marked with the tag *beta* are not stable and can damage your hardware.
-The usage of FreeMind and all components is your own risk! Please understand that this Software comes with NO WARRANTY! For more information see *license.txt*.
+All releases, wich are marked with the tag *beta* are not stable! Only use them for testing purposes and if you absolutely know what you are doing!
+The usage of FreeMind and all components is your own risk! Please understand that this software comes with NO WARRANTY! For more information see *LICENSE.txt*.
 
 ***
 
 ### About:
-FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 backend. FreeMind makes it easy to manage your Samba-Fileserver, detect problems, create a backup, use snapshots, manae bin and some more pretty cool things wich safe a lot of time - actually your time. If you are interested in a detailed list of all features, see *Features*.
+FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 backend. FreeMind makes it easy to manage your Samba-Fileserver, detect problems, create a backup, use snapshots, manage a recycle bin and some more pretty cool things wich safe a lot of time - actually your time. If you are interested in a detailed list of all features, see *Features*.
 
 ### Features:
 - installs security patches in the background for you - never get worry about security
@@ -30,5 +30,5 @@ This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
 
 ### Integrated projects & frameworks:
 - [CSS Percentage Circle](http://circle.firchow.net/) by [Andre Firchow](https://github.com/andrefirchow)
-- [Bootstrap](https://github.com/twbs/bootstrap), License: [MIT](https://opensource.org/licenses/MIT)
+- [Bootstrap](https://github.com/twbs/bootstrap)
 - [jQuery](https://github.com/jquery/jquery)

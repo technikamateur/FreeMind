@@ -16,32 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# create array with disks
-diskbunch=(sda2 sdd1) # add here your NON Raid disks
-btrfsbunch=(sdb1 sdc1) # add here your btrfs Raid disks
-# checking root
-if (( $EUID != 0 ))
+# for disks in defhdd.conf - !!! delete diskchecker.sh !!!
+# is root necessary?
+# install quickdic :)
+if ! [ "$(mount | grep /dev/sdb1>/dev/null)" ]
 then
-    exit 1
+  python3 /etc/freemind/fmmain.py error 1
+elif ! [ "$(mount | grep /dev/sdc1>/dev/null)" ]
+then
+  python3 /etc/freemind/fmmain.py error 2
+elif ! [ "$(mount | grep /dev/sdd1>/dev/null)" ]
+then
+  python3 /etc/freemind/fmmain.py error 3
 fi
-# start diskchecker script
-# bash diskchecker.sh
-# start real spacegrabber
-for i in ${diskbunch[@]}; do
-  disks+=($i)
-done
-for i in ${btrfsbunch[@]}; do
-  disks+=($i)
-done
-for i in ${diskbunch[@]}; do
-  mems+=($(df -h | grep $i | awk '{print $3}'))
-  total+=($(df -h | grep $i | awk '{print $2}'))
-done
-for i in ${btrfsbunch[@]}; do
-  mems+=($(btrfs fi show | grep $i | awk '{print $6}'))
-  total+=($(btrfs fi show | grep $i | awk '{print $4}'))
-done
-count=$((${#diskbunch[@]} + ${#btrfsbunch[@]}))
-for (( i = 0; i < $count; i++ )); do
-  echo ${disks[i]}+${mems[i]}+${total[i]} >> mem.dat # mem.dat is only tempoary
 done

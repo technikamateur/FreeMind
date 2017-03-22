@@ -16,17 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# for disks in defhdd.conf - !!! delete diskchecker.sh !!!
+# for disks in defhdd.conf
 # is root necessary?
 # install quickdic :)
-if ! [ "$(mount | grep /dev/sdb1>/dev/null)" ]
-then
-  python3 /etc/freemind/fmmain.py error 1
-elif ! [ "$(mount | grep /dev/sdc1>/dev/null)" ]
-then
-  python3 /etc/freemind/fmmain.py error 2
-elif ! [ "$(mount | grep /dev/sdd1>/dev/null)" ]
-then
-  python3 /etc/freemind/fmmain.py error 3
-fi
+while read line
+do
+  disks+=($line)
+done < disks.dat
+for i in ${disks[@]}; do
+  if ! [ "$(mount | grep /dev/$i>/dev/null)" ]; then
+    echo $i >> disk_error.dat
+  fi
 done
+rm disks.dat
+exit 0

@@ -24,8 +24,20 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - manages the backup of your data and makes it easy to restore - no more worries about lost data
 - helps you to solve problems e.g. if a HDD crashes
 
+### How to install:
+Get the latest copy of FreeMind. Go to ['releases'](https://github.com/technikamateur/FreeMind/releases) and download the latest version using
+
+`wget (link adress)`
+
+Extract the archive and save the files to a directory of your choice. **Make sure you are still connected to the internet!**
+
+#### Config files wich must be edited:
+- **defhdd.conf** - insert all HDD's (you want to monitor) and a Description wich will be displayed at the admin panel
+- **spacegrabber.sh** - insert all your HDD's (you want to monitor). Take a look at the comments!
+
 ### License:
 <img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/gplv3.png" alt="GPLv3">
+
 This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
 
 ### Integrated projects & frameworks:

@@ -9,7 +9,8 @@
 [![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg)](https://github.com/technikamateur/FreeMind/releases)
 
 #### Important information:
-All releases, wich are marked with the tag *beta* are not stable! Only use them for testing purposes and if you absolutely know what you are doing!
+All releases, wich are marked with the *beta* tag are not stable! Use them only for testing purposes and if you absolutely know what you are doing!
+
 The usage of FreeMind and all components is your own risk! Please understand that this software comes with NO WARRANTY! For more information see *LICENSE.txt*.
 
 ***
@@ -40,7 +41,7 @@ Extract the archive and save the files to a directory of your choice. **Make sur
 
 This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
 
-### Integrated projects & frameworks:
+#### Integrated projects & frameworks:
 - [CSS Percentage Circle](http://circle.firchow.net/) by [Andre Firchow](https://github.com/andrefirchow)
 - [Bootstrap](https://github.com/twbs/bootstrap)
 - [jQuery](https://github.com/jquery/jquery)

@@ -64,7 +64,7 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - and of course samba and samba-common
 
 ## License:
-<img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/gplv3.png" alt="GPLv3">
+<img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/logo/gplv3.png" alt="GPLv3">
 
 This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
 

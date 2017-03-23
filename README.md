@@ -1,6 +1,6 @@
 # FreeMind
 
-<img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/logo/linux-server-128px.png" alt="logo FreeMind">
+<img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/logo/linux-server-128px.png" alt="logo FreeMind">
 
 ***
 
@@ -15,7 +15,7 @@ The usage of FreeMind and all components is your own risk! Please understand tha
 
 ***
 
-### About:
+## About:
 FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 backend. FreeMind makes it easy to manage your Samba-Fileserver, detect problems, create a backup, use snapshots, manage a recycle bin and some more pretty cool things wich safe a lot of time - actually your time. If you are interested in a detailed list of all features, see *Features*.
 
 ### Features:
@@ -25,23 +25,42 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - manages the backup of your data and makes it easy to restore - no more worries about lost data
 - helps you to solve problems e.g. if a HDD crashes
 
-### How to install:
-Get the latest copy of FreeMind. Go to ['releases'](https://github.com/technikamateur/FreeMind/releases) and download the latest version using
+## How to install:
+1. Get the latest copy of FreeMind. Go to ['releases'](https://github.com/technikamateur/FreeMind/releases) and download the latest version using
 
-`wget (link adress)`
+    `wget (link adress)`
 
-Extract the archive and save the files to a directory of your choice. **Make sure you are still connected to the internet!**
+2. Extract the archive and save the files to a directory of your choice.
 
-#### Config files wich must be edited:
+    `tar xvf (name)`
+
+3. Now run the setup.sh file. **Make sure you are still connected to the internet!** 
+
+    `bash setup.sh`
+
+   FreeMind will now setup itself and install all requiered dependencies.
+
+### Config files wich must be edited:
 - **defhdd.conf** - insert all HDD's (you want to monitor) and a Description wich will be displayed at the admin panel
 - **spacegrabber.sh** - insert all your HDD's (you want to monitor). Take a look at the comments!
 
-### License:
-<img align="right" src="https://github.com/technikamateur/IGF-FreeMind/blob/master/gplv3.png" alt="GPLv3">
+### Dependencies:
+**'setup.sh' will install them automatically**
+- python3
+- sqlite3
+- curl
+- htop
+- rsync
+- smartmontools
+- nginx
+- php-fpm
+
+## License:
+<img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/gplv3.png" alt="GPLv3">
 
 This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
 
-#### Integrated projects & frameworks:
+## Integrated projects & frameworks:
 - [CSS Percentage Circle](http://circle.firchow.net/) by [Andre Firchow](https://github.com/andrefirchow)
 - [Bootstrap](https://github.com/twbs/bootstrap)
 - [jQuery](https://github.com/jquery/jquery)

@@ -26,19 +26,26 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - helps you to solve problems e.g. if a HDD crashes
 
 ## How to install:
-1. Get the latest copy of FreeMind. Go to ['releases'](https://github.com/technikamateur/FreeMind/releases) and download the latest version using
+1. Make sure that your drives are mounted in /etc/fstab (the drives you want to manage with FreeMind)
+2. Get a copy of FreeMind. Go to ['releases'](https://github.com/technikamateur/FreeMind/releases) and download the latest version using
 
     `wget (link adress)`
 
-2. Extract the archive and save the files to a directory of your choice.
+3. Extract the archive and save the files to a directory of your choice.
 
     `tar xvf (name)`
 
-3. Now run the setup.sh file. **Make sure you are still connected to the internet!** 
+4. Now run the setup.sh file. **Make sure you are still connected to the internet!** 
 
     `bash setup.sh`
 
    FreeMind will now setup itself and install all requiered dependencies.
+
+### Config files wich will be replaced:
+**the replaced config files can be found in /etc/freemind/old-conf**
+- /etc/nginx/nginx.conf
+- /etc/crontab
+- /etc/samba/smb.conf
 
 ### Config files wich must be edited:
 - **defhdd.conf** - insert all HDD's (you want to monitor) and a Description wich will be displayed at the admin panel
@@ -54,6 +61,7 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - smartmontools
 - nginx
 - php-fpm
+- and of course samba and samba-common
 
 ## License:
 <img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/gplv3.png" alt="GPLv3">

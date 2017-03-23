@@ -29,4 +29,3 @@ for i in ${disks[@]}; do
   fi
 done
 rm disks.dat
-exit 0

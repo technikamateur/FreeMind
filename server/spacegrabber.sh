@@ -97,4 +97,3 @@ for (( i = 0; i < $count; i++ )); do
   echo ${disks[i]}+${mems[i]}+${total[i]} >> mem.dat # mem.dat is only tempoary
 done
 rm disk_error.dat
-exit 0

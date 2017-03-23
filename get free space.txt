@@ -1,1 +1,0 @@
-df -h | grep sda1 | awk '{print $2}'

@@ -1,16 +1,8 @@
 <?php
 $action = $_GET["action"];
-if ($action == 1) { # backup done
-  # code...
-} elseif ($action == 2) { # do backup? - output requiered
-  # code...
-} elseif ($action == 3) { # last FreeMind update
-  # code...
-} elseif ($action == 4) { # last OS-Update (security patches)
-  # code...
-} elseif ($action == 5) { # Speicherplatz
-  # code...
+if (is_int($action) && $action < 6) {
+  $shellex = shell_exec("/var/www/freemind/php-bridge.sh $action");
+  echo $shellex;
 } else {
   echo "Argument error!";
-}
 ?>

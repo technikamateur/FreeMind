@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
 import dbase
+import libary
 
 
 # creating databse if not exists
@@ -42,4 +43,16 @@ elif sys.argv[1] == "recycleready":
     status = dbase.recycleready(recyclepara)
     if (status == "1") or (status == "0"):
         print(status)
-elif sys.argv[1] == 1: # spacegrabber
+elif sys.argv[1] == 1:
+    xyz = libary.spacegrabber()
+elif sys.argv[1] == 2:
+    if sys.argv[2] == 1:
+        # code
+    elif sys.argv[2] == 2:
+        # code
+    elif sys.argv[2] == 3:
+        # code
+    elif sys.argv[2] == 4:
+        # code
+    elif sys.argv[2] == 5:
+        # code

@@ -19,7 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
-import dbase
+import dbase # will be replaced by newdb
+import newdb
 import libary
 
 
@@ -49,7 +50,10 @@ elif sys.argv[1] == 2:
     if sys.argv[2] == 1:
         # code
     elif sys.argv[2] == 2:
-        # code
+        result = newdb.get(1) # -> should be 1 instead of 2!
+        if result != "error":
+            print(result)
+        # what if not (error)
     elif sys.argv[2] == 3:
         # code
     elif sys.argv[2] == 4:

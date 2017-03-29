@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sqlite3
+import time
 
 
 # function create databse if not exists
@@ -33,12 +34,12 @@ def create():
                           id INTEGER PRIMARY KEY,
                           error INTEGER,
                           date TEXT,
-                          time TEXT);""") # kann wech
+                          time TEXT);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS updatelog(
                           id INTEGER PRIMARY KEY,
                           date TEXT,
                           time TEXT,
-                          updatetyp INTEGER);""") # kann wech
+                          updatetyp INTEGER);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS recycleready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""") # 0 = not ready, 1 = ready
@@ -46,20 +47,15 @@ def create():
                           id INTEGER PRIMARY KEY,
                           total TEXT,
                           free TEXT,
-                          drive INTEGER);""")
+                          drive INTEGER);""") # edit this!
         cursor.execute("""CREATE TABLE IF NOT EXISTS backupready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""") # 0 = not ready, 1 = ready
-        cursor.execute("""CREATE TABLE IF NOT EXISTS logs(
-                          id INTEGER PRIMARY KEY,
-                          date TEXT,
-                          time TEXT,
-                          typ INTEGER);""")
         connection.close()
 
 
 # function insert data in database
-# v 1.0 - NOT final
+# v 1.0 - final
 def insert(dbtarget, dbdata): # dbtarget: table, dbdataarray: data for table
 
     if dbtarget == 1: # insert backupready
@@ -100,7 +96,7 @@ def insert(dbtarget, dbdata): # dbtarget: table, dbdataarray: data for table
 
 
 # function get data from database
-# v 1.0 - NOT final
+# v 1.0 - final
 def get(dbtarget):
     if dbtarget == 1: # get backupready
         try:
@@ -131,3 +127,63 @@ def get(dbtarget):
     else:
         ready = "value"
         return ready
+
+
+# function insert data for logging
+# v 1.1 - final
+def logging(dbtarget, dbdata):
+    if dbtarget == 1: # insert error
+        i = 1
+        dberror = int(dbdata)
+        dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+        dbtime = time.strftime("%H-%M", time.gmtime())
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        while True:
+            try:
+                # yapf: disable
+                cursor.execute("""INSERT INTO errorlog(id, error, date, time)
+                                  VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
+                # yapf: enable
+                connection.commit()
+            except:
+                pass
+            else:
+                break
+            i += 1
+            if i >= 9999:
+                break
+        connection.close()
+        if not i >= 9999:
+            result = "okay"
+        else:
+            result = "dbfull"
+        return result
+    elif dbtarget == 2: # insert update
+        dbupdatetyp = dbdata # 1=FM master; 2=FM slave; 3=OS master; 4=OS slave
+        i = 1
+        dbupdatetyp = int(dbupdatetyp)
+        dbdate = time.strftime("%Y-%m-%d", time.gmtime())
+        dbtime = time.strftime("%H-%M", time.gmtime())
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        while True:
+            try:
+                # yapf: disable
+                cursor.execute("""INSERT INTO updatelog(id, date, time, update)
+                                  VALUES(?,?,?,?)""", (i, dbdate, dbtime, dbupdatetyp))
+                # yapf: enable
+                connection.commit()
+            except:
+                pass
+            else:
+                break
+            i += 1
+            if i >= 9999:
+                break
+        connection.close()
+        if not i >= 9999:
+            result = "okay"
+        else:
+            result = "dbfull"
+        return result

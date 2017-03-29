@@ -27,7 +27,7 @@ import libary
 
 
 # function create databse if not exists
-# v 1.0 - final
+# v 1.0 - final - replaced by newdb
 def create():
     if not os.path.isfile("freemind.db"):
         connection = sqlite3.connect("freemind.db")
@@ -54,7 +54,7 @@ def create():
 
 
 # function insert error in database with current date and time stamp
-# v 1.0 - final
+# v 1.0 - final - replaced by newdb
 def inserterror(dberror):
     x = 0
     dberror = int(dberror)
@@ -95,7 +95,7 @@ def inserterror(dberror):
 
 
 # function insert update in databse with current time and date stamp
-# v 1.0 - final
+# v 1.0 - final - replaced by newdb
 def insertupdate(updatetyp):
     x = 0
     if updatetyp == "freemind":
@@ -199,7 +199,7 @@ def updatereq():
 
 # function save or get recycle status and return element
 # works with freemind.db, table recycleready
-# v 1.0 - final
+# v 1.0 - final - replaced by newdb
 def recycleready(para):
     if (para == 0) or (para == 1):
         para = int(para)

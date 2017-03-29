@@ -187,3 +187,9 @@ def logging(dbtarget, dbdata):
         else:
             result = "dbfull"
         return result
+
+
+# function read logs out of database
+# v 1.0 - NOT final
+def readlogs():
+    bla

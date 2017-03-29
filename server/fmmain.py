@@ -19,17 +19,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
-import dbase # will be replaced by newdb
-import newdb
-import libary
 
+import dbase  # will be replaced by newdb
+import libary
+import newdb
 
 # creating databse if not exists
 dbase.create()
 # getting sys arguments
 if sys.argv[1] == "error":
     error = sys.argv[2]
-    dbase.inserterror(error)
+    print("MEGA")
 elif sys.argv[1] == "update":
     update = sys.argv[2]
     if (update == "freemind") or (update == "system"):
@@ -48,15 +48,9 @@ elif sys.argv[1] == 1:
     xyz = libary.spacegrabber()
 elif sys.argv[1] == 2:
     if sys.argv[2] == 1:
-        # code
+        print("hello")
     elif sys.argv[2] == 2:
         result = newdb.get(1) # -> should be 1 instead of 2!
         if result != "error":
             print(result)
         # what if not (error)
-    elif sys.argv[2] == 3:
-        # code
-    elif sys.argv[2] == 4:
-        # code
-    elif sys.argv[2] == 5:
-        # code

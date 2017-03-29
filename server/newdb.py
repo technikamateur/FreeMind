@@ -60,7 +60,7 @@ def create():
 # function insert data in database
 # v 1.0 - NOT final
 def insert(dbtarget, dbdataarray): # dbtarget: table, dbdataarray: data for table
-    if target == 1: # insert backupready
+    if dbtarget == 1: # insert backupready
         connection = sqlite3.connect("freemind.db")
         cursor = connection.cursor()
         try:
@@ -77,12 +77,17 @@ def insert(dbtarget, dbdataarray): # dbtarget: table, dbdataarray: data for tabl
             connection.commit()
             connection.close()
             # yapf: enable
+    elif dbtarget == 2: # insert recycleready
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        try:
+            # yapf: disable
 
 
 # function get data from database
 # v 1.0 - NOT final
 def get(dbtarget):
-    if target == 1: # get backupready
+    if dbtarget == 1: # get backupready
         try:
             # yapf: disable
             connection = sqlite3.connect("freemind.db")

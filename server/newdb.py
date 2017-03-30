@@ -175,11 +175,10 @@ def logging(dbtarget, dbdata):
                 # yapf: enable
                 connection.commit()
             except:
-                pass
+                i += 1
+                if i >= 9999:
+                    break
             else:
-                break
-            i += 1
-            if i >= 9999:
                 break
         connection.close()
         if not i >= 9999:
@@ -191,5 +190,10 @@ def logging(dbtarget, dbdata):
 
 # function read logs out of database
 # v 1.0 - NOT final
-def readlogs():
-    bla
+def readlogs(dbtarget, dbdata):
+    if dbtarget == 1: # read errors
+        #bla
+    elif dbtarget == 2: # read update
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        updatetyp = int(dbdata)

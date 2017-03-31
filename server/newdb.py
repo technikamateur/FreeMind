@@ -145,13 +145,12 @@ def logging(dbtarget, dbdata):
                 cursor.execute("""INSERT INTO errorlog(id, error, date, time)
                                   VALUES(?,?,?,?)""", (i, dberror, dbdate, dbtime))
                 # yapf: enable
-                connection.commit()
             except:
-                pass
+                i += 1
+                if i >= 9999:
+                    break
             else:
-                break
-            i += 1
-            if i >= 9999:
+                connection.commit()
                 break
         connection.close()
         if not i >= 9999:
@@ -189,11 +188,33 @@ def logging(dbtarget, dbdata):
 
 
 # function read logs out of database
-# v 1.0 - NOT final
+# v 1.0 - final
 def readlogs(dbtarget, dbdata):
     if dbtarget == 1: # read errors
-        #bla
+        connection = sqlite3.connect("freemind.db")
+        cursor = connection.cursor()
+        cursor.execute("""SELECT COUNT(*) FROM errorlog""")
+        if cursor.fetchone():
+            cursor.execute("""SELECT * FROM errorlog ORDER BY id ASC""")
+        else:
+            cursor = "error"
+        connection.close()
+        result = cursor
+        return cursor
     elif dbtarget == 2: # read update
         connection = sqlite3.connect("freemind.db")
         cursor = connection.cursor()
         updatetyp = int(dbdata)
+        cursor.execute("""SELECT * FROM updatelog ORDER BY id DESC""")
+        for element in cursor:
+            if element[3] = dbdata: # is here int() necessary
+                dbres = element[1] + "+" + element[2]
+                break
+            else:
+                pass
+        connection.close()
+        if "+" not in dbres:
+            result = "error"
+        else:
+            result = dbres
+        return result

@@ -31,11 +31,11 @@ while read line; do
     hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
     status="$(smartctl -H $hdd | grep result | awk '{print $6}')"
     if ! [[ $($status | tr A-Z a-z) == $(echo "PASSED" | tr A-Z a-z) ]]; then
-      echo $hdd+"passed" >> smart.dat
+      echo "passed" >> smart.dat
     elif [[ $($status | tr A-Z a-z) == *$(echo "FAIL" | tr A-Z a-z)* ]]; then
-      echo $hdd+"faild" >> smart.dat
+      echo "faild" >> smart.dat
     else
-      echo $hdd+"unknown" >> smart.dat
+      echo "unknown" >> smart.dat
     fi
   fi
 done < disks.conf

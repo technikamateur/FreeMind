@@ -74,18 +74,6 @@ def spacegrabber():
         hddname[i] = datasplit[1]
         memis[i] = datasplit[2]
         memtotal[i] = datasplit[3]
-    # setting all hdd names to "not given"
-    for i in range(len(hddname)):
-        hdd[i] = "not given"
-    # loop for name text splitting (defhdd.conf) i = 0; try to replace "not given" by a name
-    for i in range(len(dnames)):
-        try:
-            hddnamesplit = dnames[i].split("=")
-            if hdd[i] == hddnamesplit[0]:
-                hddname[i] = hddnamesplit[1]
-        # exception for statements without "=" e.g. comments: pass them!
-        except:
-            pass
     # processing memis and memtotal
     # replace strings below
     for i in range(len(memis)):

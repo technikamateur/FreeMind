@@ -20,6 +20,9 @@
 if [[ $EUID != 0 ]]; then
   exit 1
 fi
+# cleaning up...
+rm -f smart.dat
+rm -f mem.dat
 # get S.M.A.R.T.
 while read line; do
   if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
@@ -27,5 +30,32 @@ while read line; do
   else
     hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
     status="$(smartctl -H $hdd | grep result | awk '{print $6}')"
+    if ! [[ $($status | tr A-Z a-z) == $(echo "PASSED" | tr A-Z a-z) ]]; then
+      echo $hdd+"passed" >> smart.dat
+    elif [[ $($status | tr A-Z a-z) == *$(echo "FAIL" | tr A-Z a-z)* ]]; then
+      echo $hdd+"faild" >> smart.dat
+    else
+      echo $hdd+"unknown" >> smart.dat
+    fi
   fi
 done < disks.conf
+# get memory
+if ! [[ -e smart.dat ]]; then
+  while read line; do
+    if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
+      :
+    else
+      hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
+      hddtype="$(echo $line | awk '$1 ~ "/dev" {print $2}')"
+      hddname="$(echo $line | awk '$1 ~ "/dev" {print $3}')"
+      if [[ $hddtype == "btrfs" ]]; then
+        memis="$(btrfs fi show | grep $hdd | awk '{print $6}')"
+        memtotal="$(btrfs fi show | grep $hdd | awk '{print $4}')"
+      else
+        memis="$(df -h | grep $i | awk '{print $3}')"
+        memtotal="$(df -h | grep $i | awk '{print $2}')"
+      fi
+      echo $hdd+$hddname+$memis+$memtotal >> mem.dat
+    fi
+  done < disks.conf
+fi

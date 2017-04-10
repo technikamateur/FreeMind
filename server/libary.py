@@ -44,49 +44,36 @@ def timediff(olddate, newdate):
 def spacegrabber():
     # first, it should start the .sh
     # what happens if drive is not present?????
-    subprocess.call("./spacegrabber.sh")  # if an error occurs: use(["script"])
-    # check number of drives and create array size for disks
-    fobj = open("mem.dat")
-    countdisks = 0
-    for line in fobj:
-        countdisks += 1
-    fobj.close()
-    darray = [0] * countdisk
-    # check number of names and create array size for names
-    fobj = open("defhdd.conf")
-    countnames = 0
-    for line in fobj:
-        countnames += 1
-    fobj.close()
-    dnames = [0] * countnames
-    # write data from file into array
-    fobj = open("mem.dat")
-    i = 0
-    for line in fobj:
-        darray[i] = line.rstrip()
-        i += 1
-    fobj.close()
-    # remove the source .dat
+    # call gethdd.sh
+    subprocess.call("bash gethdd.sh")  # if an error occurs: use(["script"])
+    # import disk names + memory informations
+    with open("mem.dat") as f:
+        data = []
+        for line in f:
+            line = line.rstrip("\n")
+            data.append(line)
+    # importing S.M.A.R.T. information
+    with open("smart.dat") as f:
+        smart = []
+        for line in f:
+            line = line.rstrip("\n")
+            smart.append(line)
+    # remove the source
+    os.remove("smart.dat")
     os.remove("mem.dat")
-    # read the drive names. ONLY as much as drives in mem.dat
-    fobj = open("defhdd.conf")
-    i = 0
-    for line in fobj:
-        dnames[i] = line.rstrip()
-        i += 1
-    fobj.close()
     # creating array for every category
-    hddname = [0] * countdisks
-    hdd = [0] * countdisks
-    memis = [0] * countdisks
-    memtotal = [0] * countdisks
-    mempercent = [0] * countdisks
+    hdd = []
+    hddname = []
+    memis = []
+    memtotal = []
+    mempercent = []
     # loop for disk text splitting (mem.dat) i=0
-    for i in range(len(darray)):
-        hddarraysplit = darray[i].split("+")
-        hdd[i] = hddarraysplit[0]
-        memis[i] = hddarraysplit[1]
-        memtotal[i] = hddarraysplit[2]
+    for i in range(len(data)):
+        datasplit = data[i].split("+")
+        hdd[i] = datasplit[0]
+        hddname[i] = datasplit[1]
+        memis[i] = datasplit[2]
+        memtotal[i] = datasplit[3]
     # setting all hdd names to "not given"
     for i in range(len(hddname)):
         hdd[i] = "not given"

@@ -84,7 +84,11 @@
         <div id="mainmemorybox">
             <div id="firstmemorybox">
                 <div class="c100 p25 big">
-                    <span>25%</span>
+                    <span>
+                      #<?php
+                      #$shellex = shell_exec("/etc/freemind/fmmain.py 2 $action");
+                      #?>
+                    </span>
                     <div class="slice">
                         <div class="bar"></div>
                         <div class="fill"></div>

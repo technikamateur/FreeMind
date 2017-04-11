@@ -44,10 +44,11 @@ def create():
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""") # 0 = not ready, 1 = ready
         cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
-                          id INTEGER PRIMARY KEY,
+                          drive INTEGER PRIMARY KEY,
                           total TEXT,
                           free TEXT,
-                          drive INTEGER);""") # edit this!
+                          percent INTEGER,
+                          smart INTEGER);""") # id = drive
         cursor.execute("""CREATE TABLE IF NOT EXISTS backupready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""") # 0 = not ready, 1 = ready
@@ -193,7 +194,7 @@ def readlogs(dbtarget, dbdata):
     if dbtarget == 1: # read errors
         connection = sqlite3.connect("freemind.db")
         cursor = connection.cursor()
-        cursor.execute("""SELECT COUNT(*) FROM errorlog""")
+        cursor.execute("""SELECT COUNT(*) FROM errorlog""") # Was ist COUNT?????
         if cursor.fetchone():
             cursor.execute("""SELECT * FROM errorlog ORDER BY id ASC""")
         else:

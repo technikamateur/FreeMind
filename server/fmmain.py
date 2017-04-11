@@ -28,8 +28,7 @@ import newdb
 dbase.create()
 # getting sys arguments
 if sys.argv[1] == "error":
-    error = sys.argv[2]
-    print("MEGA")
+    pass
 elif sys.argv[1] == "update":
     update = sys.argv[2]
     if (update == "freemind") or (update == "system"):

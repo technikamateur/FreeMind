@@ -61,7 +61,7 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - smartmontools
 - nginx
 - php-fpm
-- php7.0-sqlite3
+- php-sqlite3
 - btrfs-tools
 - and of course samba and samba-common
 

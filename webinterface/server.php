@@ -17,6 +17,26 @@
 </head>
 
 <body>
+  <!-- Get Memory from Database -->
+  <?php
+  /* array erstellen */
+  $mem = array();
+  $name = array();
+  $color = array();
+  /* Datenbankdatei öffnen */
+  $db = new SQLite3("fmweb.db");
+  /* Abfrage durchführen */
+  $res = $db->query("SELECT * FROM memory");
+  /* Abfrageergebnis verarbeiten */
+  while($dsatz = $res->fetchArray(SQLITE3_ASSOC))
+  {
+    array_push($name, $dsatz["name"]);
+    array_push($mem, $dsatz["percent"]);
+    array_push($color, $dsatz["smart"]);
+  }
+  /* Verbindung lösen */
+  $db->close();
+  ?>
     <!-- Navbar -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="navbar-header">
@@ -83,11 +103,12 @@
         <t2>Speicherübersicht:</t2>
         <div id="mainmemorybox">
             <div id="firstmemorybox">
-                <div class="c100 p25 big">
+                <div class="c100 p<?php echo $mem[0]; ?> .big.<?php echo $color[0]; ?>">
                     <span>
-                      #<?php
-                      #$shellex = shell_exec("/etc/freemind/fmmain.py 2 $action");
-                      #?>
+                      <?php
+                      echo $mem[0];
+                      echo " %";
+                      ?>
                     </span>
                     <div class="slice">
                         <div class="bar"></div>
@@ -95,43 +116,58 @@
                     </div>
                 </div>
                 <div id="centertextboxmemory">
-                    <tmemory>System-SSD</tmemory>
+                    <tmemory><?php echo $name[0]; ?></tmemory>
                 </div>
             </div>
             <div id="othermemorybox">
-                <div class="c100 p26 big">
-                    <span>26%</span>
+                <div class="c100 p<?php echo $mem[1]; ?> .big.<?php echo $color[1]; ?>">
+                    <span>
+                      <?php
+                      echo $mem[1];
+                      echo " %";
+                      ?>
+                    </span>
                     <div class="slice">
                         <div class="bar"></div>
                         <div class="fill"></div>
                     </div>
                 </div>
                 <div id="centertextboxmemory">
-                    <tmemory>HDD-1 (raid)</tmemory>
+                    <tmemory><?php echo $name[1]; ?></tmemory>
                 </div>
             </div>
             <div id="othermemorybox">
-                <div class="c100 p27 big">
-                    <span>27%</span>
+                <div class="c100 p<?php echo $mem[2]; ?> .big.<?php echo $color[2]; ?>">
+                    <span>
+                      <?php
+                      echo $mem[2];
+                      echo " %";
+                      ?>
+                    </span>
                     <div class="slice">
                         <div class="bar"></div>
                         <div class="fill"></div>
                     </div>
                 </div>
                 <div id="centertextboxmemory">
-                    <tmemory>HDD-2 (raid)</tmemory>
+                    <tmemory><?php echo $name[2]; ?></tmemory>
                 </div>
             </div>
             <div id="othermemorybox">
-                <div class="c100 p28 big">
-                    <span>28%</span>
+                <div class="c100 p<?php echo $mem[3]; ?> .big.<?php echo $color[3]; ?>">
+                    <span>
+                      <?php
+                      echo $mem[3];
+                      echo " %";
+                      ?>
+                    </span>
                     <div class="slice">
                         <div class="bar"></div>
                         <div class="fill"></div>
                     </div>
                 </div>
                 <div id="centertextboxmemory">
-                    <tmemory>HDD-3 (Papierkorb)</tmemory>
+                    <tmemory><?php echo $name[3]; ?></tmemory>
                 </div>
             </div>
         </div>

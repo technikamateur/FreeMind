@@ -1,8 +1,14 @@
 <?php
-$id = 1
+/* Datenbankdatei öffnen */
 $db = new SQLite3("test.db");
-$statement = $db->prepare('SELECT percent FROM memory WHERE id = :id;');
-$statement->bindValue(':id', $id);
-$result = $statement->execute();
-echo $result;
+/* Abfrage durchführen */
+$res = $db->query("SELECT * from memory");
+/* Abfrageergebnis ausgeben */
+while($dsatz = $res->fetchArray(SQLITE3_ASSOC))
+{
+  echo $dsatz["drive"] . ", "
+     . $dsatz["percent"]. "<br />";
+}
+/* Verbindung lösen */
+$db->close()
 ?>

@@ -24,38 +24,40 @@ fi
 rm -f smart.dat
 rm -f mem.dat
 # get S.M.A.R.T.
+# disks.conf wird eingelesen und der smart status wird ermittelt. Die drei Typen
+# passed, failed und unknown werden in smart.dat geschrieben. Wird später in
+# python eingelesen und mit mem.dat gematcht. Da beides zeitgleich ausgeführt
+# wird, steht eine Zeile für jede HDD, die mittels mem.dat zugeordnet werden können.
 while read line; do
   if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
     :
   else
     hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
     status="$(smartctl -H $hdd | grep result | awk '{print $6}')"
-    if ! [[ $($status | tr A-Z a-z) == $(echo "PASSED" | tr A-Z a-z) ]]; then
+    if [[ $($status | tr A-Z a-z) == $(echo "PASSED" | tr A-Z a-z) ]]; then
       echo "passed" >> smart.dat
     elif [[ $($status | tr A-Z a-z) == *$(echo "FAIL" | tr A-Z a-z)* ]]; then
-      echo "faild" >> smart.dat
+      echo "failed" >> smart.dat
     else
       echo "unknown" >> smart.dat
     fi
   fi
 done < disks.conf
 # get memory
-if ! [[ -e smart.dat ]]; then
-  while read line; do
-    if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
-      :
+while read line; do
+  if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
+    :
+  else
+    hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
+    hddtype="$(echo $line | awk '$1 ~ "/dev" {print $2}')"
+    hddname="$(echo $line | awk '$1 ~ "/dev" {print $3}')"
+    if [[ $hddtype == "btrfs" ]]; then
+      memis="$(btrfs fi show | grep $hdd | awk '{print $6}')"
+      memtotal="$(btrfs fi show | grep $hdd | awk '{print $4}')"
     else
-      hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
-      hddtype="$(echo $line | awk '$1 ~ "/dev" {print $2}')"
-      hddname="$(echo $line | awk '$1 ~ "/dev" {print $3}')"
-      if [[ $hddtype == "btrfs" ]]; then
-        memis="$(btrfs fi show | grep $hdd | awk '{print $6}')"
-        memtotal="$(btrfs fi show | grep $hdd | awk '{print $4}')"
-      else
-        memis="$(df -h | grep $i | awk '{print $3}')"
-        memtotal="$(df -h | grep $i | awk '{print $2}')"
-      fi
-      echo $hdd+$hddname+$memis+$memtotal >> mem.dat
+      memis="$(df -h | grep $hdd | awk '{print $3}')"
+      memtotal="$(df -h | grep $hdd | awk '{print $2}')"
     fi
-  done < disks.conf
-fi
+    echo $hdd+$hddname+$memis+$memtotal >> mem.dat
+  fi
+done < disks.conf

@@ -103,11 +103,10 @@
         <t2>Speicherübersicht:</t2>
         <div id="mainmemorybox">
             <div id="firstmemorybox">
-                <div class="c100 p<?php echo $mem[0]; ?> .big.<?php echo $color[0]; ?>">
+                <div class="c100 p<?php echo $mem[0]; ?> big center <?php echo $color[0]; ?>">
                     <span>
                       <?php
-                      echo $mem[0];
-                      echo " %";
+                      echo $mem[0]."%";
                       ?>
                     </span>
                     <div class="slice">
@@ -120,11 +119,10 @@
                 </div>
             </div>
             <div id="othermemorybox">
-                <div class="c100 p<?php echo $mem[1]; ?> .big.<?php echo $color[1]; ?>">
+                <div class="c100 p<?php echo $mem[1]; ?> big center <?php echo $color[1]; ?>">
                     <span>
                       <?php
-                      echo $mem[1];
-                      echo " %";
+                      echo $mem[1]."%";
                       ?>
                     </span>
                     <div class="slice">
@@ -137,11 +135,10 @@
                 </div>
             </div>
             <div id="othermemorybox">
-                <div class="c100 p<?php echo $mem[2]; ?> .big.<?php echo $color[2]; ?>">
+                <div class="c100 p<?php echo $mem[2]; ?> big center <?php echo $color[2]; ?>">
                     <span>
                       <?php
-                      echo $mem[2];
-                      echo " %";
+                      echo $mem[2]."%";
                       ?>
                     </span>
                     <div class="slice">
@@ -154,11 +151,10 @@
                 </div>
             </div>
             <div id="othermemorybox">
-                <div class="c100 p<?php echo $mem[3]; ?> .big.<?php echo $color[3]; ?>">
+                <div class="c100 p<?php echo $mem[3]; ?> big center <?php echo $color[3]; ?>">
                     <span>
                       <?php
-                      echo $mem[3];
-                      echo " %";
+                      echo $mem[3]."%";
                       ?>
                     </span>
                     <div class="slice">

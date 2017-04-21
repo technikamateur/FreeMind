@@ -6,7 +6,6 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
                   name TEXT,
                   percent INTEGER,
                   smart TEXT);""")
-connection.commit()
 connection.close()
 connection = sqlite3.connect("fmweb.db")
 cursor = connection.cursor()

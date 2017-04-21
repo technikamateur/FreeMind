@@ -19,10 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import sqlite3
-import time
-import subprocess
+import os #file delete, moving and chmod
+import sqlite3 #support for databases
+import time #calculating with the time
+import subprocess #running subprocesses
+import shutil #file moving
 
 
 # function create databse if not exists
@@ -75,8 +76,8 @@ def buildfmweb():
                           percent INTEGER,
                           smart TEXT);""") # smart enthält Farbe
         for i in range(0, lena):
-            name = hddname[i]
-            mem = hddmem[i]
+            name = str(hddname[i])
+            mem = int(hddmem[i])
             if hddsmart[i] == "passed":
                 smart = "green"
             elif hddsmart[i] == "failed":
@@ -85,9 +86,10 @@ def buildfmweb():
                 smart = "dark"
             cursor.execute("""INSERT INTO memory(drive, name, percent, smart)
                               VALUES(?,?,?,?)""", (i, name, mem, smart))
-            connection.commit()
+        connection.commit()
         connection.close()
-        # now move db and set chmod (644 oder so) + own
+        shutil.move(os.path.join("/etc/freemind/", "fmweb.db"), os.path.join("/var/www/freemind/", "fmweb.db"))
+        os.chmod("/var/www/freemind/fmweb.db", 0644)
     else:
         pass
         # Error verarbeiten: es exsistiert nicht die dieselbe anzahl von namen, mem und smart.
@@ -280,7 +282,7 @@ def timediff(olddate, newdate):
 def spacegrabber():
     # what happens if drive is not present?????
     # call gethdd.sh
-    subprocess.call("bash gethdd.sh")  # if an error occurs: use(["script"])
+    subprocess.call(["bash gethdd.sh"])
     # import disk names + memory informations
     with open("mem.dat") as f:
         data = []

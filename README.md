@@ -65,6 +65,13 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 - btrfs-tools
 - and of course samba and samba-common
 
+#### Dependencies to access webinterface:
+- min. resolution: 1280 x 720 px (FullHD recommended)
+- Firefox 52 or higher
+- Chrome 49 or higher
+- Internet Explorer 8 or higher (IE 11 recommended)
+- Opera and Edge not tested
+
 ## License:
 <img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/logo/gplv3.png" alt="GPLv3">
 

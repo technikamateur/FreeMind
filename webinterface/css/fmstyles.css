@@ -30,29 +30,54 @@
   margin: 2em auto 0 auto;
 }
 
+.centerText {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.picturebox {
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
 /*fonts*/
 f1 {
   font-family: Verdana, Geneva, sans-serif;
-  font-size: 1.5em;
+  font-size: 1.75em;
   color: #494949;
 }
 
 f2 {
   font-family: Verdana, Geneva, sans-serif;
-  font-size: 1.0em;
-  font-weight: bold;
+  font-size: 1.5em;
   color: #494949;
 }
 
 f3 {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 1.0em;
+  font-weight: bold;
   color: #494949;
 }
 
 f4 {
   font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.0em;
+  color: #494949;
+}
+
+f5 {
+  font-family: Verdana, Geneva, sans-serif;
   font-size: 1.3em;
   font-weight: bold;
+  color: #494949;
+}
+
+f6 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.2em;
   color: #494949;
 }

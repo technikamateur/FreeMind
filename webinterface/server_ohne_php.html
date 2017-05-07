@@ -8,7 +8,6 @@
   <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" type="text/css" href="css/Meinestyles.css">
   <link rel="stylesheet" type="text/css" href="css/fmstyles.css">
   <link rel="stylesheet" type="text/css" href="css/circle.css">
   <link rel="stylesheet" type="text/css" href="css/reflex.min.css">
@@ -23,63 +22,63 @@
     <div>
       <ul class="nav navbar-nav">
         <li><a href="index.html">Startseite</a></li>
-        <li class="active"><a href="server.html">Server</a></li>
+        <li class="active"><a href="server.php">Server</a></li>
         <li><a href="bananapi.html">Banana Pi</a></li>
         <li><a href="freemind.pdf">Handbuch</a></li>
       </ul>
     </div>
   </nav>
   <div class="informationbox">
-    <f1>Systeminformationen:</f1><br><br>
+    <f2>Systeminformationen:</f2><br><br>
     <div class="grid">
       <div class="grid__col-4">
         <ul class="list-group">
           <li class="list-group-item">
-            <f2>Server Betriebssystem: </f2>
-            <f3> Ubuntu Server 16.04 (64bit)</f3>
+            <f3>Server Betriebssystem: </f3>
+            <f4> Ubuntu Server 16.04 (64bit)</f4>
           </li>
           <li class="list-group-item">
-            <f2>CPU: </f2>
-            <f3> AMD A4-6300</f3>
+            <f3>CPU: </f3>
+            <f4> AMD A4-6300</f4>
           </li>
           <li class="list-group-item">
-            <f2>RAM: </f2>
-            <f3> 4GB</f3>
+            <f3>RAM: </f3>
+            <f4> 4GB</f4>
           </li>
           <li class="list-group-item">
-            <f2>Mainboard: </f2>
-            <f3> GA-F2A78M-HD2 (rev. 3.1)</f3>
+            <f3>Mainboard: </f3>
+            <f4> GA-f3A78M-HD2 (rev. 3.1)</f4>
           </li>
           <li class="list-group-item">
-            <f2>Gesamtspeicherplatz: </f2>
-            <f3> > 8TB</f3>
+            <f3>Gesamtspeicherplatz: </f3>
+            <f4> > 8TB</f4>
           </li>
         </ul>
       </div>
       <div class="grid__col-4">
         <ul class="list-group">
           <li class="list-group-item">
-            <f2>Letztes OS-Update: </f2>
-            <f3> 01.01.2017</f3>
+            <f3>Letztes OS-Update: </f3>
+            <f4> 01.01.2017</f4>
           </li>
           <li class="list-group-item">
-            <f2>Letztes FreeMind-Update: </f2>
-            <f3> 01.01.2017</f3>
+            <f3>Letztes FreeMind-Update: </f3>
+            <f4> 01.01.2017</f4>
           </li>
           <li class="list-group-item">
-            <f2>Letzte Ausführung Papierkorb-Skript: </f2>
-            <f3> 01.01.2017</f3>
+            <f3>Letzte Ausführung Papierkorb-Skript: </f3>
+            <f4> 01.01.2017</f4>
           </li>
           <li class="list-group-item">
-            <f2>Letztes Backup: </f2>
-            <f3> 01.01.2017</f3>
+            <f3>Letztes Backup: </f3>
+            <f4> 01.01.2017</f4>
           </li>
         </ul>
       </div>
     </div>
   </div>
   <div class="memorybox">
-    <f1>Speicherübersicht:</f1>
+    <f2>Speicherübersicht:</f2>
     <div class="memorybox__circles">
       <div class="grid">
         <div class="grid__col-3">
@@ -93,7 +92,7 @@
             </div>
           </div>
           <div class="memorybox__description">
-            <f4>HDD-1</f4>
+            <f5>HDD-1</f5>
           </div>
         </div>
         <div class="grid__col-3">
@@ -107,7 +106,7 @@
             </div>
           </div>
           <div class="memorybox__description">
-            <f4>HDD-2</f4>
+            <f5>HDD-2</f5>
           </div>
         </div>
         <div class="grid__col-3">
@@ -121,7 +120,7 @@
             </div>
           </div>
           <div class="memorybox__description">
-            <f4>HDD-3</f4>
+            <f5>HDD-3</f5>
           </div>
         </div>
         <div class="grid__col-3">
@@ -135,28 +134,28 @@
             </div>
           </div>
           <div class="memorybox__description">
-            <f4>HDD-4</f4>
+            <f5>HDD-4</f5>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="actionbox">
-    <f1> Serveraktionen:</f1>
+    <f2> Serveraktionen:</f2>
     <div class="actionbox__actions">
       Jetzt ein grid...
+      <p>
+        <div class="form-group">
+          <label class="sr-only" for="exampleInputPassword3">Password</label>
+          <input type="password" class="form-control" id="passwordform" placeholder="Passwort">
+        </div>
+        <a class="btn btn-default" href="#" role="button">Herunterfahren</a>
+        <a class="btn btn-default" href="#" role="button">Neustart</a>
+        <a class="btn btn-default" href="#" role="button">Aktualisieren</a>
+        <a class="btn btn-default" href="#" role="button">Dateisysteme prüfen</a>
+        <a class="btn btn-default" href="#" role="button">Festplatten prüfen</a>
+      </p>
     </div>
-  </div>
-  <div id="serveractions">
-    <div class="form-group">
-      <label class="sr-only" for="exampleInputPassword3">Password</label>
-      <input type="password" class="form-control" id="passwordform" placeholder="Passwort">
-    </div>
-    <a class="btn btn-default" href="#" role="button">Herunterfahren</a>
-    <a class="btn btn-default" href="#" role="button">Neustart</a>
-    <a class="btn btn-default" href="#" role="button">Aktualisieren</a>
-    <a class="btn btn-default" href="#" role="button">Dateisysteme prüfen</a>
-    <a class="btn btn-default" href="#" role="button">Festplatten prüfen</a>
   </div>
 </body>
 

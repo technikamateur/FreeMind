@@ -7,14 +7,13 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/png" href="favicon-300px.png">
   <link rel="stylesheet" type="text/css" href="css/fmstyles.css">
   <link rel="stylesheet" type="text/css" href="css/circle.css">
   <link rel="stylesheet" type="text/css" href="css/reflex.min.css">
 </head>
 
 <body>
-    <!-- Navbar -->
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
       <a class="navbar-brand" href="index.html">FreeMind</a>
@@ -22,8 +21,8 @@
     <div>
       <ul class="nav navbar-nav">
         <li><a href="index.html">Startseite</a></li>
-        <li class="active"><a href="server.php">Server</a></li>
-        <li><a href="bananapi.html">Banana Pi</a></li>
+        <li><a href="server.html">Server</a></li>
+        <li class="active"><a href="bananapi.html">Banana Pi</a></li>
         <li><a href="freemind.pdf">Handbuch</a></li>
       </ul>
     </div>
@@ -35,23 +34,19 @@
         <ul class="list-group">
           <li class="list-group-item">
             <f3>Server Betriebssystem: </f3>
-            <f4> Ubuntu Server 16.04 (64bit)</f4>
+            <f4> Debian 8 (Jessie) armhf</f4>
           </li>
           <li class="list-group-item">
             <f3>CPU: </f3>
-            <f4> AMD A4-6300</f4>
+            <f4> Cortex A7 Dual-Core</f4>
           </li>
           <li class="list-group-item">
             <f3>RAM: </f3>
-            <f4> 4GB</f4>
+            <f4> 1GB</f4>
           </li>
           <li class="list-group-item">
-            <f3>Mainboard: </f3>
-            <f4> GA-f3A78M-HD2 (rev. 3.1)</f4>
-          </li>
-          <li class="list-group-item">
-            <f3>Gesamtspeicherplatz: </f3>
-            <f4> > 8TB</f4>
+            <f3>Speicherplatz SD + HDD: </f3>
+            <f4> 16GB + 3TB</f4>
           </li>
         </ul>
       </div>
@@ -66,10 +61,6 @@
             <f4> 01.01.2017</f4>
           </li>
           <li class="list-group-item">
-            <f3>Letzte Ausführung Papierkorb-Skript: </f3>
-            <f4> 01.01.2017</f4>
-          </li>
-          <li class="list-group-item">
             <f3>Letztes Backup: </f3>
             <f4> 01.01.2017</f4>
           </li>
@@ -81,7 +72,7 @@
     <f2>Speicherübersicht:</f2>
     <div class="memorybox__circles">
       <div class="grid">
-        <div class="grid__col-3">
+        <div class="grid__col-6">
           <div class="c100 p27 big center green">
             <span>
               27%
@@ -92,10 +83,10 @@
             </div>
           </div>
           <div class="memorybox__description">
-            <f5>HDD-1</f5>
+            <f5>SD</f5>
           </div>
         </div>
-        <div class="grid__col-3">
+        <div class="grid__col-6">
           <div class="c100 p28 big center green">
             <span>
               28%
@@ -106,35 +97,7 @@
             </div>
           </div>
           <div class="memorybox__description">
-            <f5>HDD-2</f5>
-          </div>
-        </div>
-        <div class="grid__col-3">
-          <div class="c100 p29 big center green">
-            <span>
-              29%
-            </span>
-            <div class="slice">
-              <div class="bar"></div>
-              <div class="fill"></div>
-            </div>
-          </div>
-          <div class="memorybox__description">
-            <f5>HDD-3</f5>
-          </div>
-        </div>
-        <div class="grid__col-3">
-          <div class="c100 p30 big center green">
-            <span>
-              30%
-            </span>
-            <div class="slice">
-              <div class="bar"></div>
-              <div class="fill"></div>
-            </div>
-          </div>
-          <div class="memorybox__description">
-            <f5>HDD-4</f5>
+            <f5>HDD</f5>
           </div>
         </div>
       </div>

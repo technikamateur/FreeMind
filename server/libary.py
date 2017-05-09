@@ -89,7 +89,7 @@ def buildfmweb():
         connection.commit()
         connection.close()
         shutil.move(os.path.join("/etc/freemind/", "fmweb.db"), os.path.join("/var/www/freemind/", "fmweb.db"))
-        os.chmod("/var/www/freemind/fmweb.db", 0644)
+        os.chmod("/var/www/freemind/fmweb.db", 644)
     else:
         pass
         # Error verarbeiten: es exsistiert nicht die dieselbe anzahl von namen, mem und smart.
@@ -249,7 +249,7 @@ def readlogs(dbtarget, dbdata):
         cursor.execute("""SELECT * FROM updatelog ORDER BY id DESC""")
         for element in cursor:
             if element[3] = dbdata: # is here int() necessary
-                dbres = element[1] + "+" + element[2]
+                dbres == element[1] + "+" + element[2]
                 break
             else:
                 pass
@@ -282,7 +282,7 @@ def timediff(olddate, newdate):
 def spacegrabber():
     # what happens if drive is not present?????
     # call gethdd.sh
-    subprocess.call(["bash gethdd.sh"])
+    subprocess.call(["sudo", "bash", "gethdd.sh"])
     # import disk names + memory informations
     with open("mem.dat") as f:
         data = []

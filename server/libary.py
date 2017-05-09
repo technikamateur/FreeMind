@@ -81,7 +81,7 @@ def buildfmweb():
             if hddsmart[i] == "passed":
                 smart = "green"
             elif hddsmart[i] == "failed":
-                smart = "orange"
+                smart = "red" # manuell in reflex.min ergänzt
             else:
                 smart = "dark"
             cursor.execute("""INSERT INTO memory(drive, name, percent, smart)
@@ -345,4 +345,5 @@ def spacegrabber():
             #memtotal[i] = str(memtotal[i]) + "G"
         # calculate disk usage in percent
         mempercent[i] = (100 * memis[i]) / memtotal[i]
-    return hddname, mempercent, smart # percent runden!!!!!!!!!!!!
+        mempercent[i] = int(mempercent[i])
+    return hddname, mempercent, smart

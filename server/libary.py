@@ -76,7 +76,7 @@ def buildfmweb():
                           percent INTEGER,
                           smart TEXT);""") # smart enthält Farbe
         for i in range(0, lena):
-            name = str(hddname[i])
+            name = str(hddnames[i])
             mem = int(hddmem[i])
             if hddsmart[i] == "passed":
                 smart = "green"
@@ -248,7 +248,7 @@ def readlogs(dbtarget, dbdata):
         updatetyp = int(dbdata)
         cursor.execute("""SELECT * FROM updatelog ORDER BY id DESC""")
         for element in cursor:
-            if element[3] = dbdata: # is here int() necessary
+            if element[3] == dbdata: # is here int() necessary
                 dbres == element[1] + "+" + element[2]
                 break
             else:
@@ -280,39 +280,38 @@ def timediff(olddate, newdate):
 
 
 def spacegrabber():
-    # what happens if drive is not present?????
-    # call gethdd.sh
+    # gethdd.sh ausführen
     subprocess.call(["sudo", "bash", "gethdd.sh"])
-    # import disk names + memory informations
+    # Import Festplatteninformationen
     with open("mem.dat") as f:
         data = []
         for line in f:
             line = line.rstrip("\n")
             data.append(line)
-    # importing S.M.A.R.T. information
+    # Import S.M.A.R.T. Informationen
     with open("smart.dat") as f:
         smart = []
         for line in f:
             line = line.rstrip("\n")
             smart.append(line)
-    # remove the source
+    # Quelle löschen
     os.remove("smart.dat")
     os.remove("mem.dat")
-    # creating array for every category
+    # Arrays für Kategorien erzeugen
     hdd = []
     hddname = []
     memis = []
     memtotal = []
     mempercent = []
-    # loop for disk text splitting (mem.dat) i=0
-    for i in range(len(data)):
-        datasplit = data[i].split("+")
-        hdd[i] = datasplit[0]
-        hddname[i] = datasplit[1]
-        memis[i] = datasplit[2]
-        memtotal[i] = datasplit[3]
-    # processing memis and memtotal
-    # replace strings below
+    # Schleife für Textsplitting
+    for element in data:
+        datasplit = element.split("+")
+        hdd.append(datasplit[0])
+        hddname.append(datasplit[1])
+        memis.append(datasplit[2])
+        memtotal.append(datasplit[3])
+    # memis und memtotal verarbeiten
+    # strings ersetzten (siehe unterhalb)
     for i in range(len(memis)):
         memis[i] = memis[i].replace(",", ".")
         memis[i] = memis[i].replace("TiB", "T")
@@ -323,27 +322,23 @@ def spacegrabber():
         memtotal[i] = memtotal[i].replace("GiB", "G")
         memtotal[i] = memtotal[i].replace("MiB", "M")
         # convert everything to G
-        if memis[i].endswith("T"):
-            memis[i] = memis[i].replace("T", "")
-            memis[i] = int(memis[i]) * 1000
-            #memis[i] = str(memis[i]) + "G"
-        elif memtotal[i].endswith("T"):
-            memtotal[i] = memtotal[i].replace("T", "")
-            memtotal[i] = int(memtotal[i]) * 1000
-            #memtotal[i] = str(memtotal[i]) + "G"
-        elif memis[i].endswith("G"):
+        if memis[i].endswith("G"):
             memis[i] = memis[i].replace("G", "")
-        elif memtotal[i].endswith("G"):
-            memtotal[i] = memtotal[i].replace("G", "")
+        elif memis[i].endswith("T"):
+            memis[i] = memis[i].replace("T", "")
+            memis[i] = float(memis[i]) * 1000
         elif memis[i].endswith("M"):
             memis[i] = memis[i].replace("M", "")
-            memis[i] = int(memis[i]) / 1000
-            #memis[i] = str(memis[i]) + "G"
+            memis[i] = float(memis[i]) / 1000
+        if memtotal[i].endswith("G"):
+            memtotal[i] = memtotal[i].replace("G", "")
+        elif memtotal[i].endswith("T"):
+            memtotal[i] = memtotal[i].replace("T", "")
+            memtotal[i] = float(memtotal[i]) * 1000
         elif memtotal[i].endswith("M"):
             memtotal[i] = memtotal[i].replace("M", "")
-            memtotal[i] = int(memtotal[i]) / 1000
-            #memtotal[i] = str(memtotal[i]) + "G"
-        # calculate disk usage in percent
-        mempercent[i] = (100 * memis[i]) / memtotal[i]
-        mempercent[i] = int(mempercent[i])
+            memtotal[i] = float(memtotal[i]) / 1000
+        # Speicherbelegung in Prozent berechnen
+        percent = 100 * float(memis[i]) / float(memtotal[i])
+        mempercent.append(int(percent))
     return hddname, mempercent, smart

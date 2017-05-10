@@ -34,9 +34,10 @@ while read line; do
   else
     hdd="$(echo $line | awk '$1 ~ "/dev" {print $1}')"
     status="$(smartctl -H $hdd | grep result | awk '{print $6}')"
-    if [[ $($status | tr A-Z a-z) == $(echo "PASSED" | tr A-Z a-z) ]]; then # Das Ergebnis (passed) wird ausgeführt. Daher rührt vermutlich der Fehla
+    status="$(echo $status | tr A-Z a-z)"
+    if [[ $status == "passed" ]]; then
       echo "passed" >> smart.dat
-    elif [[ $($status | tr A-Z a-z) == $(echo "FAIL" | tr A-Z a-z) ]]; then
+    elif [[ $status == "fail" ]]; then
       echo "failed" >> smart.dat
     else
       echo "unknown" >> smart.dat

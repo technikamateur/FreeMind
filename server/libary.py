@@ -63,7 +63,6 @@ def buildfmweb():
     lenb = len(hddmem)
     lenc = len(hddsmart)
     if lena == lenb and lenb == lenc:
-        lena = lena - 1
         try:
             os.remove("fmweb.db")
         except:
@@ -89,7 +88,7 @@ def buildfmweb():
         connection.commit()
         connection.close()
         shutil.move(os.path.join("/etc/freemind/", "fmweb.db"), os.path.join("/var/www/freemind/", "fmweb.db"))
-        os.chmod("/var/www/freemind/fmweb.db", 644)
+        os.chmod("/var/www/freemind/fmweb.db", 0o644)
     else:
         pass
         # Error verarbeiten: es exsistiert nicht die dieselbe anzahl von namen, mem und smart.
@@ -340,5 +339,5 @@ def spacegrabber():
             memtotal[i] = float(memtotal[i]) / 1000
         # Speicherbelegung in Prozent berechnen
         percent = 100 * float(memis[i]) / float(memtotal[i])
-        mempercent.append(int(percent))
+        mempercent.append(int(round(percent)))
     return hddname, mempercent, smart

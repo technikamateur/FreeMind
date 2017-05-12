@@ -68,7 +68,7 @@ def buildfmweb():
         except:
             pass
         connection = sqlite3.connect("fmweb.db")
-        cursor = connection.cursor()
+        cursor = connection.cursor() # MOVE TO DBASE
         cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
                           drive INTEGER PRIMARY KEY,
                           name TEXT,
@@ -85,7 +85,7 @@ def buildfmweb():
                 smart = "dark"
             cursor.execute("""INSERT INTO memory(drive, name, percent, smart)
                               VALUES(?,?,?,?)""", (i, name, mem, smart))
-        connection.commit()
+        connection.commit() # MOVE TO DBASE
         connection.close()
         shutil.move(os.path.join("/etc/freemind/", "fmweb.db"), os.path.join("/var/www/freemind/", "fmweb.db"))
         os.chmod("/var/www/freemind/fmweb.db", 0o644)

@@ -37,22 +37,59 @@ def create():
                           error INTEGER,
                           date TEXT,
                           time TEXT);""")
-        cursor.execute("""CREATE TABLE IF NOT EXISTS updatelog(
-                          id INTEGER PRIMARY KEY,
-                          date TEXT,
-                          time TEXT,
-                          updatetyp INTEGER);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS recycleready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""")
-        cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
+        cursor.execute("""CREATE TABLE IF NOT EXISTS backupready(
                           id INTEGER PRIMARY KEY,
-                          total TEXT,
-                          free TEXT,
-                          drive INTEGER);""")
+                          ready INTEGER);""")
+        # Typ: 1=OS-Update; 2=FM-Update; 3=Backup-done; 4=Do-Backup?
+        cursor.execute("""CREATE TABLE IF NOT EXISTS actionlog(
+                          client INTEGER,
+                          variety INTEGER,
+                          content TEXT);""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS clients(
+                          client INTEGER PRIMARY KEY,
+                          name TEXT);""")
         connection.close()
+        prep_clients()
+        prep_actionlog()
 
 
+def prep_actionlog():
+    connection = sqlite3.connect("freemind.db")
+    cursor = connection.cursor()
+    for i in range(1,3):
+        for k in range(1,5):
+            cursor.execute("""INSERT INTO actionlog(client, variety, content)
+                              VALUES(?,?,?)""", (i,k,"never"))
+    connection.commit()
+    connection.close()
+
+
+def prep_clients(): # Später: Dynamisch erezugen, um mehr clients zu ermöglichen
+    connection = sqlite3.connect("freemind.db")
+    cursor = connection.cursor()
+    cursor.execute("""INSERT INTO clients(client, name)
+                      VALUES(?,?)""", (1,"Server"))
+    cursor.execute("""INSERT INTO clients(client, name)
+                      VALUES(?,?)""", (2,"Banana Pi"))
+    connection.commit()
+    connection.close()
+
+
+def insert_actionlog(client, variety):
+    # sicherstellen, dass client und variety integer sind
+    client = int(client)
+    variety = int(variety)
+    content = time.strftime("%Y-%m-%d", time.gmtime())
+    content = str(content)
+    connection = sqlite3.connect("freemind.db")
+    cursor = connection.cursor()
+    cursor.execute("""UPDATE actionlog SET content=?
+                      WHERE client=? AND variety=?""", (content, client, variety))
+    connection.commit()
+    connection.close()
 # function insert error in database with current date and time stamp
 # v 1.0 - final - replaced by newdb
 def inserterror(dberror):

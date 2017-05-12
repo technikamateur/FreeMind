@@ -78,7 +78,7 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 This project is licensed under "GPLv3"! For more information see *LICENSE.txt*.
 
 ## Integrated projects & frameworks:
-- [CSS Percentage Circle](http://circle.firchow.net/) by [Andre Firchow](https://github.com/andrefirchow)
-- [Bootstrap](https://github.com/twbs/bootstrap)
-- [jQuery](https://github.com/jquery/jquery)
-- [reflex grid](http://leejordan.github.io/reflex/docs/)
+- [CSS Percentage Circle](http://circle.firchow.net/)
+- [Bootstrap 3.3.7](https://github.com/twbs/bootstrap)
+- [jQuery 3.1.1](https://github.com/jquery/jquery)
+- [reflex grid 1.5](http://leejordan.github.io/reflex/docs/)

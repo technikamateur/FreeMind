@@ -20,10 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
-import dbase
+import libary
 
-# sys.argv[1] enthält client information
+
 # 1=OS-Update; 2=FM-Update; 3=Backup-done; 4=Do-Backup?
-dbase.create()
-result = dbase.insert_actionlog(sys.argv[1], sys.argv[2])
+if sys.argv[1] < 4:
+    libary.create()
+    libary.insert_actionlog(2, sys.argv[1])
+else: # Do Backup?
+    pass
 print(result)

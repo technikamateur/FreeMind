@@ -1,9 +1,27 @@
 <?php
-$currenturl = "46.182.19.177:8002";
-$vfreemind = "1.0";
-$vfreemindbackup = "1.0";
-$userversion = $_GET["userversion"];
-$userprogram = $_GET["userprogram"];
+/* Voreinstellungen */
+$ready = True;
+$url = "31.185.110.8:8002";
+$vMaster = 1.0;
+$vSlave = 1.0;
+$vBetaMaster = 1.0;
+$vBetaSlave = 1.0;
+/* Parameter empfangen */
+$userVersion = $_GET["userVersion"];
+$userProgram = $_GET["userProgram"];
+$userChannel = $_GET["userChannel"];
+/* Parameter prüfen */
+if (isset($userVersion) and isset($userProgram) and isset($userChannel)) {
+  # Do nothing
+} else {
+  $ready = False;
+}
+Jetzt noch in Numern bzw. Text umwandeln (natürlich mit try except und $ready anpassen)
+Dann das unten überarbeiten.
+
+
+
+
 if ($userprogram == "freemind") {
   if ($userversion == $vfreemind) {
     print "latest-version";

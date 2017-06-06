@@ -1,14 +1,14 @@
 <?php
 /* Voreinstellungen */
 $ready = True;
-$url = "31.185.110.8:8002";
+$url = "update.freemind-client.org";
 $vMaster = 1.0;
 $vSlave = 1.0;
 $vBetaMaster = 1.0;
 $vBetaSlave = 1.0;
 /* Parameter empfangen */
 $userVersion = $_GET["userVersion"];
-$userProgram = $_GET["userProgram"];
+$userProgram = $_GET["userProgram"];/* 1=master, 2=beta */
 $userChannel = $_GET["userChannel"];/* 1=stable, 2=beta */
 /* Parameter prüfen */
 if (isset($userVersion) and isset($userProgram) and isset($userChannel)) {
@@ -27,17 +27,35 @@ try {
   echo $e->getMessage();
 }
 /* Ausgabe des Ergebnisses */
-if ($userprogram == "freemind") {
-  if ($userversion == $vfreemind) {
-    print "latest-version";
+if ($ready == True) {
+  if ($userChannel == 1) {
+    if ($userProgram == 1) {
+      if ($userVersion == $vMaster) {
+        echo "latest-version";
+      } else {
+        echo "$url/stable/latest/master.tar.gz";
+      }
+    } else {
+      if ($userVersion == $vSlave) {
+        echo "latest-version";
+      } else {
+        echo "$url/stable/latest/slave.tar.gz";
+      }
+    }
   } else {
-    print "$currenturl/freemind/$vfreemind";
-  }
-} elseif ($userprogram == "freemind-backup") {
-  if ($userversion == $vfreemindbackup) {
-    print "latest-version";
-  } else {
-    print "$currenturl/freemind-backup/$vfreemindbackup";
+    if ($userProgram == 1) {
+      if ($userVersion == $vBetaMaster) {
+        echo "latest-version";
+      } else {
+        echo "$url/beta/latest/master.tar.gz";
+      }
+    } else {
+      if ($userVersion == $vBetaSlave) {
+        echo "latest-version";
+      } else {
+        echo "$url/beta/latest/slave.tar.gz";
+      }
+    }
   }
 }
 ?>

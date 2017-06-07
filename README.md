@@ -1,4 +1,5 @@
 # FreeMind
+## currently out of date
 
 <img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/logo/linux-server-128px.png" alt="logo FreeMind">
 

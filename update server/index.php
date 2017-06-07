@@ -8,7 +8,7 @@ $vBetaMaster = 1.0;
 $vBetaSlave = 1.0;
 /* Parameter empfangen */
 $userVersion = $_GET["userVersion"];
-$userProgram = $_GET["userProgram"];/* 1=master, 2=beta */
+$userProgram = $_GET["userProgram"];/* 1=master, 2=slave */
 $userChannel = $_GET["userChannel"];/* 1=stable, 2=beta */
 /* Parameter prüfen */
 if (isset($userVersion) and isset($userProgram) and isset($userChannel)) {

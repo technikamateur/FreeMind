@@ -23,23 +23,30 @@ varcurl=curl
 # checking superuser
 if (( $EUID != 0 ))
 then
-    exit 1
+  echo "Please run script as root!"
+  exit 1
 fi
 # starting update procedure...
-if [[ $1 == 1 ]]; then
-  $varcurl -s --request GET "http://46.182.19.177:8002/index.php?userprogram=freemind-backup&userversion=$version" > /dev/null || $internet=false
-  if [ $internet == true ]; then
-    update=$($varcurl -s --request GET "http://46.182.19.177:8002/index.php?userprogram=freemind-backup&userversion=$version")
-    if [ $update != "latest-version" ]; then
-      mkdir /etc/freemind/update
-      wget -q -O - $update/freemind-backup.tar.gz | tar xzf - -C /etc/freemind/update
-      chmod +x /etc/freemind/update/update.sh
+if [[ $1 == "backup" ]]; then
+  backup=$($varcurl -s --request GET "192.168.0.111/bridge.php?action=4")
+  if [[ $backup == "true" ]]; then
+    bash autobackup.sh
+    $varcurl -s --request GET "192.168.0.111/bridge.php?action=3" > /dev/null
+  fi
+fi
+if [[ $1 == "update" ]]; then
+  $varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version" > /dev/null || $internet=false
+  if [[ $internet == true ]]; then
+    update=$($varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version")
+    if [[ $update != "false" ]]; then
+      rm -r /etc/freemind/update
+      mkdir /etc/freemind/update && cd /etc/freemind/update
+      wget -q $update
+      tar xzf slave.tar.gz
+      chmod +x update.sh
       bash /etc/freemind/update/update.sh &
       exit 0
     fi
-  fi # else statement?
-elif [[ $1 == 2 ]]; then
-  bash fmtransfer.sh
-elif [[ $1 == 3 ]]; then
-  bash autobackup.sh
+  fi
 fi
+exit 0

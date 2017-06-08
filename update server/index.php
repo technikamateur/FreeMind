@@ -12,19 +12,17 @@ $userProgram = $_GET["userProgram"];/* 1=master, 2=slave */
 $userChannel = $_GET["userChannel"];/* 1=stable, 2=beta */
 /* Parameter prüfen */
 if (isset($userVersion) and isset($userProgram) and isset($userChannel)) {
-  # Do nothing
+  if (is_numeric($userVersion) && is_numeric($userProgram) && is_numeric($userChannel)) {
+    # Nichts tun ...
+  } else {
+    echo "Argument Error!";
+    echo "<br/>";
+    echo "Numeric arguments only!";
+    $ready = False;
+  }
 } else {
-  echo "Argument Error\n";
+  echo "Argument Error!";
   $ready = False;
-}
-try {
-  $userVersion = floatval($userVersion);
-  $userProgram = floatval($userProgram);
-  $userChannel = intval($userChannel);
-} catch (Exception $e) {
-  $ready = False;
-  echo "Argument Error\n";
-  echo $e->getMessage();
 }
 /* Ausgabe des Ergebnisses */
 if ($ready == True) {

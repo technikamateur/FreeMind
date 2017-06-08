@@ -38,7 +38,7 @@ if [[ $1 == "update" ]]; then
   $varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version" > /dev/null || $internet=false
   if [[ $internet == true ]]; then
     update=$($varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version")
-    if [[ $update != "false" ]]; then
+    if [[ $update != "latest-version" ]]; then
       rm -r /etc/freemind/update
       mkdir /etc/freemind/update && cd /etc/freemind/update
       wget -q $update

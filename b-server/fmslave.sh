@@ -21,8 +21,7 @@ version="1.0"
 internet=true
 varcurl=curl
 # checking superuser
-if (( $EUID != 0 ))
-then
+if [[ $EUID != 0 ]]; then
   echo "Please run script as root!"
   exit 1
 fi

@@ -17,17 +17,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # run script as sudo!
-sleep 30 # in case ist starts with OS it should wait until samba is started
-if (( $EUID != 0 ))
-then
-    exit 1
-fi
-bready=$(cat bready.dat)
-if [[ $bready == 1 ]]; then
-  rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@192.168.0.111:/media/fileraid/ /media/backupdrive/igfserverbackup --exclude='.recycle'
-  find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
-  chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
-  chmod -R 700 /media/backupdrive/igfserverbackup
-else
+sleep 30 # Der BPI ist manchmal träge. Sicher gehen, dass Samba auch geatrtet ist
+if [[ $EUID != 0 ]]; then
   exit 1
 fi
+rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@192.168.0.111:/media/fileraid/ /media/backupdrive/igfserverbackup --exclude='.recycle'
+find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
+chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
+chmod -R 700 /media/backupdrive/igfserverbackup
+exit 0

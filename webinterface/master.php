@@ -16,23 +16,39 @@
 <body>
 <!-- Get Memory from Database -->
   <?php
-  /* array erstellen */
+  // array erstellen
   $mem = array();
   $name = array();
   $color = array();
-  /* Datenbankdatei öffnen */
+  // Datenbankdatei öffnen
   $db = new SQLite3("fmweb.db");
-  /* Abfrage durchführen */
+  // Abfrage durchführen
   $res = $db->query("SELECT * FROM memory");
-  /* Abfrageergebnis verarbeiten */
+  // Abfrageergebnis verarbeiten
   while($dsatz = $res->fetchArray(SQLITE3_ASSOC))
   {
     array_push($name, $dsatz["name"]);
     array_push($mem, $dsatz["percent"]);
     array_push($color, $dsatz["smart"]);
   }
-  /* Verbindung lösen */
+  // Verbindung lösen
   $db->close();
+  ?>
+  <?php
+  function getinfo($variety)
+  {
+    // Datenbankdatei öffnen
+    $db = new SQLite3("fmweb.db");
+    // Abfrage durchführen
+    // Abfrageergebnis verarbeiten
+    if (sqlite_num_rows($res) > 0) {
+        $content = sqlite_fetch_single($res);
+    }
+    // Verbindung lösen
+    $db->close();
+    // Ergebnis zurückgeben
+    return $content;
+  }
   ?>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
@@ -78,19 +94,19 @@
         <ul class="list-group">
           <li class="list-group-item">
             <f3>Letztes OS-Update: </f3>
-            <f4> 01.01.2017</f4>
+            <f4> <?php $content = getinfo(1); echo $content; ?></f4>
           </li>
           <li class="list-group-item">
             <f3>Letztes FreeMind-Update: </f3>
-            <f4> 01.01.2017</f4>
+            <f4> <?php $content = getinfo(2); echo $content; ?></f4>
           </li>
           <li class="list-group-item">
             <f3>Letzte Ausführung Papierkorb-Skript: </f3>
-            <f4> 01.01.2017</f4>
+            <f4> <?php $content = getinfo(4); echo $content; ?></f4>
           </li>
           <li class="list-group-item">
             <f3>Letztes Backup: </f3>
-            <f4> 01.01.2017</f4>
+            <f4> <?php $content = getinfo(3); echo $content; ?></f4>
           </li>
         </ul>
       </div>

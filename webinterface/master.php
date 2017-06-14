@@ -35,15 +35,15 @@
   $db->close();
   ?>
   <?php
-  function getinfo($variety)
-  {
+  function getinfo($variety) {
     // Datenbankdatei öffnen
     $db = new SQLite3("fmweb.db");
     // Abfrage durchführen
-    $res = $db->query("SELECT * FROM info WHERE client=1 AND variety=$variety");
+    $res = $db->prepare("SELECT * FROM info WHERE client=? AND variety=?");
+    $res->execute(array(1, $variety));
     // Abfrageergebnis verarbeiten
     if (sqlite_num_rows($res) > 0) {
-        $content = sqlite_fetch_single($res);
+      $content = sqlite_fetch_single($res);
     }
     // Verbindung lösen
     $db->close();

@@ -222,7 +222,7 @@ def updatereq():
         # yapf: disable
         cursor.execute("""SELECT * FROM updatelog ORDER BY id DESC LIMIT 1""")
         # yapf: enable
-        dbdate = cursor[1]
+        dbdate = cursor[1]#funktioniert nicht, das cursor immer eine Liste mit den elementen enthält. fetchone() verwenden!!!
         lastupdate = cursor[3]
     connection.close()
     currenttime = time.strftime("%Y-%m-%d", time.gmtime())
@@ -269,7 +269,7 @@ def recycleready(para):
             connection = sqlite3.connect("freemind.db")
             cursor = connection.cursor()
             cursor.execute("""SELECT * FROM recycleready WHERE id=?""", (eid))
-            ready = cursor[1]
+            ready = cursor[1]# fetchone() verwenden!
             connection.close
             # yapf: enable
         except:

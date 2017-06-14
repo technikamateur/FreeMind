@@ -36,19 +36,18 @@
   ?>
   <?php
   function getinfo($variety) {
-    // Datenbankdatei öffnen
-    $db = new SQLite3("fmweb.db");
-    // Abfrage durchführen
-    $res = $db->prepare("SELECT * FROM info WHERE client=? AND variety=?");
-    $res->execute(array(1, $variety));
-    // Abfrageergebnis verarbeiten
-    if (sqlite_num_rows($res) > 0) {
-      $content = sqlite_fetch_single($res);
-    }
-    // Verbindung lösen
-    $db->close();
-    // Ergebnis zurückgeben
-    return $content;
+   // Datenbankdatei öffnen
+   $db = new SQLite3("fmweb.db");
+   // Abfrage durchführen
+   $result = $db->prepare('SELECT content FROM info WHERE client=:client AND variety=:variety');
+   $result->bindValue(':client', 1, SQLITE3_INTEGER);
+   $result->bindValue(':variety', $variety, SQLITE3_INTEGER);
+   $result = $result->execute();
+   $data = $result->fetchArray();
+   // Verbindung lösen
+   $db->close();
+   // Ergebnis zurückgeben
+   return $data["content"];
   }
   ?>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">

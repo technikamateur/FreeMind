@@ -57,9 +57,9 @@
     <div>
       <ul class="nav navbar-nav">
         <li><a href="index.html">Startseite</a></li>
-        <li class="active"><a href="server.php">Server</a></li>
-        <li><a href="bananapi.html">Banana Pi</a></li>
-        <li><a href="freemind.pdf">Handbuch</a></li>
+        <li class="active"><a href="master.php">Server</a></li>
+        <li><a href="slave.php">Banana Pi</a></li>
+        <li><a href="https://github.com/technikamateur/FreeMind/wiki" target="_blank">Handbuch</a></li>
       </ul>
     </div>
   </nav>

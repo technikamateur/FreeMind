@@ -48,7 +48,7 @@ def create():
         prep_actionlog()
 
 
-def prep_actionlog():
+def prep_actionlog(): # Nicht manuell ausführen - wird über create() durchgeführt
     connection = sqlite3.connect("freemind.db")
     cursor = connection.cursor()
     for i in range(1,3): # 1=master; 2=slave
@@ -59,7 +59,7 @@ def prep_actionlog():
     connection.close()
 
 
-def prep_clients():
+def prep_clients(): # Nicht manuell ausführen - wird über create() durchgeführt
     connection = sqlite3.connect("freemind.db")
     cursor = connection.cursor()
     cursor.execute("""INSERT INTO clients(client, name)

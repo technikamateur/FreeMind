@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Dieses Script sollte nicht als root ausgeführt werden
 
+import os
 import sys
 import sqlite3
 import time
@@ -42,14 +43,18 @@ def actionlog(client, variety):
 
 
 # 1=OS-Update; 2=FM-Update; 3=Backup-done; 4=Do-Backup?
-result = ""
-if sys.argv[1] < 4:
+try:
+    para = int(sys.argv[1])
+except Exception as e:
+    print("Parameter not valid!")
+    sys.exit(2)
+if para < 4:
     if os.path.isfile("freemind.db"):
-        actionlog(2, sys.argv[1])
+        actionlog(2, para)
     else:
         pass # Datenbank ist nicht vorhanden
-elif sys.argv[1] == 4: # Do Backup? - Wird aktuell einfach bejat
+elif para == 4: # Do Backup? - Wird aktuell einfach bejat
     result = "true"
+    print(result)
 else:
     pass # Argument Error
-print(result)

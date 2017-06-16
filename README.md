@@ -6,16 +6,13 @@
 ***
 
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl.txt)
+[![Stable](https://img.shields.io/badge/Master%20Version-none-green.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
+[![Stable](https://img.shields.io/badge/Slave%20Version-none-green.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
 
-Master-Version:
+Current Beta:
 
-[![Stable](https://img.shields.io/badge/Stable%20Version-none-green.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
-[![beta](https://img.shields.io/badge/Beta%20Version-none-yellow.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
-
-Slave-Version:
-
-[![Stable](https://img.shields.io/badge/Stable%20Version-none-green.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
-[![beta](https://img.shields.io/badge/Beta%20Version-1.0-yellow.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
+[![beta](https://img.shields.io/badge/Master%20Beta%20Version-none-yellow.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
+[![beta](https://img.shields.io/badge/Slave%20Beta%20Version-1.0-yellow.svg?style=flat-square)](https://github.com/technikamateur/FreeMind/releases)
 
 #### Important information:
 All releases, wich are marked with the *beta* tag are not stable! Use them only for testing purposes and if you absolutely know what you are doing!

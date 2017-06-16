@@ -52,11 +52,11 @@
   ?>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html">FreeMind</a>
+      <a class="navbar-brand" href="/">FreeMind</a>
     </div>
     <div>
       <ul class="nav navbar-nav">
-        <li><a href="index.html">Startseite</a></li>
+        <li><a href="/">Startseite</a></li>
         <li class="active"><a href="master.php">Server</a></li>
         <li><a href="slave.php">Banana Pi</a></li>
         <li><a href="https://github.com/technikamateur/FreeMind/wiki" target="_blank">Handbuch</a></li>

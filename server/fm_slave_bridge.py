@@ -19,14 +19,37 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+# Dieses Script sollte nicht als root ausgeführt werden
+
 import sys
-import libary
+import sqlite3
+import time
+
+
+# No root variante - libary.py nur für root
+def actionlog(client, variety):
+    # sicherstellen, dass client und variety integer sind
+    client = int(client)
+    variety = int(variety)
+    content = time.strftime("%Y-%m-%d", time.gmtime())
+    content = str(content)
+    connection = sqlite3.connect("freemind.db")
+    cursor = connection.cursor()
+    cursor.execute("""UPDATE actionlog SET content=?
+                      WHERE client=? AND variety=?""", (content, client, variety))
+    connection.commit()
+    connection.close()
 
 
 # 1=OS-Update; 2=FM-Update; 3=Backup-done; 4=Do-Backup?
+result = ""
 if sys.argv[1] < 4:
-    libary.create()
-    libary.insert_actionlog(2, sys.argv[1])
-else: # Do Backup?
-    pass
+    if os.path.isfile("freemind.db"):
+        actionlog(2, sys.argv[1])
+    else:
+        pass # Datenbank ist nicht vorhanden
+elif sys.argv[1] == 4: # Do Backup? - Wird aktuell einfach bejat
+    result = "true"
+else:
+    pass # Argument Error
 print(result)

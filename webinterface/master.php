@@ -21,7 +21,7 @@
   $name = array();
   $color = array();
   // Datenbankdatei öffnen
-  $db = new SQLite3("fmweb.db");
+  $db = new SQLite3("/opt/freemind/freemind.db");
   // Abfrage durchführen
   $res = $db->query("SELECT * FROM memory");
   // Abfrageergebnis verarbeiten

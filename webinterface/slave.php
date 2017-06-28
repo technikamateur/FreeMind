@@ -17,7 +17,7 @@
   <?php
   function getinfo($variety) {
    // Datenbankdatei öffnen
-   $db = new SQLite3("fmweb.db");
+   $db = new SQLite3("/opt/freemind/freemind.db");
    // Abfrage durchführen
    $result = $db->prepare('SELECT content FROM info WHERE client=:client AND variety=:variety');
    $result->bindValue(':client', 2, SQLITE3_INTEGER);

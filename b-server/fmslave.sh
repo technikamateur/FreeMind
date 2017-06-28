@@ -26,7 +26,7 @@ if [[ $EUID != 0 ]]; then
   exit 1
 fi
 if [[ $1 == "backup" ]]; then
-  backup=$($varcurl -s --request GET "192.168.0.111/bridge?action=DO_BACKUP")
+  backup=$($varcurl -s --request GET "192.168.0.111:5000/bridge?action=DO_BACKUP")
   if [[ $backup == "true" ]]; then
     mount | grep /dev/sda1 > /dev/null # prüfen, ob HDD angeschlossen
     if [[ $? == 0 ]]; then
@@ -35,14 +35,14 @@ if [[ $1 == "backup" ]]; then
         find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
         chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
         chmod -R 700 /media/backupdrive/igfserverbackup
-        $varcurl -s --request GET "192.168.0.111/bridge?action=BACKUP&status=SUCCESS" > /dev/null # Backup-done
+        $varcurl -s --request GET "192.168.0.111:5000/bridge?action=BACKUP&status=SUCCESS" > /dev/null # Backup-done
         exit 0
       else
-        $varcurl -s --request GET "192.168.0.111/bridge?action=BACKUP&status=FAILED" > /dev/null # Backup f3hler
+        $varcurl -s --request GET "192.168.0.111:5000/bridge?action=BACKUP&status=FAILED" > /dev/null # Backup f3hler
         exit 99
       fi
     else
-      $varcurl -s --request GET "192.168.0.111/bridge?action=HDD_ERROR" > /dev/null # Festplatte nicht online
+      $varcurl -s --request GET "192.168.0.111:5000/bridge?action=HDD_ERROR" > /dev/null # Festplatte nicht online
       exit 99
     fi
   fi

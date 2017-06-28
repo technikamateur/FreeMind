@@ -29,8 +29,20 @@ fi
 if [[ $1 == "backup" ]]; then
   backup=$($varcurl -s --request GET "192.168.0.111/bridge.php?action=4")
   if [[ $backup == "true" ]]; then
-    bash autobackup.sh
-    $varcurl -s --request GET "192.168.0.111/bridge.php?action=3" > /dev/null
+    mount | grep /dev/sda1 > /dev/null # prüfen, ob HDD angeschlossen
+    if [[ $? == 0 ]]; then
+      rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@192.168.0.111:/media/fileraid/ /media/backupdrive/igfserverbackup --exclude='.recycle'
+      if [[ $? == 0 ]]; then
+        find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
+        chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
+        chmod -R 700 /media/backupdrive/igfserverbackup
+        $varcurl -s --request GET "192.168.0.111/bridge.php?action=3" > /dev/null # Backup-done
+      else
+        $varcurl -s --request GET "192.168.0.111/bridge.php?action=5" > /dev/null # Backup f3hler
+      fi
+    else
+      $varcurl -s --request GET "192.168.0.111/bridge.php?action=6" > /dev/null # Festplatte nicht online
+    fi
   fi
 fi
 if [[ $1 == "update" ]]; then

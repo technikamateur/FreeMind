@@ -33,6 +33,11 @@ def create():
         cursor.execute("""CREATE TABLE IF NOT EXISTS recycleready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
+                          drive INTEGER PRIMARY KEY,
+                          name TEXT,
+                          percent INTEGER,
+                          smart TEXT);""") # smart enthält Farbe; green = passed; red = failed; dark = unknown;
         cursor.execute("""CREATE TABLE IF NOT EXISTS backupready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""")
@@ -43,6 +48,9 @@ def create():
         cursor.execute("""CREATE TABLE IF NOT EXISTS clients(
                           client INTEGER PRIMARY KEY,
                           name TEXT);""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS logging(
+                          timetime REAL,
+                          errortype TEXT);""")
         connection.close()
         prep_clients()
         prep_actionlog()

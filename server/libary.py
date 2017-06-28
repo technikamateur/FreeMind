@@ -42,9 +42,6 @@ def create():
                           name TEXT,
                           percent INTEGER,
                           smart TEXT);""") # smart enthält Farbe; green = passed; red = failed; dark = unknown;
-        cursor.execute("""CREATE TABLE IF NOT EXISTS backupready(
-                          id INTEGER PRIMARY KEY,
-                          ready INTEGER);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS actionlog(
                           client INTEGER,
                           variety INTEGER,

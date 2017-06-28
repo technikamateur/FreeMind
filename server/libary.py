@@ -27,7 +27,6 @@ import shutil # Dateien verschieben
 import logging # Logs
 from logging.handlers import SMTPHandler # Mails
 import config # Config
-import time
 
 
 def create():

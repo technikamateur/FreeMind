@@ -49,8 +49,8 @@ def create():
                           client INTEGER PRIMARY KEY,
                           name TEXT);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS logging(
-                          timetime REAL,
-                          errortype TEXT);""")
+                          timestamp REAL,
+                          message TEXT);""")
         connection.close()
         prep_clients()
         prep_actionlog()

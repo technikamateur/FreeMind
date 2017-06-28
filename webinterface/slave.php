@@ -19,7 +19,7 @@
    // Datenbankdatei öffnen
    $db = new SQLite3("/opt/freemind/freemind.db");
    // Abfrage durchführen
-   $result = $db->prepare('SELECT content FROM info WHERE client=:client AND variety=:variety');
+   $result = $db->prepare('SELECT content FROM actionlog WHERE client=:client AND variety=:variety');
    $result->bindValue(':client', 2, SQLITE3_INTEGER);
    $result->bindValue(':variety', $variety, SQLITE3_INTEGER);
    $result = $result->execute();

@@ -234,6 +234,10 @@ def spacegrabber():
 class MySMTPHandler(SMTPHandler):
     lastMail = False;
 
+    def getSubject(self, record):
+        formatter = logging.Formatter(fmt=self.subject)
+        return formatter.format(record)
+
     def emit(self, record):
         now = record.created
         if not self.lastMail or (self.lastMail - now) > 10:
@@ -241,10 +245,6 @@ class MySMTPHandler(SMTPHandler):
             self.lastMail = now;
 
 class SQLiteHandler(logging.StreamHandler):
-    """
-    A handler class which allows the cursor to stay on
-    one line for selected messages
-    """
     def emit(self, record):
        connection = sqlite3.connect("freemind.db")
        cursor = connection.cursor()
@@ -274,3 +274,4 @@ __sqliteHandler = SQLiteHandler()
 logger.addHandler(__sqliteHandler)
 
 
+logger.warn('sd')

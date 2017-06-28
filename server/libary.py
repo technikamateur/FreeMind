@@ -24,6 +24,10 @@ import time # Zeitstempel - logging, etc.
 import sqlite3 # Für sämtliche Datenbankoperationen
 import subprocess # Subprozesse (shell) ausführen
 import shutil # Dateien verschieben
+import logging # Logs
+from logging.handlers import SMTPHandler # Mails
+import config # Config
+import time
 
 
 def create():
@@ -43,6 +47,7 @@ def create():
         cursor.execute("""CREATE TABLE IF NOT EXISTS clients(
                           client INTEGER PRIMARY KEY,
                           name TEXT);""")
+
         connection.close()
         prep_clients()
         prep_actionlog()
@@ -210,3 +215,49 @@ def spacegrabber():
         percent = 100 * float(memis[i]) / float(memtotal[i])
         mempercent.append(int(round(percent)))
     return hddname, mempercent, smart
+
+###############################################################################
+#                                    Logging                                  #
+###############################################################################
+
+# Patch SMTPHandler
+class MySMTPHandler(SMTPHandler):
+    lastMail = False;
+
+    def emit(self, record):
+        now = time.time()
+        if not self.lastMail or (self.lastMail - now) > 10:
+            super(MySMTPHandler,self).emit(record)
+            self.lastMail = now;
+
+class SQLiteHandler(logging.StreamHandler):
+    """
+    A handler class which allows the cursor to stay on
+    one line for selected messages
+    """
+    def emit(self, record):
+       connection = sqlite3.connect("fmweb.db")
+       cursor = connection.cursor()
+       cursor.execute("""insert INTO loggin(timestamp, message) VALUES(?,?,?)""", (time.time(), self.format(record)))
+
+# Set up Logging and Levels
+logger = logging.getLogger();
+logger.setLevel(logging.DEBUG);
+
+# Add multiple Mail Handlers for Levels
+for level in config.mail['mailAdresses']:
+    if len(config.mail['mailAdresses'][level]) == 0:
+        continue
+
+    __handler = MySMTPHandler(config.mail['mailServer']['host'],
+                            '<server@' + config.mail['mailServer']['host'] + '> FreeMind',
+                            config.mail['mailAdresses'][level],
+                            subject=config.mail['subjectLine'],
+                            credentials=(config.mail['mailServer']['username'], config.mail['mailServer']['password']))
+
+    __handler.setLevel(level)
+    logger.addHandler(__handler)
+
+__sqliteHandler = SQLiteHandler()
+
+logger.warn(config.warnings['full'], 'sda1')

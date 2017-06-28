@@ -62,3 +62,6 @@ while read line; do
     echo $hdd+$hddname+$memis+$memtotal >> /tmp/mem.dat
   fi
 done < $(dirname "$(readlink -e "$0")")/disks.conf
+
+chmown fmuser /tmp/mem.dat
+chmown fmuser /tmp/smart.dat

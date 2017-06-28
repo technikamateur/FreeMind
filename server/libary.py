@@ -95,27 +95,15 @@ def insert_actionlog(client, variety):
     connection.close()
 
 
-def buildfmweb():
+def writeSpacegrab():
     hddnames, hddmem, hddsmart = spacegrabber()
     lena = len(hddnames)
     lenb = len(hddmem)
     lenc = len(hddsmart)
     if lena == lenb and lenb == lenc:
-        try:
-            os.remove("fmweb.db")
-        except:
-            pass
-        connection = sqlite3.connect("fmweb.db")
+        connection = sqlite3.connect("../freemind.db")  
         cursor = connection.cursor()
-        cursor.execute("""CREATE TABLE IF NOT EXISTS memory(
-                          drive INTEGER PRIMARY KEY,
-                          name TEXT,
-                          percent INTEGER,
-                          smart TEXT);""") # smart enthält Farbe
-        cursor.execute("""CREATE TABLE IF NOT EXISTS info(
-                          client INTEGER,
-                          variety INTEGER,
-                          content TEXT);""")
+
         for i in range(0, lena):
             name = str(hddnames[i])
             mem = int(hddmem[i])
@@ -129,30 +117,6 @@ def buildfmweb():
                               VALUES(?,?,?,?)""", (i, name, mem, smart))
         connection.commit()
         connection.close()
-        # jetzt kommt die actionlog migrierung
-        # arrays erstellen und Daten einlesen
-        client = []
-        variety = []
-        content = []
-        connection = sqlite3.connect("../freemind.db")
-        cursor = connection.cursor()
-        cursor.execute("""SELECT * FROM actionlog""")
-        for dsatz in cursor:
-            client.append(dsatz[0])
-            variety.append(dsatz[1])
-            content.append(dsatz[2])
-        connection.close()
-        # Daten in fmweb.db übertragen
-        connection = sqlite3.connect("fmweb.db")
-        cursor = connection.cursor()
-        for i in range(0,8):
-            cursor.execute("""INSERT INTO info(client, variety, content)
-                              VALUES(?,?,?)""", (client[i],variety[i],content[i]))
-        connection.commit()
-        connection.close()
-        # verschieben und Rechte setzten
-        shutil.move(os.path.join("/etc/freemind/", "fmweb.db"), os.path.join("/var/www/freemind/", "fmweb.db"))
-        os.chmod("/var/www/freemind/fmweb.db", 0o644)
     else:
         pass
         # Error verarbeiten: es exsistiert nicht die dieselbe anzahl von namen, mem und smart.
@@ -160,7 +124,7 @@ def buildfmweb():
 
 def spacegrabber():
     # gethdd.sh ausführen
-    subprocess.call(["sudo", "bash", "../utils/gethdd.sh"], cwd='../utils')
+    subprocess.call(["sudo", "bash", "../utils/gethdd.sh"])
     # Import Festplatteninformationen
     with open("/tmp/mem.dat") as f:
         data = []

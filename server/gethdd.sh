@@ -43,7 +43,7 @@ while read line; do
       echo "unknown" >> /tmp/smart.dat
     fi
   fi
-done < ./disks.conf
+done <${BASH_SOURCE[0]}/disks.conf
 # get memory
 while read line; do
   if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
@@ -61,4 +61,4 @@ while read line; do
     fi
     echo $hdd+$hddname+$memis+$memtotal >> /tmp/mem.dat
   fi
-done < ./disks.conf
+done < ${BASH_SOURCE[0]}/disks.conf

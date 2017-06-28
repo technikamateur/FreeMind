@@ -34,6 +34,7 @@ def create():
     if not os.path.isfile("freemind.db"):
         connection = sqlite3.connect("freemind.db")
         cursor = connection.cursor()
+
         cursor.execute("""CREATE TABLE IF NOT EXISTS recycleready(
                           id INTEGER PRIMARY KEY,
                           ready INTEGER);""")
@@ -54,6 +55,7 @@ def create():
                           name TEXT);""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS logging(
                           timestamp REAL,
+                          level INTEGER,
                           message TEXT);""")
 
         connection.close()
@@ -233,7 +235,7 @@ class MySMTPHandler(SMTPHandler):
     lastMail = False;
 
     def emit(self, record):
-        now = time.time()
+        now = record.created
         if not self.lastMail or (self.lastMail - now) > 10:
             super(MySMTPHandler,self).emit(record)
             self.lastMail = now;
@@ -244,9 +246,11 @@ class SQLiteHandler(logging.StreamHandler):
     one line for selected messages
     """
     def emit(self, record):
-       connection = sqlite3.connect("fmweb.db")
+       connection = sqlite3.connect("freemind.db")
        cursor = connection.cursor()
-       cursor.execute("""insert INTO loggin(timestamp, message) VALUES(?,?,?)""", (time.time(), self.format(record)))
+       cursor.execute("""insert INTO logging(timestamp, level, message) VALUES(?,?,?)""", (time.time(), record.levelno, self.format(record)))
+       connection.commit()
+       connection.close()
 
 # Set up Logging and Levels
 logger = logging.getLogger();
@@ -267,5 +271,6 @@ for level in config.mail['mailAdresses']:
     logger.addHandler(__handler)
 
 __sqliteHandler = SQLiteHandler()
+logger.addHandler(__sqliteHandler)
 
-logger.warn(config.warnings['full'], 'sda1')
+

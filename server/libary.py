@@ -30,8 +30,8 @@ import config # Config
 
 
 def create():
-    if not os.path.isfile("freemind.db"):
-        connection = sqlite3.connect("freemind.db")
+    if not os.path.isfile("../freemind.db"):
+        connection = sqlite3.connect("../freemind.db")
         cursor = connection.cursor()
 
         cursor.execute("""CREATE TABLE IF NOT EXISTS recycleready(
@@ -63,7 +63,7 @@ def create():
 
 
 def prep_actionlog(): # Nicht manuell ausführen - wird über create() durchgeführt
-    connection = sqlite3.connect("freemind.db")
+    connection = sqlite3.connect("../freemind.db")
     cursor = connection.cursor()
     for i in range(1,3): # 1=master; 2=slave
         for k in range(1,5):# 1=OS-Update; 2=FM-Update; 3=letztes Backup; 4=Letzte Ausführung Papierkorb - nicht slave!
@@ -74,7 +74,7 @@ def prep_actionlog(): # Nicht manuell ausführen - wird über create() durchgef�
 
 
 def prep_clients(): # Nicht manuell ausführen - wird über create() durchgeführt
-    connection = sqlite3.connect("freemind.db")
+    connection = sqlite3.connect("../freemind.db")
     cursor = connection.cursor()
     cursor.execute("""INSERT INTO clients(client, name)
                       VALUES(?,?)""", (1,"Server"))
@@ -90,7 +90,7 @@ def insert_actionlog(client, variety):
     variety = int(variety)
     content = time.strftime("%Y-%m-%d", time.gmtime())
     content = str(content)
-    connection = sqlite3.connect("freemind.db")
+    connection = sqlite3.connect("../freemind.db")
     cursor = connection.cursor()
     cursor.execute("""UPDATE actionlog SET content=?
                       WHERE client=? AND variety=?""", (content, client, variety))
@@ -137,7 +137,7 @@ def buildfmweb():
         client = []
         variety = []
         content = []
-        connection = sqlite3.connect("freemind.db")
+        connection = sqlite3.connect("../freemind.db")
         cursor = connection.cursor()
         cursor.execute("""SELECT * FROM actionlog""")
         for dsatz in cursor:
@@ -163,22 +163,22 @@ def buildfmweb():
 
 def spacegrabber():
     # gethdd.sh ausführen
-    subprocess.call(["sudo", "bash", "gethdd.sh"])
+    subprocess.call(["sudo", "bash", "../utils/gethdd.sh"], cwd='../utils')
     # Import Festplatteninformationen
-    with open("mem.dat") as f:
+    with open("/tmp/mem.dat") as f:
         data = []
         for line in f:
             line = line.rstrip("\n")
             data.append(line)
     # Import S.M.A.R.T. Informationen
-    with open("smart.dat") as f:
+    with open("/tmp/smart.dat") as f:
         smart = []
         for line in f:
             line = line.rstrip("\n")
             smart.append(line)
     # Quelle löschen
-    os.remove("smart.dat")
-    os.remove("mem.dat")
+    os.remove("/tmp/smart.dat")
+    os.remove("/tmp/mem.dat")
     # Arrays für Kategorien erzeugen
     hdd = []
     hddname = []
@@ -238,21 +238,21 @@ class MySMTPHandler(SMTPHandler):
         return formatter.format(record)
 
     def emit(self, record):
-        now = record.created
-        if not self.lastMail or (self.lastMail - now) > 10:
+        now = time.time()
+        if not self.lastMail or (now - self.lastMail) > 10:
             super(MySMTPHandler,self).emit(record)
             self.lastMail = now;
 
 class SQLiteHandler(logging.StreamHandler):
     def emit(self, record):
-       connection = sqlite3.connect("freemind.db")
+       connection = sqlite3.connect("../freemind.db")
        cursor = connection.cursor()
        cursor.execute("""insert INTO logging(timestamp, level, message) VALUES(?,?,?)""", (time.time(), record.levelno, self.format(record)))
        connection.commit()
        connection.close()
 
 # Set up Logging and Levels
-logger = logging.getLogger();
+logger = logging.getLogger('SERVER');
 logger.setLevel(logging.DEBUG);
 
 # Add multiple Mail Handlers for Levels
@@ -270,7 +270,11 @@ for level in config.mail['mailAdresses']:
     logger.addHandler(__handler)
 
 __sqliteHandler = SQLiteHandler()
+__sqliteHandler.setLevel(logging.DEBUG)
 logger.addHandler(__sqliteHandler)
 
 
-logger.warn('sd')
+###############################################################################
+#                                  Bootstrap                                  #
+###############################################################################
+create()

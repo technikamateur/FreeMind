@@ -21,7 +21,7 @@ if [[ $EUID != 0 ]]; then
   exit 1
 fi
 # cleaning up...
-rm -f /tmp/smart.dat
+rm -f smart.dat
 rm -f /tmp/mem.dat
 # get S.M.A.R.T.
 # disks.conf wird eingelesen und der smart status wird ermittelt. Die drei Typen
@@ -43,7 +43,7 @@ while read line; do
       echo "unknown" >> /tmp/smart.dat
     fi
   fi
-done < ./disks.conf
+done < disks.conf
 # get memory
 while read line; do
   if [[ $line == *"#"* ]] || [[ $line == *"<"* ]]; then
@@ -61,4 +61,4 @@ while read line; do
     fi
     echo $hdd+$hddname+$memis+$memtotal >> /tmp/mem.dat
   fi
-done < ./disks.conf
+done < disks.conf

@@ -25,7 +25,6 @@ if [[ $EUID != 0 ]]; then
   echo "Please run script as root!"
   exit 1
 fi
-# starting update procedure...
 if [[ $1 == "backup" ]]; then
   backup=$($varcurl -s --request GET "192.168.0.111/bridge.php?action=4")
   if [[ $backup == "true" ]]; then
@@ -37,11 +36,14 @@ if [[ $1 == "backup" ]]; then
         chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
         chmod -R 700 /media/backupdrive/igfserverbackup
         $varcurl -s --request GET "192.168.0.111/bridge.php?action=3" > /dev/null # Backup-done
+        exit 0
       else
         $varcurl -s --request GET "192.168.0.111/bridge.php?action=5" > /dev/null # Backup f3hler
+        exit 99
       fi
     else
       $varcurl -s --request GET "192.168.0.111/bridge.php?action=6" > /dev/null # Festplatte nicht online
+      exit 99
     fi
   fi
 fi
@@ -59,5 +61,6 @@ if [[ $1 == "update" ]]; then
       exit 0
     fi
   fi
+  exit 3
 fi
 exit 0

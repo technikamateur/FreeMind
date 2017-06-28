@@ -173,9 +173,6 @@ def spacegrabber():
         for line in f:
             line = line.rstrip("\n")
             smart.append(line)
-    # Quelle löschen
-    os.remove("/tmp/smart.dat")
-    os.remove("/tmp/mem.dat")
     # Arrays für Kategorien erzeugen
     hdd = []
     hddname = []

@@ -36,7 +36,7 @@ def doBackUp():
     except:
         return 'False'
 
-    for hdd in range(0, len(hddname)):
+    for hdd in hddname:
         if mempercent[hdd] > 90 or smart[hdd] != 'passed':
             return 'False'
 

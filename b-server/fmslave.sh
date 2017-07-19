@@ -39,14 +39,15 @@ if [[ $1 == "backup" ]]; then
         exit 0
       else
         $varcurl -s --request GET "192.168.0.111:5000/bridge?action=BACKUP&status=FAILED" > /dev/null # Backup f3hler
-        exit 99
       fi
     else
       $varcurl -s --request GET "192.168.0.111:5000/bridge?action=HDD_ERROR" > /dev/null # Festplatte nicht online
-      exit 99
     fi
+  else
+    exit 0
   fi
 fi
+exit 99
 if [[ $1 == "update" ]]; then
   $varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version" > /dev/null || $internet=false
   if [[ $internet == true ]]; then

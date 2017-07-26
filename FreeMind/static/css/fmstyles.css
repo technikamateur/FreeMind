@@ -1,0 +1,83 @@
+/* Abstand nach unten immer 5em */
+.informationbox {
+  width: 98%;
+  margin: 5em auto 5em auto;
+}
+
+.memorybox {
+  width: 98%;
+  margin: 0 auto 5em auto;
+}
+
+.memorybox__circles {
+  width: 95%;
+  margin: 2em auto 0 auto;
+}
+
+.memorybox__description {
+  width: 200px;
+  margin: 1em auto 0 auto;
+  text-align: center;
+}
+
+.actionbox {
+  width: 98%;
+  margin: 0 auto 0 auto;
+}
+
+.actionbox__actions {
+  width: 95%;
+  margin: 2em auto 0 auto;
+}
+
+.centerText {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.picturebox {
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+/*fonts*/
+f1 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.75em;
+  color: #494949;
+}
+
+f2 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.5em;
+  color: #494949;
+}
+
+f3 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.0em;
+  font-weight: bold;
+  color: #494949;
+}
+
+f4 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.0em;
+  color: #494949;
+}
+
+f5 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #494949;
+}
+
+f6 {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 1.2em;
+  color: #494949;
+}

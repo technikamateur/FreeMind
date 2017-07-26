@@ -20,28 +20,36 @@
 version="1.0"
 internet=true
 varcurl=curl
+host="192.168.0.111"
+port=5000
+
+function getURL() {
+    printf "http://$host\:$port\/bridge?action=$1"
+    [ -z "$2" ] || printf "&status=$2" 
+}
+
 # checking superuser
 if [[ $EUID != 0 ]]; then
   echo "Please run script as root!"
   exit 1
 fi
 if [[ $1 == "backup" ]]; then
-  backup=$($varcurl -s --request GET "192.168.0.111:5000/bridge?action=DO_BACKUP")
+  backup=$($varcurl -s --request GET "`getURL DO_BACKUP`")
   if [[ $backup == "true" ]]; then
     mount | grep /dev/sda1 > /dev/null # prüfen, ob HDD angeschlossen
     if [[ $? == 0 ]]; then
-      rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@192.168.0.111:/media/fileraid/ /media/backupdrive/igfserverbackup --exclude='.recycle'
+      rsync --rsync-path="sudo rsync" --delete -aze 'ssh -i /root/.ssh/id_rsa' rsyncuser@$host:/media/fileraid/ /media/backupdrive/igfserverbackup --exclude='.recycle'
       if [[ $? == 0 ]]; then
         find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
         chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
         chmod -R 700 /media/backupdrive/igfserverbackup
-        $varcurl -s --request GET "192.168.0.111:5000/bridge?action=BACKUP&status=SUCCESS" > /dev/null # Backup-done
+        $varcurl -s --request GET "`getURL BACKUP SUCCESS`" > /dev/null # Backup-done
         exit 0
       else
-        $varcurl -s --request GET "192.168.0.111:5000/bridge?action=BACKUP&status=FAILED" > /dev/null # Backup f3hler
+        $varcurl -s --request GET "getURL BACKUP FAILED" > /dev/null # Backup f3hler
       fi
     else
-      $varcurl -s --request GET "192.168.0.111:5000/bridge?action=HDD_ERROR" > /dev/null # Festplatte nicht online
+      $varcurl -s --request GET "getURL HDD_ERROR" > /dev/null # Festplatte nicht online
     fi
   else
     exit 0

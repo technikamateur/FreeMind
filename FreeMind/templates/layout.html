@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+
+    <head>
+        <title>FreeMind</title>
+        <meta charset="UTF-8" />
+        <script type="text/javascript" src="{{ url_for('static', filename='js/moment.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <link rel="shortcut icon" type="image/png" href="favicon-300px.png">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fmstyles.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/circle.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reflex.min.css') }}">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">FreeMind</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Startseite</a></li>
+                    <li class="active"><a href="{{url_for('renderMaster')}}">Server</a></li>
+                    <li><a href="{{url_for('renderSlave')}}">Banana Pi</a></li>
+                    <li><a href="https://github.com/technikamateur/FreeMind/wiki" target="_blank">Handbuch</a></li>
+                </ul>
+            </div>
+            {% block body %}{% endblock %}
+        </nav>
+        <body>
+</html>

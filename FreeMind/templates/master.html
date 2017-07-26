@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="informationbox">
+    <f2>Systeminformationen:</f2><br><br>
+    <div class="grid">
+        <div class="grid__col-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <f3>Server Betriebssystem: </f3>
+                    <f4> Ubuntu Server 16.04 (64bit)</f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>CPU: </f3>
+                    <f4> AMD A4-6300</f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>RAM: </f3>
+                    <f4> 4GB</f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>Mainboard: </f3>
+                    <f4> GA-f3A78M-HD2 (rev. 3.1)</f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>Gesamtspeicherplatz: </f3>
+                    <f4> > 8TB</f4>
+                </li>
+            </ul>
+        </div>
+        <div class="grid__col-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <f3>Letztes OS-Update: </f3>
+                    <f4> <?php $content = getinfo(1); echo $content; ?></f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>Letztes FreeMind-Update: </f3>
+                    <f4> <?php $content = getinfo(2); echo $content; ?></f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>Letzte Ausführung Papierkorb-Skript: </f3>
+                    <f4> <?php $content = getinfo(4); echo $content; ?></f4>
+                </li>
+                <li class="list-group-item">
+                    <f3>Letztes Backup: </f3>
+                    <f3>{{ momentjs(lastBackup).calendar()}}</f4>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="memorybox">
+    <f2>Speicherübersicht:</f2>
+    <div class="memorybox__circles">
+        <div class="grid">
+            {% for dev, hdd in hdds.items() %}
+            <div class="grid__col-3">
+                <div class="c100 p{{hdd.full}} big center {{hdd.color}}">
+                    <span>
+                        {{hdd.full}}%
+                    </span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <div class="memorybox__description">
+                    <f5>{{hdd.name}}</f5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="actionbox">
+    <f2> Serveraktionen:</f2>
+    <div class="actionbox__actions">
+        Jetzt ein grid...
+        <p>
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputPassword3">Password</label>
+                <input type="password" class="form-control" id="passwordform" placeholder="Passwort">
+            </div>
+            <a class="btn btn-default" href="#" role="button">Herunterfahren</a>
+            <a class="btn btn-default" href="#" role="button">Neustart</a>
+            <a class="btn btn-default" href="#" role="button">Aktualisieren</a>
+            <a class="btn btn-default" href="#" role="button">Dateisysteme prüfen</a>
+            <a class="btn btn-default" href="#" role="button">Festplatten prüfen</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

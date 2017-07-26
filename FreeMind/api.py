@@ -1,22 +1,37 @@
 from FreeMind import app
+from flask import request
+from FreeMind.action.actions import getHddHealth, getHddSpace
+from FreeMind.action.properties import Pi, Master
 
 @app.route('/bridge', methods=['GET'])
 def handleBridge():
     action = request.args.get('action')
     status = request.args.get('status')
 
-    # Did an OS Update
+    if action is None or status is None:
+        return "Invalid Request"
+
+    returnStatus = "OK"
+
     if action == "OS_UPDATE":
-        return bridge.handleOsUpdate(status)
+        Pi.osUpdate.set(status)
 
     elif action == "FM_UPDATE":
-        return bridge.handleOsUpdate(status)
+        Pi.freeMindUpdate.set(status)
 
     elif action == "BACKUP":
-        return bridge.handleBackup(status)
+        Master.backup.set(status)
 
     elif action == "DO_BACKUP":
-        return bridge.doBackUp()
+        returnStatus = shouldDoBackUp()
 
-    elif action == "HDD_ERROR":
-        return bridge.handleHddError()
+    elif action == "HDD_STATUS":
+        Pi.hddStatus.set(status)
+
+    return returnStatus
+
+def shouldDoBackUp():
+    space, spaceError, spaceErrorDetails = getHddSpace.run() # TODO: more elegant
+    health, healthError, healthErrorDetails = getHddHealth.run()
+
+    return "False" if spaceError or healthError else "True"

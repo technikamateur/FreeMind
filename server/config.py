@@ -9,7 +9,8 @@ mail = {
         "username": "m03f19d3",
         "password": "eN2QepkFcdaD"
     },
-    "subjectLine": "Freemind Logging | %(levelname)s | Na dann mal ran an den Speck!"
+    "subjectLine": "Freemind Logging | %(levelname)s | Na dann mal ran an den Speck!",
+    "interval": 10
 }
 
 warnings = {

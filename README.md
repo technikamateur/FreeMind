@@ -51,6 +51,11 @@ FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 
 
    FreeMind will now setup itself and install all requiered dependencies.
 
+## How to install the Web Interface
+1. Run `pip install -e FreeMind` to install the Package
+2. Run `export FLASK_APP=FreeMind`
+3. And finally `flask run` - enjoy
+
 ### Config files wich will be replaced:
 **the replaced config files can be found in /etc/freemind/old-conf**
 - /etc/nginx/nginx.conf

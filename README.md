@@ -21,6 +21,10 @@ The usage of FreeMind and all components is your own risk! Please understand tha
 
 ***
 
+## TODO:
+- Check todos in the project with `grep -R todo`...
+- Some modularizing around the `actions` has to be done...
+
 ## About:
 FreeMind is a simple webinterface, based on HTML and CSS and a powerful python3 backend. FreeMind makes it easy to manage your Samba-Fileserver, detect problems, create a backup, use snapshots, manage a recycle bin and some more pretty cool things wich safe a lot of time - actually your time. If you are interested in a detailed list of all features, see *Features*.
 

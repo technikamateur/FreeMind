@@ -186,7 +186,7 @@
   <div class="actionbox">
     <f2> Serveraktionen:</f2>
     <div class="actionbox__actions">
-      Jetzt ein grid...
+      Jetzt ein grid....
       <p>
         <div class="form-group">
           <label class="sr-only" for="exampleInputPassword3">Password</label>

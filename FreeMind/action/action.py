@@ -1,3 +1,11 @@
+""" TOPO - The Omni Present Observer
+
+It observes. Actually it is just a collection of a handy framework for observing values
+and running actions.
+
+RTFM and be enlightened.
+"""
+
 import time
 import subprocess
 import logging
@@ -18,31 +26,84 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 atexit.register(scheduler.shutdown)
 
-class _ErrorHandling(object):
-    def defaultIsError(self, value):
-        """Checks if the result is `None` or in the Error Dict.`"""
-        return value is None or value in self.errorMessages, value
+class Observer(Object):
+    """A class which provides basic monitoring methods and is inteded to be subclassed!
+    When subclassing !!be sure to call __init__!!
 
-    def defaultOnError(self, errorType, *args):
-        """The default error handler invokes the app logger."""
+    The errorMessages are a dictionary of which wonder, errorMessages.
+    (Check `isError` and onError for details.)
+
+    The methods implemented lay out an API for the Observer and provide handy and sufficient
+    implementations for most use cases.
+    """
+
+    def isError(self, value):
+        """Checks if the result is `None` or in the Error Dict.` If it is, it returns the
+        value in the bellow-stated manner.
+
+        In this implementation, the errorType is simply the value.
+        This is Ok for operations which can either go good or bad and return a
+        single (simple) Value.
+
+        The errorType can be any Value which can be matched against a dictionary
+        (see onError for the reason) and for the sake of simplicity and readibility
+        a string is suggested. (Ex. SCARY_ERROR)
+
+        This method should return tuple.
+        The first element is an array composed of tuples in the form
+        `(errorType, errorArgs)` where errorArgs is just an iterable of arguments containing
+        additional information about the error. In the provided `onError` these arguments are
+        supplied to the logger as values for the format string. Peanuts.
+
+        The second element is the Number of errors which have been found.
+
+        If everything went good and there is no error, just return `(False, False)`.
+        """
+        return False, False if value is None or value in self.errorMessag else \
+            ([value], None)
+
+    def onError(self, errors):
+        """The default error handler invokes the app logger with the given Arguments.
+
+        It expects an array of errors to handle.
+
+        An error is represented by a tuple in the shape `(errorType, arguments)`
+        where `arguments` is an iterable.
+        """
+
+        error = errors.pop()
+
+        if len(errors) > 0:
+            onError(errors)
+
+        errorType, args = error
 
         err = self.errorMessages['default'] if errorType is None \
               or self.errorMessages[errorType] is None else self.errorMessages[errorType]
 
+        logger.log(err['level'], err['message'], *args)
 
-        # TODO: nicer
-        if args[0] is None:
-            logger.log(err['level'], err['message'])
-        else:
-            logger.log(err['level'], err['message'], *args)
+    def onSuccess(self):
+        """A Proposal.
 
-    def __init__(self, errorMessages=None, onError=None, isError=None, *args, **kwargs):
-         # A function which is invoked if an error Value is returned by the action.
-        self.onError = self.defaultOnError if onError is None else onError
+        You may want to Implement logging here.
+        """
+        raise NotImplementedError
 
-        # A function that evaluates, if the the result of the Action is an Error
-        self.isError = self.defaultIsError if isError is None else isError
+    def observe(self, *args, **kwargs):
+        """This method just comfortably combines the boilerplate of observing.
+        Give it, what you would pass to the isError method and it automatically
+        calls on error, if an error happened.
 
+        In all other ways it behaves like `isError`."""
+        error, numErr = self.isError(*args, **kwargs)
+
+        if not error is False:
+            self.onError(error, multiple=numErr)
+
+        return error, numErr
+
+    def __init__(self, errorMessages=None, *args, **kwargs):
         # A dictionary with errors and log-reactions.
         self.errorMessages = copy.deepcopy(errorHandlingConfig["defaultErrorMessages"])
 
@@ -50,7 +111,7 @@ class _ErrorHandling(object):
             for key in errorMessages:
                 self.errorMessages[key] = errorMessages[key]
 
-class DataBaseProperty(object):
+class PersistentProperty(object):
     """A Class to manage Properties, which are obtained across time and therefore are sortable (preferably with a timestamp)."""
     def get(self):
         return self._value
@@ -88,26 +149,26 @@ class DataBaseProperty(object):
         self.serialized = hasattr(model, 'deSerialize') # TODO: Better Implementation
         self._value = self._getLatestFromDb()
 
-class BinaryDBProperty(_ErrorHandling, DataBaseProperty):
-    """A DataBaseProperty child with _errorHandling.
-    The value can either represent success, or a failure (thus binary).
+class ObservedPersistentProperty(Observer, PersistentProperty):
+    """A PersistentProperty child with _errorHandling.
+    The value can either represent success, or a failure.
     This represents a very common special case of a property.
-    The model which is being used must contain a `success` key as keyword Argument."""
+    The model which is being used must contain a `success` key as keyword Argument.
+
+    This class is really only to be used for single valued properties.
+    If you want fancier properties, be sure to overwrite the isError method.
+    """
 
     def set(self, *args, **kwargs):
-        error, errorType = self.isError(*args, **kwargs)
+        error, errorType = self.isError(*args, **kwargs)[0]
 
         if error:
-            if len(kwargs) > 0:
-                self.onError(errorType, kwargs, *args)
-            else:
                 self.onError(errorType, *args)
 
-        DataBaseProperty.set(self, success=not error, *args, **kwargs)
+        PersistentProperty.set(self, success=not error, *args, **kwargs)
 
         if not error:
             self._lastSuccesfull = self._value
-            pass
 
     def getLastSuccessfull(self):
         """Get the last successfull value of the property."""
@@ -118,17 +179,25 @@ class BinaryDBProperty(_ErrorHandling, DataBaseProperty):
         if not hasattr(model, 'success'):
             raise ValueError('The Data Base Model must contain a `success` key!')
 
-        DataBaseProperty.__init__(self, model, *args, **kwargs)
-        _ErrorHandling.__init__(self, **kwargs)
+        PersistentProperty.__init__(self, model, *args, **kwargs)
+        Observer.__init__(self, **kwargs)
 
         self._lastSuccesfull = self._getLatestFromDb(success=True)
 
 # TODO: Support for Multiple Simultaneous Errors...
-class Action(_ErrorHandling):
-    """The action Base Class, with an Implementation for timers and caching.
-    The action is a function which returns a Value in case of success or `None` otherwise.
-    It has built-in support for running shell-scripts. All time intervalls are in Seconds."""
-    # TODO: Persistence
+class Action(Observer):
+    """This is a Class, intended to be subclassed!
+    At least the action Method should be overwritten.
+
+    An Object of this class represents an action, which is run and then observed.
+    The result is being cached.
+    Also a timer, which runs the action like a cron job is implemented and works --out of the box--.
+    The basic interface is the get() method.
+
+    There are some handy methods available to use at your disposal.
+
+    It is also handy to use a dictionary for configuration and pass it as **kwargs.
+    """
 
     def runExternal(self, commandPath, sudo = False, *commandArgs):
         """Runs a given shell script and returns STDOUT.
@@ -140,16 +209,15 @@ class Action(_ErrorHandling):
 
         try:
             shellProcess = subprocess.run(command, stdout=subprocess.PIPE)
-
             return shellProcess.stdout.decode('utf-8')
 
         except subprocess.CalledProcessError:
             return None
 
-    def defaultAction(self):
+    def action(self):
         """A function which performs the Action.
         It is to be overwritten by the Subclass."""
-        return None
+        raise NotImplementedError()
 
     def _getResult(self):
         return self.result
@@ -158,37 +226,31 @@ class Action(_ErrorHandling):
         self.result = result
 
     def run(self, force=False, *args, **kwargs):
-        """Run the action and get the restult either Cached or New."""
+        """Run the action and get the restult either Cached or New.
 
-        error = False
+        Returns the result and the errors which might have occurred in the `isError` format."""
+
         tmpResult = None
-        errorDetails = False
 
-        try:
-            if force or self._getResult is None \
-               or (time.time() - self.lastExec) > self.cacheTime:
-                tmpResult = self.action(*args, **kwargs)
+        if force or self._getResult is None \
+           or (time.time() - self.lastExec) > self.cacheTime:
+            tmpResult = self.action(*args, **kwargs)
 
-                if(not tmpResult is None):
-                    self._setResult(tmpResult)
-                    self.lastExec = time.time()
+            if(not tmpResult is None):
+                self._setResult(tmpResult)
+                self.lastExec = time.time()
 
-            else:
-                tmpResult = self._getResult()
+            self.errors = self.isError(tmpResult)
 
-        finally:
-            if tmpResult is None:
-                error, errorDetails = 'ACTION_FAILED', None
-            else:
-                error, errorDetails = self.isError(tmpResult)
+        else:
+            tmpResult = self._getResult()
 
-            if not error is False:
-                self.onError(error, errorDetails, tmpResult)
+        if not error is False:
+            self.onError(error, errorDetails, tmpResult)
 
-        return tmpResult, error, errorDetails
+        return tmpResult, self.errors
 
-    def __init__(self, action=None, updateInterval=None, cacheTime=None, commandPath=None,
-                 commandArgs=None, sudo=False, *args, **kwargs):
+    def __init__(self, updateInterval=None, cacheTime=None, *args, **kwargs):
         # Init error Handling
         super().__init__(**kwargs)
 
@@ -201,23 +263,9 @@ class Action(_ErrorHandling):
         # The time of last execution
         self.lastExec = 0
 
-        # A function which performs the Action.
-        # If it isn't set, the built in Method will be used.
-        self.action = self.defaultAction if action is None else action
-
-        # Use a Shell Script if provided.
-        if not action is None:
-            self.action = action
-
-        elif not commandPath is None:
-            cArgs = [] if commandArgs is None else commandArgs
-            self.action = lambda: self.runExternal(commandPath, sudo, *cArgs)
-
-        else:
-            self.action = self.defaultAction
-
         # The return Value of the Action
         self.result = None
+        self.errors = False, False
 
         if not self.updateInterval is None:
             scheduler.add_job(func=self.run,
@@ -225,13 +273,15 @@ class Action(_ErrorHandling):
                                   seconds=self.updateInterval))
 
 class PersistentAction(Action):
-    """Look! An action which is persistent! Use the DataBaseProperty API to use the Persistency features, to keep it clean."""
+    """Look! An action which is persistent! Use the PersistentProperty API to use the Persistency features, to keep it clean."""
     def _getResult(self):
         return self.result.get()
 
     def _setResult(self, value):
         self.result.set(value)
 
-    def  __init__(self, model, discard=False, orderKey=None, *args, **kwargs):
+    def  __init__(self, discard=False, orderKey=None, *args, **kwargs):
+        if self.model is None:
+
         super().__init__(*args, **kwargs)
-        self.result = DataBaseProperty(model, discard=discard, orderKey=orderKey)
+        self.result = PersistentProperty(model, discard=discard, orderKey=orderKey)

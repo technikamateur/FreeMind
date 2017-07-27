@@ -55,7 +55,7 @@ actionConfig = {
         "cacheTime": 10,
         "errorMessages": {
             "ACTION_FAILED": {
-                "message": "Konnte HDD Fuellstand nicht abrufen!",
+                "message": "Konnte HDD (%s) Fuellstand nicht abrufen!",
                 "level": logging.ERROR
             },
             "HDD_FULL": {
@@ -69,7 +69,7 @@ actionConfig = {
         "cacheTime": 10,
         "errorMessages": {
             "ACTION_FAILED": {
-                "message": "Konnte HDD Status nicht abrufen!",
+                "message": "Konnte HDD ()Status nicht abrufen!",
                 "level": logging.ERROR
             },
             "HDD_ILL": {

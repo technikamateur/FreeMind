@@ -4,7 +4,7 @@ import re
 import os
 
 class __HddSpace(Action): # TODO: better error checking...
-    def defaultAction(self):
+    def action(self):
         # get disk usage
         df = self.runExternal('df').split('\n')
 
@@ -27,20 +27,24 @@ class __HddSpace(Action): # TODO: better error checking...
 
         return space
 
-    def defaultIsError(self, result):
-        if len(result) < len(hddList):
-            return 'HDD_NOT_FOUND', [hdd for hdd in hddList if not hdd in result]
+    def isError(self, result):
+        if result is None: # TODO: There may be a more elegant way.
+            return [('ACTION_FAILED', ('Unknown Cause.')),]
 
-        fullHdd = [hdd for hdd in result if \
+        errors = [('ACTION_FAILED', (hdd)) for hdd in hddList if hdd not in result]
+
+        fullHdd = [('HDD_FULL', (hdd)) for hdd in result if \
                             (result[hdd]['full']) > hddList[hdd]['maxFull']]
 
-        return (False if len(fullHdd) is 0 else 'HDD_FULL'), fullHdd
+        errors.extend(fullHdd)
+
+        return False, False if len(errors) is 0 else errors
 
     def __init__(self):
         super().__init__(**actionConfig['hddSpace'])
 
 class __HddHealth(Action):
-    def defaultAction(self):
+    def action(self):
         health = {hdd: self.runExternal(os.path.join(baseDir, 'utils/smartstat.sh')) \
                      for hdd in hddList}
 
@@ -53,10 +57,17 @@ class __HddHealth(Action):
 
         return health
 
-    def defaultIsError(self, result):
-        badHealt = [hdd for hdd in result if result[hdd] != 'PASSED']
+    def isError(self, result):
+        if result is None: # TODO: There may be a more elegant way.
+            return [('ACTION_FAILED', ('Unknown Cause.')),]
 
-        return (False if len(badHealt) is 0 else 'HDD_ILL'), badHealt
+        errors = [('ACTION_FAILED', (hdd)) for hdd in hddList if hdd not in result]
+
+        badHealt = [('HDD_ILL', (hdd)) for hdd in result if result[hdd] != 'PASSED']
+
+        errors.extend(badHealt)
+
+        return False, False if len(errors) is 0 else errors
 
     def __init__(self):
         super().__init__(**actionConfig['hddHealth'])

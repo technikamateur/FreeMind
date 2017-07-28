@@ -26,7 +26,7 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 atexit.register(scheduler.shutdown)
 
-class Observer(Object):
+class Observer():
     """A class which provides basic monitoring methods and is inteded to be subclassed!
     When subclassing !!be sure to call __init__!!
 
@@ -49,18 +49,15 @@ class Observer(Object):
         (see onError for the reason) and for the sake of simplicity and readibility
         a string is suggested. (Ex. SCARY_ERROR)
 
-        This method should return tuple.
-        The first element is an array composed of tuples in the form
-        `(errorType, errorArgs)` where errorArgs is just an iterable of arguments containing
-        additional information about the error. In the provided `onError` these arguments are
-        supplied to the logger as values for the format string. Peanuts.
+        This method should return an array of tuples in the form `(errorType, errorArgs)` where
+        errorArgs is just an iterable of arguments containing additional information about the error.
+        In the implementation of `onError` these arguments are supplied to the logger as values for
+        the format string. Peanuts.
 
-        The second element is the Number of errors which have been found.
-
-        If everything went good and there is no error, just return `(False, False)`.
+        If everything went good and there is no error, just return `False`.
         """
-        return False, False if value is None or value in self.errorMessag else \
-            ([value], None)
+        return False if value is None or value in self.errorMessag else \
+            [(value, None)]
 
     def onError(self, errors):
         """The default error handler invokes the app logger with the given Arguments.
@@ -71,10 +68,14 @@ class Observer(Object):
         where `arguments` is an iterable.
         """
 
+        # Nothing to worry about...
+        if errors is False or len(errors) is 0:
+            return
+
         error = errors.pop()
 
         if len(errors) > 0:
-            onError(errors)
+            self.onError(errors)
 
         errorType, args = error
 
@@ -95,13 +96,15 @@ class Observer(Object):
         Give it, what you would pass to the isError method and it automatically
         calls on error, if an error happened.
 
+        It is mainly devised for improving the maintainability of the API, in case
+        a more complex behaviour is implemented.
+
         In all other ways it behaves like `isError`."""
-        error, numErr = self.isError(*args, **kwargs)
 
-        if not error is False:
-            self.onError(error, multiple=numErr)
+        errors = self.isError(*args, **kwargs)
+        self.onError(errors)
 
-        return error, numErr
+        return errors
 
     def __init__(self, errorMessages=None, *args, **kwargs):
         # A dictionary with errors and log-reactions.
@@ -203,7 +206,7 @@ class Action(Observer):
         """Runs a given shell script and returns STDOUT.
         It returns None on error."""
 
-        command = ['/usr/bin/sudo'] if sudo else []
+        command = ['sudo -S'] if sudo else []
         command.append(commandPath)
         command.extend(commandArgs)
 
@@ -240,13 +243,10 @@ class Action(Observer):
                 self._setResult(tmpResult)
                 self.lastExec = time.time()
 
-            self.errors = self.isError(tmpResult)
+            self.errors = self.observe(tmpResult)
 
         else:
             tmpResult = self._getResult()
-
-        if not error is False:
-            self.onError(error, errorDetails, tmpResult)
 
         return tmpResult, self.errors
 
@@ -265,7 +265,7 @@ class Action(Observer):
 
         # The return Value of the Action
         self.result = None
-        self.errors = False, False
+        self.errors = False
 
         if not self.updateInterval is None:
             scheduler.add_job(func=self.run,
@@ -281,7 +281,5 @@ class PersistentAction(Action):
         self.result.set(value)
 
     def  __init__(self, discard=False, orderKey=None, *args, **kwargs):
-        if self.model is None:
-
         super().__init__(*args, **kwargs)
         self.result = PersistentProperty(model, discard=discard, orderKey=orderKey)

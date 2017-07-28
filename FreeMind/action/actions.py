@@ -38,7 +38,7 @@ class __HddSpace(Action): # TODO: better error checking...
 
         errors.extend(fullHdd)
 
-        return False, False if len(errors) is 0 else errors
+        return False if len(errors) is 0 else errors
 
     def __init__(self):
         super().__init__(**actionConfig['hddSpace'])
@@ -67,7 +67,7 @@ class __HddHealth(Action):
 
         errors.extend(badHealt)
 
-        return False, False if len(errors) is 0 else errors
+        return False if len(errors) is 0 else errors
 
     def __init__(self):
         super().__init__(**actionConfig['hddHealth'])
@@ -76,9 +76,16 @@ class __HddHealth(Action):
 # Export the Handlers
 getHddSpace = __HddSpace()
 getHddHealth = __HddHealth()
+
 def getHddSumary():
-    space, spaceError, spaceErrorDetails = getHddSpace.run()
-    health, healthError, healthErrorDetails = getHddHealth.run()
+    """A Little Helper, to prepare the data for the view."""
+    space, errors = getHddSpace.run()
+    health, healthErrors = getHddHealth.run()
+
+    errors = errors if not errors is False else []
+
+    if healthErrors:
+        errors.extend(healthErrors)
 
     hdds = {}
 
@@ -93,9 +100,15 @@ def getHddSumary():
 
         hdds[hdd]['name'] = hddList[hdd]['name']
 
-        hdds[hdd]['color'] = 'red' if spaceError is 'ACTION_FAILED' \
-                      or healthError is 'ACTION_FAILED' \
-                      or hdd in healthErrorDetails else 'orange' \
-                      if hdd in spaceErrorDetails else 'green'
+        hdds[hdd]['color'] = 'green'
+
+        for error, errorDetails in errors:
+            if errorDetails[0] is hdd:
+                if error is 'ACTION_FAILED':
+                    hdds[hdd]['offline'] = True
+                    break
+
+                hdds[hdd]['color'] = 'red' if error is 'HDD_ILL' else 'yellow' \
+                                 if error is 'HDD_FULL' else 'gray'
 
     return hdds

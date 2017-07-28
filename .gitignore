@@ -223,3 +223,7 @@ pip-log.txt
 
 *.pyc
 __pycache__
+tags
+GTAGS
+GRTAGS
+GPATH

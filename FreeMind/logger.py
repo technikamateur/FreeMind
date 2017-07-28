@@ -4,7 +4,6 @@ import time
 from FreeMind import config
 from FreeMind.models import LogMessage
 from FreeMind import db
-from hashlib import md5
 
 # Patch SMTPHandler to allow only a certain frequency
 class _SMTPHandler(SMTPHandler):

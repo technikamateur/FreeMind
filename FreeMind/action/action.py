@@ -50,7 +50,8 @@ class Observer():
         a string is suggested. (Ex. SCARY_ERROR)
 
         This method should return an array of tuples in the form `(errorType, errorArgs)` where
-        errorArgs is just an iterable of arguments containing additional information about the error.
+        errorArgs is just an iterable (or a single value) of arguments containing additional information
+        about the error.
         In the implementation of `onError` these arguments are supplied to the logger as values for
         the format string. Peanuts.
 
@@ -59,7 +60,7 @@ class Observer():
         return False if value is None or value in self.errorMessag else \
             [(value, None)]
 
-    def onError(self, errors):
+    def onError(self, errors, index = False):
         """The default error handler invokes the app logger with the given Arguments.
 
         It expects an array of errors to handle.
@@ -69,15 +70,24 @@ class Observer():
         """
 
         # Nothing to worry about...
-        if errors is False or len(errors) is 0:
+        if errors is False:
             return
 
-        error = errors.pop()
+        index = len(errors) - 1 if not index else index
 
-        if len(errors) > 0:
+        error = errors[index]
+        index -= 1
+
+        if index > -1:
             self.onError(errors)
 
         errorType, args = error
+
+        # Check the Args
+        if not args:
+            args = []
+        elif not (isinstance(args, tuple) or isinstance(args, list)):
+            args = args,
 
         err = self.errorMessages['default'] if errorType is None \
               or self.errorMessages[errorType] is None else self.errorMessages[errorType]

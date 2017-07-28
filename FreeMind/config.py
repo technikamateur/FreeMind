@@ -9,7 +9,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 mail = {
     "mailAdresses": {
         #logging.INFO: ('daniel.koersten@posteo.de'),
-        #logging.WARN: ('valentin@boettcher.cf')
+        logging.WARN: ('valentin@boettcher.cf')
     },
     "mailServer": {
         "host": "igf-jena.de",
@@ -17,7 +17,8 @@ mail = {
         "password": "eN2QepkFcdaD"
     },
     "subjectLine": "Freemind Logging | %(levelname)s | Na dann mal ran an den Speck!",
-    "interval": 10
+    "interval": 10,
+    "repeat_interval": 60*60
 }
 
 errorMessa = {
@@ -32,7 +33,12 @@ hddList = {
     "/dev/sda2": {
         "maxFull": 90,
         "name": "main"
-    }
+    },
+    "/dev/sdd": {
+        "maxFull": 90,
+        "name": "main"
+    },
+    
 }
 
 errorHandling = {

@@ -57,7 +57,11 @@
             <div class="grid__col-3">
                 <div class="c100 p{{hdd.full}} big center {{hdd.color}}">
                     <span>
+                        {% if hdd.offline %}
+                        OFFLINE
+                        {% else %}
                         {{hdd.full}}%
+                        {% endif %}
                     </span>
                     <div class="slice">
                         <div class="bar"></div>
@@ -65,7 +69,7 @@
                     </div>
                 </div>
                 <div class="memorybox__description">
-                    <f5>{{hdd.name}}</f5>
+                    <f5>{{hdd.name}}</f5>: {{dev}}
                 </div>
             </div>
             {% endfor %}

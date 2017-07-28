@@ -4,10 +4,23 @@ import time
 from FreeMind import config
 from FreeMind.models import LogMessage
 from FreeMind import db
+from hashlib import md5
 
 # Patch SMTPHandler to allow only a certain frequency
 class _SMTPHandler(SMTPHandler):
     lastMail = False;
+
+    def repeated(self, record):
+        message = self.format(record)
+        now = time.time()
+
+        if message in self.msgTable.keys():
+            age = (now - self.msgTable[message])
+            if age < config.mail['repeat_interval']:
+                return True
+
+        self.msgTable[message] = now
+        return False
 
     def getSubject(self, record):
         formatter = logging.Formatter(fmt=self.subject)
@@ -16,8 +29,14 @@ class _SMTPHandler(SMTPHandler):
     def emit(self, record):
         now = time.time()
         if not self.lastMail or (now - self.lastMail) > config.mail['interval']:
-            super().emit(record)
+            if self.repeated(record):
+                return
+            super(_SMTPHandler, self).emit(record)
             self.lastMail = now;
+
+    def __init__(self, *args, **kwargs):
+        super(_SMTPHandler, self).__init__(*args, **kwargs)
+        self.msgTable = {}
 
 # A Simple Logging Handler for the Database
 class SQLHanlder(logging.StreamHandler):

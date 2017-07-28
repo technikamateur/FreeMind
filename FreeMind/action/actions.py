@@ -103,9 +103,10 @@ def getHddSumary():
         hdds[hdd]['color'] = 'green'
 
         for error, errorDetails in errors:
-            if errorDetails[0] is hdd:
+            if errorDetails is hdd:
                 if error is 'ACTION_FAILED':
                     hdds[hdd]['offline'] = True
+                    hdds[hdd]['color'] = 'red'
                     break
 
                 hdds[hdd]['color'] = 'red' if error is 'HDD_ILL' else 'yellow' \

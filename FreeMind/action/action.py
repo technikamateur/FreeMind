@@ -60,48 +60,32 @@ class Observer():
         return False if value is None or value in self.errorMessag else \
             [(value, None)]
 
-    def _cleanErrorTable(self):
-        """Cleans the error table from entries that are from the last execution
-        or, if `self.repeatInterval` is set which are outdated.
-        """
-        now = time.time()
+    def _matchToErrorTable(self, errors):
+        """This function maintains the errorTable by adding new items and removing obsolete ones."""
 
-        for error, errorDat in list(self.errorTable.items()):
-            de = False
-
-            if self.repeatInterval:
-                de = (now - errorDat['time']) > self.repeatInterval
-            else:
-                de = not errorDat['last']
-
-            if de:
-                del self.errorTable[error]
-
-    def _addToErrorTable(self, errors):
-        if not errors:
-            return
+        if not errors or not self.repeatInterval:
+            return errors
 
         now = time.time()
 
-        # Set the errors from last time to inactive
-        for error in self.errorTable:
-            self.errorTable[error]['last'] = False
+        newErrors = []
 
-        # Clean the Error Table
-        self._cleanErrorTable()
+        for error in list(self._errorTable.keys()):
+            if self.repeatInterval and (now - self._errorTable[error]) >= self.repeatInterval:
+                del self._errorTable[error]
 
         for error in errors:
-            if not error in self.errorTable:
-                self.errorTable[error] = {
-                    'time': now,
-                    'last': True
-                }
+            if not error in self._errorTable:
+                self._errorTable[error] = now
+                newErrors.append(error)
+
+        return newErrors if len(newErrors) > 0 else False
 
     def inErrorTable(self, error):
-        return error in [error for error in self.errorTable if not self.errorTable[error]['last']]
+        return error in [error for error in self._errorTable if not self._errorTable[error]['last']]
 
     def getLastErrors(self):
-        return [error for error in self.errorTable if self.errorTable[error]['last']]
+        return self._errorTable
 
     def onError(self, errors, index = False):
         """The default error handler invokes the app logger with the given Arguments.
@@ -126,9 +110,6 @@ class Observer():
 
         if index > -1:
             self.onError(errors)
-
-        if self.inErrorTable(error):
-            return
 
         errorType, args = error
 
@@ -160,8 +141,9 @@ class Observer():
 
         In all other ways it behaves like `isError`."""
 
-        errors = self.isError(*args, **kwargs)
-        self._addToErrorTable(errors)
+        errors = self._matchToErrorTable(self.isError(*args, **kwargs))
+
+        # Maintain the error table. # TODO: maybe extract to new mehtod
         self.onError(errors)
 
         return errors
@@ -171,7 +153,7 @@ class Observer():
         self.errorMessages = copy.deepcopy(errorHandlingConfig["defaultErrorMessages"])
 
         self.repeatInterval = repeatInterval
-        self.errorTable = {}
+        self._errorTable = {}
 
         if not errorMessages is None:
             for key in errorMessages:

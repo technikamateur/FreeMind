@@ -18,8 +18,7 @@ mail = {
     },
     "subjectLine": "Freemind Logging | %(levelname)s | Na dann mal ran an den Speck!",
     "interval": 10,
-    "repeat_interval": 60*60
-}
+ }
 
 errorMessa = {
     "full": "Die Festplatte: %s ist voll, na Toll."

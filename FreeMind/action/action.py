@@ -68,21 +68,18 @@ class Observer():
 
         now = time.time()
 
-        newErrors = []
-
         for error in list(self._errorTable.keys()):
             if self.repeatInterval and (now - self._errorTable[error]) >= self.repeatInterval:
                 del self._errorTable[error]
 
+        self._newErrors = []
         for error in errors:
             if not error in self._errorTable:
                 self._errorTable[error] = now
-                newErrors.append(error)
+                self._newErrors.append(error)
 
-        return newErrors if len(newErrors) > 0 else False
-
-    def inErrorTable(self, error):
-        return error in [error for error in self._errorTable if not self._errorTable[error]['last']]
+    def _isNewError(self, error):
+        return error in self._newErrors
 
     def getLastErrors(self):
         return self._errorTable
@@ -110,6 +107,9 @@ class Observer():
 
         if index > -1:
             self.onError(errors)
+
+        if not self._isNewError(error):
+            return
 
         errorType, args = error
 
@@ -141,7 +141,8 @@ class Observer():
 
         In all other ways it behaves like `isError`."""
 
-        errors = self._matchToErrorTable(self.isError(*args, **kwargs))
+        errors = self.isError(*args, **kwargs)
+        self._matchToErrorTable(errors)
 
         # Maintain the error table. # TODO: maybe extract to new mehtod
         self.onError(errors)
@@ -154,6 +155,7 @@ class Observer():
 
         self.repeatInterval = repeatInterval
         self._errorTable = {}
+        self._newErrors = False
 
         if not errorMessages is None:
             for key in errorMessages:

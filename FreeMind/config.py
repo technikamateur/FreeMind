@@ -57,7 +57,7 @@ actionConfig = {
     "hddSpace": {
         "updateInterval": 1,
         "cacheTime": 0,
-        "repeatInterval": 10,
+        "repeatInterval": 60*60,
         "errorMessages": {
             "ACTION_FAILED": {
                 "message": "Konnte HDD (%s) Fuellstand nicht abrufen!",
@@ -72,6 +72,7 @@ actionConfig = {
     "hddHealth": {
         "updateInterval": 15,
         "cacheTime": 10,
+        "repeatInterval": 60*60,
         "errorMessages": {
             "ACTION_FAILED": {
                 "message": "Konnte HDD ()Status nicht abrufen!",

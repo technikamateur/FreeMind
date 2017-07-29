@@ -60,6 +60,49 @@ class Observer():
         return False if value is None or value in self.errorMessag else \
             [(value, None)]
 
+    def _cleanErrorTable(self):
+        """Cleans the error table from entries that are from the last execution
+        or, if `self.repeatInterval` is set which are outdated.
+        """
+        now = time.time()
+
+        for error, errorDat in list(self.errorTable.items()):
+            de = False
+
+            if self.repeatInterval:
+                de = (now - errorDat['time']) > self.repeatInterval
+            else:
+                de = not errorDat['last']
+
+            if de:
+                del self.errorTable[error]
+
+    def _addToErrorTable(self, errors):
+        if not errors:
+            return
+
+        now = time.time()
+
+        # Set the errors from last time to inactive
+        for error in self.errorTable:
+            self.errorTable[error]['last'] = False
+
+        # Clean the Error Table
+        self._cleanErrorTable()
+
+        for error in errors:
+            if not error in self.errorTable:
+                self.errorTable[error] = {
+                    'time': now,
+                    'last': True
+                }
+
+    def inErrorTable(self, error):
+        return error in [error for error in self.errorTable if not self.errorTable[error]['last']]
+
+    def getLastErrors(self):
+        return [error for error in self.errorTable if self.errorTable[error]['last']]
+
     def onError(self, errors, index = False):
         """The default error handler invokes the app logger with the given Arguments.
 
@@ -67,6 +110,9 @@ class Observer():
 
         An error is represented by a tuple in the shape `(errorType, arguments)`
         where `arguments` is an iterable.
+
+        If the class field `repeatFrequency` is non `False`, the error messages get filtered
+        to not be spammed to the logs.
         """
 
         # Nothing to worry about...
@@ -80,6 +126,9 @@ class Observer():
 
         if index > -1:
             self.onError(errors)
+
+        if self.inErrorTable(error):
+            return
 
         errorType, args = error
 
@@ -112,13 +161,17 @@ class Observer():
         In all other ways it behaves like `isError`."""
 
         errors = self.isError(*args, **kwargs)
+        self._addToErrorTable(errors)
         self.onError(errors)
 
         return errors
 
-    def __init__(self, errorMessages=None, *args, **kwargs):
+    def __init__(self, errorMessages=None, repeatInterval=False, *args, **kwargs):
         # A dictionary with errors and log-reactions.
         self.errorMessages = copy.deepcopy(errorHandlingConfig["defaultErrorMessages"])
+
+        self.repeatInterval = repeatInterval
+        self.errorTable = {}
 
         if not errorMessages is None:
             for key in errorMessages:

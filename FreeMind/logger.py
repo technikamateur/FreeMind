@@ -9,18 +9,6 @@ from FreeMind import db
 class _SMTPHandler(SMTPHandler):
     lastMail = False;
 
-    def repeated(self, record):
-        message = self.format(record)
-        now = time.time()
-
-        if message in self.msgTable.keys():
-            age = (now - self.msgTable[message])
-            if age < config.mail['repeat_interval']:
-                return True
-
-        self.msgTable[message] = now
-        return False
-
     def getSubject(self, record):
         formatter = logging.Formatter(fmt=self.subject)
         return formatter.format(record)
@@ -28,14 +16,8 @@ class _SMTPHandler(SMTPHandler):
     def emit(self, record):
         now = time.time()
         if not self.lastMail or (now - self.lastMail) > config.mail['interval']:
-            if self.repeated(record):
-                return
             super(_SMTPHandler, self).emit(record)
             self.lastMail = now;
-
-    def __init__(self, *args, **kwargs):
-        super(_SMTPHandler, self).__init__(*args, **kwargs)
-        self.msgTable = {}
 
 # A Simple Logging Handler for the Database
 class SQLHanlder(logging.StreamHandler):
@@ -68,11 +50,11 @@ for level in config.mail['mailAdresses']:
     logger.addHandler(__handler)
 
 __sqlHandler = SQLHanlder()
-__sqlHandler.setLevel(logging.DEBUG)
+__sqlHandler.setLevel(logging.INFO)
 logger.addHandler(__sqlHandler)
 
 __streamHandler = logging.StreamHandler()
-__streamHandler.setLevel(logging.DEBUG)
+__streamHandler.setLevel(logging.ERROR)
 logger.addHandler(__streamHandler)
 
 __streamHandler.setFormatter(__formatter)

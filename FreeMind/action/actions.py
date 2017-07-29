@@ -74,8 +74,9 @@ class __HddHealth(Action):
 
 
 # Export the Handlers
-getHddSpace = __HddSpace()
+getHddSpace = __HddSpace() 
 getHddHealth = __HddHealth()
+# NOTE: You could wrap this into multiple Actions, but leave them like this, to enable a more flexible config.
 
 def getHddSumary():
     """A Little Helper, to prepare the data for the view."""

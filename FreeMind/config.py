@@ -37,8 +37,7 @@ hddList = {
     "/dev/sdd": {
         "maxFull": 90,
         "name": "main"
-    },
-    
+    }
 }
 
 errorHandling = {
@@ -57,8 +56,9 @@ errorHandling = {
 # Configuration for the Actions. The dict gets converted into KWArgs! The action.errorMessages key gets merged with the Error messages of all other error messages.
 actionConfig = {
     "hddSpace": {
-        "updateInterval": 15,
-        "cacheTime": 10,
+        "updateInterval": 1,
+        "cacheTime": 0,
+        "repeatInterval": 10,
         "errorMessages": {
             "ACTION_FAILED": {
                 "message": "Konnte HDD (%s) Fuellstand nicht abrufen!",

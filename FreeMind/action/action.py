@@ -84,30 +84,40 @@ class Observer():
     def getLastErrors(self):
         return self._errorTable
 
-    def onError(self, errors, index = False):
+    def handleErrors(self, errors):
+        """A nice wrapper to loop over the errors and remove boilerplate.
+
+        It accepts a List of errors. An error is represented by a tuple in the shape `(errorType, arguments)`
+        where `arguments` is an iterable.
+
+        The return values of the error handler (if any) will be gathered and returned as list.
+        """
+        # Nothing to worry about...
+        if errors is False or len(errors) is 0:
+            return []
+
+        handledErrors = [self.onError(error) for error in errors if not error is None]
+        handledErrors = [error for error in handledErrors if not error is None]
+
+        return handledErrors
+
+    def onError(self, error):
         """The default error handler invokes the app logger with the given Arguments.
 
-        It expects an array of errors to handle.
-
-        An error is represented by a tuple in the shape `(errorType, arguments)`
+        The method requires an error is represented by a tuple in the shape `(errorType, arguments)`
         where `arguments` is an iterable.
 
         If the class field `repeatFrequency` is non `False`, the error messages get filtered
         to not be spammed to the logs.
+
+        The error handler may or may not return a Value.
         """
 
         # Nothing to worry about...
-        if errors is False:
+        if error is False:
             return
 
-        index = len(errors) - 1 if not index else index
-
-        error = errors[index]
-        index -= 1
-
-        if index > -1:
-            self.onError(errors)
-
+        # This logic is left in here deliberately! //TODO: May be moved to `handleErrors`
         if not self._isNewError(error):
             return
 
@@ -145,7 +155,7 @@ class Observer():
         self._matchToErrorTable(errors)
 
         # Maintain the error table. # TODO: maybe extract to new mehtod
-        self.onError(errors)
+        self.handleErrors(errors)
 
         return errors
 

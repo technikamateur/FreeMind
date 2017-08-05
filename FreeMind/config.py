@@ -9,7 +9,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 mail = {
     "mailAdresses": {
         #logging.INFO: ('daniel.koersten@posteo.de'),
-        logging.WARN: ('valentin@boettcher.cf')
+        #logging.WARN: ('valentin@boettcher.cf')
     },
     "mailServer": {
         "host": "igf-jena.de",
@@ -55,7 +55,7 @@ errorHandling = {
 # Configuration for the Actions. The dict gets converted into KWArgs! The action.errorMessages key gets merged with the Error messages of all other error messages.
 actionConfig = {
     "hddSpace": {
-        "updateInterval": 1,
+        "updateInterval": 10,
         "cacheTime": 0,
         "repeatInterval": 60*60,
         "errorMessages": {
@@ -72,7 +72,7 @@ actionConfig = {
     "hddHealth": {
         "updateInterval": 15,
         "cacheTime": 10,
-        "repeatInterval": 60*60,
+        "repeatInterval": 60*601,
         "errorMessages": {
             "ACTION_FAILED": {
                 "message": "Konnte HDD ()Status nicht abrufen!",

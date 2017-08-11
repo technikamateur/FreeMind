@@ -6,7 +6,7 @@ from FreeMind.config import hddList
 
 @app.route('/')
 def renderMaster():
-    hdds = getHddSumary()    
+    hdds = getHddSumary()
     return render_template('master.html', hdds=hdds, lastBackup=Master.backup.getLastSuccessfull().time)
 
 @app.route('/slave')

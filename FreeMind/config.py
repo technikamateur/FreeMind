@@ -9,7 +9,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 mail = {
     "mailAdresses": {
         #logging.INFO: ('daniel.koersten@posteo.de'),
-        #logging.WARN: ('valentin@boettcher.cf')
+        logging.WARN: ('valentin@boettcher.cf')
     },
     "mailServer": {
         "host": "igf-jena.de",
@@ -56,7 +56,7 @@ errorHandling = {
 actionConfig = {
     "hddSpace": {
         "updateInterval": 10,
-        "cacheTime": 0,
+        "cacheTime": 10,
         "repeatInterval": 60*60,
         "errorMessages": {
             "ACTION_FAILED": {
@@ -81,6 +81,16 @@ actionConfig = {
             "HDD_ILL": {
                 "message": "Die Festplatte/n %s ist/sind in keinem guten Zustand! Status: %s",
                 "level": logging.WARN
+            }
+        }
+    },
+    "isBackupOverDue": {
+        "updateInterval": 60*60,
+        "repeatInterval": 60*60*24,
+        "errorMessages": {
+            "BACKUP_OVERDUE": {
+                "message": "Backup ist Überfällig!",
+                "level": logging.ERROR
             }
         }
     }

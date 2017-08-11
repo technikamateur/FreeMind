@@ -1,5 +1,7 @@
 from FreeMind.action import Action
 from FreeMind.config import hddList, actionConfig, baseDir
+from FreeMind import properties
+import time
 import re
 import os
 
@@ -71,10 +73,24 @@ class __HddHealth(Action):
         super().__init__(**actionConfig['hddHealth'])
         self.healthRe = re.compile(' result: ([A-Z]+)\n')
 
+class __isBackUpOverDue(Action):
+    def action(self):
+        return properties.Master.backup.getLastSuccessfull()
+
+    def isError(self, backup):
+        if time.time() - backup.time > self.maxBackupInterval:
+            return [('BACKUP_OVERDUE')]
+        else:
+            return False
+
+    def __init__(maxBackupInterval, *args, **kwargs):
+        self.maxBackupInterval = maxBackupInterval
+        super().__init__(*args, **kwargs)
 
 # Export the Handlers
-getHddSpace = __HddSpace() 
+getHddSpace = __HddSpace()
 getHddHealth = __HddHealth()
+__backupWatcher = __isBackUpOverDue(**actionConfig['isBackupOverDue'])
 # NOTE: You could wrap this into multiple Actions, but leave them like this, to enable a more flexible config.
 
 def getHddSumary():

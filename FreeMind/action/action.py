@@ -58,7 +58,7 @@ class Observer():
         If everything went good and there is no error, just return `False`.
         """
         return False if value is None or value in self.errorMessag else \
-            [(value, None)]
+            [(value, value)]
 
     def _matchToErrorTable(self, errors):
         """This function maintains the errorTable by adding new items and removing obsolete ones."""
@@ -69,7 +69,7 @@ class Observer():
         now = time.time()
 
         for error in list(self._errorTable.keys()):
-            if self.repeatInterval and (now - self._errorTable[error]) >= self.repeatInterval:
+            if (now - self._errorTable[error]) >= self.repeatInterval:
                 del self._errorTable[error]
 
         self._newErrors = []
@@ -225,7 +225,7 @@ class ObservedPersistentProperty(Observer, PersistentProperty):
         if error:
                 self.onError(errorType, *args)
 
-        PersistentProperty.set(self, success=not error, *args, **kwargs)
+        PersistentProperty.set(self, success=(not error), *args, **kwargs)
 
         if not error:
             self._lastSuccesfull = self._value
@@ -307,7 +307,7 @@ class Action(Observer):
 
         return tmpResult, self.errors
 
-    def __init__(self, updateInterval=None, cacheTime=None, *args, **kwargs):
+    def __init__(self, updateInterval=None, cacheTime=0, *args, **kwargs):
         # Init error Handling
         super().__init__(**kwargs)
 

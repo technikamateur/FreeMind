@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 import FreeMind.models
 db.create_all()
 
-import FreeMind.commands, FreeMind.api, FreeMind.action, FreeMind.logger, FreeMind.views
+import FreeMind.api, FreeMind.action, FreeMind.logger, FreeMind.views
 import FreeMind.action.actions as actions, FreeMind.action.properties as properties
 from FreeMind.plugins.momentjs import momentjs
 

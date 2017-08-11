@@ -52,7 +52,7 @@ class Observer():
         This method should return an array of tuples in the form `(errorType, errorArgs)` where
         errorArgs is just an iterable (or a single value) of arguments containing additional information
         about the error.
-        In the implementation of `onError` these arguments are supplied to the logger as values for
+        In the implementation of `or` these arguments are supplied to the logger as values for
         the format string. Peanuts.
 
         If everything went good and there is no error, just return `False`.
@@ -259,16 +259,16 @@ class Action(Observer):
     It is also handy to use a dictionary for configuration and pass it as **kwargs.
     """
 
-    def runExternal(self, commandPath, sudo = False, *commandArgs):
+    def runExternal(self, commandPath, *commandArgs, sudo=False):
         """Runs a given shell script and returns STDOUT.
         It returns None on error."""
 
-        command = ['sudo -S'] if sudo else []
+        command = ['sudo '] if sudo else []
         command.append(commandPath)
         command.extend(commandArgs)
 
         try:
-            shellProcess = subprocess.run(command, stdout=subprocess.PIPE)
+            shellProcess = subprocess.run(' '.join(command), stdout=subprocess.PIPE, shell=True)
             return shellProcess.stdout.decode('utf-8')
 
         except subprocess.CalledProcessError:
@@ -285,7 +285,7 @@ class Action(Observer):
     def _setResult(self, result):
         self.result = result
 
-    def run(self, force=False, *args, **kwargs):
+    def run(self, *args, force=False, **kwargs):
         """Run the action and get the restult either Cached or New.
 
         Returns the result and the errors which might have occurred in the `isError` format."""

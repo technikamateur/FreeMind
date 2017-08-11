@@ -75,7 +75,7 @@ actionConfig = {
         "repeatInterval": 60*601,
         "errorMessages": {
             "ACTION_FAILED": {
-                "message": "Konnte HDD ()Status nicht abrufen!",
+                "message": "Konnte HDD (%s) Status nicht abrufen!",
                 "level": logging.ERROR
             },
             "HDD_ILL": {

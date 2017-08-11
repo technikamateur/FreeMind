@@ -45,15 +45,13 @@ class __HddSpace(Action): # TODO: better error checking...
 
 class __HddHealth(Action):
     def action(self):
-        health = {hdd: self.runExternal(os.path.join(baseDir, 'utils/smartstat.sh')) \
+        health = {hdd: self.runExternal('/usr/bin/smartctl -H ', hdd, sudo=True) \
                      for hdd in hddList}
 
         for hdd in health:
-            if health[hdd] is None:
-                return None
-            else:
-                # Remove the trailing \n
-                health[hdd] = health[hdd][:-1]
+            # Remove the trailing \n
+            tmpHealth = self.healthRe.findall(health[hdd])
+            health[hdd] = None if len(tmpHealth) < 1 else tmpHealth[0]
 
         return health
 
@@ -61,9 +59,9 @@ class __HddHealth(Action):
         if result is None: # TODO: There may be a more elegant way.
             return [('ACTION_FAILED', ('Unknown Cause.')),]
 
-        errors = [('ACTION_FAILED', (hdd)) for hdd in hddList if hdd not in result]
+        errors = [('ACTION_FAILED', (hdd)) for hdd in hddList if (hdd not in result) or (result[hdd] is None)]
 
-        badHealt = [('HDD_ILL', (hdd)) for hdd in result if result[hdd] != 'PASSED']
+        badHealt = [('HDD_ILL', (hdd, result[hdd])) for hdd in result if result[hdd] != 'PASSED' and hdd not in [error[1] for error in errors]]
 
         errors.extend(badHealt)
 
@@ -71,6 +69,7 @@ class __HddHealth(Action):
 
     def __init__(self):
         super().__init__(**actionConfig['hddHealth'])
+        self.healthRe = re.compile(' result: ([A-Z]+)\n')
 
 
 # Export the Handlers

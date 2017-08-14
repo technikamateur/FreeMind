@@ -17,15 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # setting up some parameters
-version="1.0"
+version="1.1"
 internet=true
 varcurl=curl
 host="192.168.0.111"
-port=5000
+port="5000"
 
-function getURL() {
-    printf "http://$host\:$port\/bridge?action=$1"
-    [ -z "$2" ] || printf "&status=$2" 
+function contactHost() {
+  $varcurl -s --request GET "$(echo -e "http://$host:$port/bridge?action=$1\c"; [ -z "$2" ] || echo -e "&status=$2\c")"
 }
 
 # checking superuser
@@ -34,7 +33,7 @@ if [[ $EUID != 0 ]]; then
   exit 1
 fi
 if [[ $1 == "backup" ]]; then
-  backup=$($varcurl -s --request GET "`getURL DO_BACKUP`")
+  backup=$(contactHost DO_BACKUP)
   if [[ $backup == "true" ]]; then
     mount | grep /dev/sda1 > /dev/null # prüfen, ob HDD angeschlossen
     if [[ $? == 0 ]]; then
@@ -43,13 +42,13 @@ if [[ $1 == "backup" ]]; then
         find /media/backupdrive/igfserverbackup -type d -empty -exec rmdir {} +
         chown -R igfbackup:igfbackup /media/backupdrive/igfserverbackup
         chmod -R 700 /media/backupdrive/igfserverbackup
-        $varcurl -s --request GET "`getURL BACKUP SUCCESS`" > /dev/null # Backup-done
+        contactHost BACKUP SUCCESS > /dev/null # Backup-done
         exit 0
       else
-        $varcurl -s --request GET "getURL BACKUP FAILED" > /dev/null # Backup f3hler
+        contactHost BACKUP FAILED > /dev/null # Backup f3hler
       fi
     else
-      $varcurl -s --request GET "getURL HDD_ERROR" > /dev/null # Festplatte nicht online
+      contactHost HDD_ERROR > /dev/null # Festplatte nicht online
     fi
   else
     exit 0

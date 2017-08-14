@@ -18,13 +18,19 @@
 
 # setting up some parameters
 version="1.1"
+channel="1" # 1 = stable; 2 = beta/dev
 internet=true
 varcurl=curl
 host="192.168.0.111"
 port="5000"
+webapp="https://update.freemind-client.org/index.php"
 
 function contactHost() {
   $varcurl -s --request GET "$(echo -e "http://$host:$port/bridge?action=$1\c"; [ -z "$2" ] || echo -e "&status=$2\c")"
+}
+
+function contactUpdateServer() {
+  $varcurl -s --request GET "$webapp?userProgram=2&userChannel=$channel&userVersion=$version"
 }
 
 # checking superuser
@@ -56,9 +62,9 @@ if [[ $1 == "backup" ]]; then
 fi
 exit 99
 if [[ $1 == "update" ]]; then
-  $varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version" > /dev/null || $internet=false
+  contactUpdateServer > /dev/null || $internet=false
   if [[ $internet == true ]]; then
-    update=$($varcurl -s --request GET "https://update.freemind-client.org/index.php?userProgram=2&userChannel=2&userVersion=$version")
+    update=$(contactUpdateServer)
     if [[ $update != "latest-version" ]]; then
       rm -r /etc/freemind/update
       mkdir /etc/freemind/update && cd /etc/freemind/update
@@ -66,9 +72,14 @@ if [[ $1 == "update" ]]; then
       tar xzf slave.tar.gz
       chmod +x update.sh
       bash /etc/freemind/update/update.sh &
+      if [[ $? == 0 ]]; then
+        contactHost FM_UPDATE SUCCESS > /dev/null # Update Done
+      else
+        contactHost FM_UPDATE FAILED > /dev/null # Update Failed 
+      fi
       exit 0
     fi
   fi
   exit 3
 fi
-exit 0
+exit 99

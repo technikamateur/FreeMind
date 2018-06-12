@@ -1,5 +1,5 @@
 # FreeMind
-## currently out of date
+## FreeMind is no longer under active development.
 
 <img align="right" src="https://github.com/technikamateur/FreeMind/blob/master/logo/linux-server-128px.png" alt="logo FreeMind">
 
